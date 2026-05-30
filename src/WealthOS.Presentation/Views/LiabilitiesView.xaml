@@ -1,0 +1,156 @@
+<UserControl x:Class="WealthOS.Presentation.Views.LiabilitiesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:WealthOS.Presentation.Converters"
+             xmlns:enums="clr-namespace:WealthOS.Domain.Enums;assembly=WealthOS.Domain">
+
+    <UserControl.Resources>
+        <conv:CurrencyConverter x:Key="CurrencyConv"/>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVis"/>
+        <ObjectDataProvider x:Key="LiabilityTypes" MethodName="GetValues"
+                            ObjectType="{x:Type enums:LiabilityType}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:LiabilityType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="32,24">
+            <StackPanel MaxWidth="1200">
+                <!-- Header -->
+                <Grid Margin="0,0,0,24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Liabilities" Style="{StaticResource PageTitleStyle}"/>
+                    <Button Grid.Column="1" Content="+ Add Liability" Style="{StaticResource PrimaryButton}"
+                            Command="{Binding ShowAddCommand}" VerticalAlignment="Center"/>
+                </Grid>
+
+                <!-- Total -->
+                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,20">
+                    <StackPanel>
+                        <TextBlock Text="Total Liabilities" FontSize="14"
+                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,8"/>
+                        <TextBlock FontSize="36" FontWeight="Bold" Foreground="{StaticResource ExpenseBrush}">
+                            <TextBlock.Text>
+                                <Binding Path="TotalBalance" Converter="{StaticResource CurrencyConv}"/>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <!-- Liability Cards -->
+                <ItemsControl ItemsSource="{Binding Liabilities}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource CardStyle}" Margin="0,0,16,16" Width="300">
+                                <StackPanel>
+                                    <Grid Margin="0,0,0,12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding Institution}"
+                                                   FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Type}" FontSize="12"
+                                                   Foreground="{StaticResource TextSecondaryBrush}"/>
+                                    </Grid>
+                                    <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="SemiBold"
+                                               Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                                    <TextBlock FontSize="26" FontWeight="Bold"
+                                               Foreground="{StaticResource ExpenseBrush}">
+                                        <TextBlock.Text>
+                                            <Binding Path="Balance" Converter="{StaticResource CurrencyConv}"/>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                    <Grid Margin="0,12,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="Interest Rate" FontSize="11"
+                                                       Foreground="{StaticResource TextSecondaryBrush}"/>
+                                            <TextBlock Text="{Binding InterestRate, StringFormat='{}{0:F2}%'}"
+                                                       FontSize="14" FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="Monthly Payment" FontSize="11"
+                                                       Foreground="{StaticResource TextSecondaryBrush}"/>
+                                            <TextBlock FontSize="14" FontWeight="SemiBold">
+                                                <TextBlock.Text>
+                                                    <Binding Path="MonthlyPayment" Converter="{StaticResource CurrencyConv}"/>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!-- Add Dialog -->
+                <Border Background="#80000000" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}"
+                        Panel.ZIndex="100">
+                    <Border Background="White" CornerRadius="20" Padding="32" Width="480"
+                            VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <StackPanel>
+                            <TextBlock Text="Add Liability" FontSize="22" FontWeight="Bold"
+                                       Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,24"/>
+
+                            <TextBlock Text="Name" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                            <TextBox Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
+
+                            <TextBlock Text="Type" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource LiabilityTypes}}"
+                                      SelectedItem="{Binding NewType}" Margin="0,0,0,16"/>
+
+                            <TextBlock Text="Institution" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                            <TextBox Text="{Binding NewInstitution, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
+
+                            <Grid Margin="0,0,0,16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Balance" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                                    <TextBox Text="{Binding NewBalance, UpdateSourceTrigger=PropertyChanged}"
+                                             Style="{StaticResource InputStyle}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Interest Rate %" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                                    <TextBox Text="{Binding NewInterestRate, UpdateSourceTrigger=PropertyChanged}"
+                                             Style="{StaticResource InputStyle}"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <TextBlock Text="Monthly Payment" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                            <TextBox Text="{Binding NewMonthlyPayment, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource InputStyle}" Margin="0,0,0,24"/>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="Cancel" Style="{StaticResource SecondaryButton}"
+                                        Command="{Binding CancelAddCommand}" Margin="0,0,12,0"/>
+                                <Button Content="Add" Style="{StaticResource PrimaryButton}"
+                                        Command="{Binding ConfirmAddCommand}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

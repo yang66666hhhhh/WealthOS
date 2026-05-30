@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/WealthOS.Application/WealthOS.Application.csproj" />
+    <Project Path="src/WealthOS.Domain/WealthOS.Domain.csproj" />
+    <Project Path="src/WealthOS.Infrastructure/WealthOS.Infrastructure.csproj" />
+    <Project Path="src/WealthOS.Presentation/WealthOS.Presentation.csproj" />
+  </Folder>
+</Solution>
