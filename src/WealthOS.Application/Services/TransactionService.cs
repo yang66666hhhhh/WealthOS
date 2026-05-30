@@ -43,21 +43,20 @@ public class TransactionService
 
     public async Task<Guid> AddTransactionAsync(Transaction transaction)
     {
+        var account = await _accountRepo.GetByIdAsync(transaction.AccountId)
+            ?? throw new InvalidOperationException($"Account {transaction.AccountId} not found.");
+
         var id = await _transactionRepo.AddAsync(transaction);
 
-        var account = await _accountRepo.GetByIdAsync(transaction.AccountId);
-        if (account != null)
+        account.Balance += transaction.Type switch
         {
-            account.Balance += transaction.Type switch
-            {
-                TransactionType.Income => transaction.Amount,
-                TransactionType.Expense => -transaction.Amount,
-                TransactionType.Transfer => -transaction.Amount,
-                _ => 0
-            };
-            account.UpdatedAt = DateTime.UtcNow;
-            await _accountRepo.UpdateAsync(account);
-        }
+            TransactionType.Income => transaction.Amount,
+            TransactionType.Expense => -transaction.Amount,
+            TransactionType.Transfer => -transaction.Amount,
+            _ => 0
+        };
+        account.UpdatedAt = DateTime.UtcNow;
+        await _accountRepo.UpdateAsync(account);
 
         if (transaction.Type == TransactionType.Transfer && transaction.ToAccountId.HasValue)
         {
@@ -73,5 +72,36 @@ public class TransactionService
         return id;
     }
 
-    public async Task<bool> DeleteTransactionAsync(Guid id) => await _transactionRepo.DeleteAsync(id);
+    public async Task<bool> DeleteTransactionAsync(Guid id)
+    {
+        var transaction = await _transactionRepo.GetByIdAsync(id);
+        if (transaction == null) return false;
+
+        var account = await _accountRepo.GetByIdAsync(transaction.AccountId);
+        if (account != null)
+        {
+            account.Balance -= transaction.Type switch
+            {
+                TransactionType.Income => transaction.Amount,
+                TransactionType.Expense => -transaction.Amount,
+                TransactionType.Transfer => -transaction.Amount,
+                _ => 0
+            };
+            account.UpdatedAt = DateTime.UtcNow;
+            await _accountRepo.UpdateAsync(account);
+        }
+
+        if (transaction.Type == TransactionType.Transfer && transaction.ToAccountId.HasValue)
+        {
+            var toAccount = await _accountRepo.GetByIdAsync(transaction.ToAccountId.Value);
+            if (toAccount != null)
+            {
+                toAccount.Balance -= transaction.Amount;
+                toAccount.UpdatedAt = DateTime.UtcNow;
+                await _accountRepo.UpdateAsync(toAccount);
+            }
+        }
+
+        return await _transactionRepo.DeleteAsync(id);
+    }
 }

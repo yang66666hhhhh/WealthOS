@@ -29,21 +29,50 @@
                             Command="{Binding ShowAddCommand}" VerticalAlignment="Center"/>
                 </Grid>
 
+                <!-- Loading -->
+                <ProgressBar IsIndeterminate="True" Height="3" Margin="0,0,0,16"
+                             Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
+                             Background="Transparent" Foreground="{StaticResource PrimaryBrush}"/>
+
                 <!-- Filter -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                     <Button Content="All" Margin="0,0,8,0" Padding="12,6" FontSize="12"
                             Background="Transparent" BorderThickness="1"
-                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"/>
+                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"
+                            Command="{Binding FilterByTypeCommand}" CommandParameter="{x:Null}"/>
                     <Button Content="Cash" Margin="0,0,8,0" Padding="12,6" FontSize="12"
                             Background="Transparent" BorderThickness="1"
-                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"/>
+                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"
+                            Command="{Binding FilterByTypeCommand}" CommandParameter="Cash"/>
                     <Button Content="Bank" Margin="0,0,8,0" Padding="12,6" FontSize="12"
                             Background="Transparent" BorderThickness="1"
-                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"/>
+                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"
+                            Command="{Binding FilterByTypeCommand}" CommandParameter="Bank"/>
                     <Button Content="Investment" Margin="0,0,8,0" Padding="12,6" FontSize="12"
                             Background="Transparent" BorderThickness="1"
-                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"/>
+                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"
+                            Command="{Binding FilterByTypeCommand}" CommandParameter="Fund"/>
                 </StackPanel>
+
+                <!-- Empty State -->
+                <Border Padding="60" Visibility="{Binding Assets.Count, Converter={StaticResource BoolToVis}}">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Assets.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="No assets yet" FontSize="20" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Click '+ Add Asset' to track your first asset"
+                                   FontSize="14" Foreground="{StaticResource TextHintBrush}"
+                                   HorizontalAlignment="Center" Margin="0,12,0,0"/>
+                    </StackPanel>
+                </Border>
 
                 <!-- Asset Cards -->
                 <ItemsControl ItemsSource="{Binding Assets}">
@@ -63,10 +92,12 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{Binding Institution}"
                                                    FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
-                                        <Button Grid.Column="1" Content="×" FontSize="14"
+                                        <Button Grid.Column="1" Content="x" FontSize="14"
                                                 Background="Transparent" BorderThickness="0"
                                                 Foreground="{StaticResource TextHintBrush}" Cursor="Hand"
-                                                Padding="4,0"/>
+                                                Padding="4,0"
+                                                Command="{Binding DataContext.ConfirmDeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding Id}"/>
                                     </Grid>
                                     <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="SemiBold"
                                                Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
@@ -76,16 +107,7 @@
                                             <Binding Path="CurrentValue" Converter="{StaticResource CurrencyConv}"/>
                                         </TextBlock.Text>
                                     </TextBlock>
-                                    <TextBlock Margin="0,8,0,0" FontSize="13">
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding ChangeAmount}" Value="0">
-                                                        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
+                                    <TextBlock Margin="0,8,0,0" FontSize="13" Foreground="{StaticResource AccentBrush}">
                                         <TextBlock.Text>
                                             <Binding Path="ChangePercentage" StringFormat="{}{0:+0.0;-0.0}%"/>
                                         </TextBlock.Text>
@@ -96,7 +118,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <!-- Add Dialog Overlay -->
+                <!-- Add Dialog -->
                 <Border Background="#80000000" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}"
                         Panel.ZIndex="100">
                     <Border Background="White" CornerRadius="20" Padding="32" Width="480"
@@ -144,6 +166,28 @@
                                         Command="{Binding CancelAddCommand}" Margin="0,0,12,0"/>
                                 <Button Content="Add" Style="{StaticResource PrimaryButton}"
                                         Command="{Binding ConfirmAddCommand}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Border>
+
+                <!-- Delete Confirmation Dialog -->
+                <Border Background="#80000000" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}"
+                        Panel.ZIndex="100">
+                    <Border Background="White" CornerRadius="20" Padding="32" Width="400"
+                            VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <StackPanel>
+                            <TextBlock Text="Delete Asset" FontSize="22" FontWeight="Bold"
+                                       Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12"/>
+                            <TextBlock Text="Are you sure you want to delete this asset? This action cannot be undone."
+                                       FontSize="14" Foreground="{StaticResource TextSecondaryBrush}"
+                                       TextWrapping="Wrap" Margin="0,0,0,24"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="Cancel" Style="{StaticResource SecondaryButton}"
+                                        Command="{Binding CancelDeleteCommand}" Margin="0,0,12,0"/>
+                                <Button Content="Delete" Style="{StaticResource PrimaryButton}"
+                                        Command="{Binding ExecuteDeleteCommand}"
+                                        Background="{StaticResource ExpenseBrush}"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>

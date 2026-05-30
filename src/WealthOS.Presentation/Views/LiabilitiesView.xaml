@@ -29,6 +29,11 @@
                             Command="{Binding ShowAddCommand}" VerticalAlignment="Center"/>
                 </Grid>
 
+                <!-- Loading -->
+                <ProgressBar IsIndeterminate="True" Height="3" Margin="0,0,0,16"
+                             Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
+                             Background="Transparent" Foreground="{StaticResource PrimaryBrush}"/>
+
                 <!-- Total -->
                 <Border Style="{StaticResource CardStyle}" Margin="0,0,0,20">
                     <StackPanel>
@@ -39,6 +44,26 @@
                                 <Binding Path="TotalBalance" Converter="{StaticResource CurrencyConv}"/>
                             </TextBlock.Text>
                         </TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <!-- Empty State -->
+                <Border Padding="60" Visibility="{Binding Liabilities.Count, Converter={StaticResource BoolToVis}}">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Liabilities.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="No liabilities yet" FontSize="20" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Click '+ Add Liability' to track your first liability"
+                                   FontSize="14" Foreground="{StaticResource TextHintBrush}"
+                                   HorizontalAlignment="Center" Margin="0,12,0,0"/>
                     </StackPanel>
                 </Border>
 
@@ -60,8 +85,12 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{Binding Institution}"
                                                    FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
-                                        <TextBlock Grid.Column="1" Text="{Binding Type}" FontSize="12"
-                                                   Foreground="{StaticResource TextSecondaryBrush}"/>
+                                        <Button Grid.Column="1" Content="x" FontSize="14"
+                                                Background="Transparent" BorderThickness="0"
+                                                Foreground="{StaticResource TextHintBrush}" Cursor="Hand"
+                                                Padding="4,0"
+                                                Command="{Binding DataContext.ConfirmDeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding Id}"/>
                                     </Grid>
                                     <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="SemiBold"
                                                Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
@@ -139,13 +168,38 @@
 
                             <TextBlock Text="Monthly Payment" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
                             <TextBox Text="{Binding NewMonthlyPayment, UpdateSourceTrigger=PropertyChanged}"
-                                     Style="{StaticResource InputStyle}" Margin="0,0,0,24"/>
+                                     Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
+
+                            <TextBlock Text="Start Date" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                            <DatePicker SelectedDate="{Binding NewStartDate}" Margin="0,0,0,24"/>
 
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Button Content="Cancel" Style="{StaticResource SecondaryButton}"
                                         Command="{Binding CancelAddCommand}" Margin="0,0,12,0"/>
                                 <Button Content="Add" Style="{StaticResource PrimaryButton}"
                                         Command="{Binding ConfirmAddCommand}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Border>
+
+                <!-- Delete Confirmation Dialog -->
+                <Border Background="#80000000" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}"
+                        Panel.ZIndex="100">
+                    <Border Background="White" CornerRadius="20" Padding="32" Width="400"
+                            VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <StackPanel>
+                            <TextBlock Text="Delete Liability" FontSize="22" FontWeight="Bold"
+                                       Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12"/>
+                            <TextBlock Text="Are you sure you want to delete this liability? This action cannot be undone."
+                                       FontSize="14" Foreground="{StaticResource TextSecondaryBrush}"
+                                       TextWrapping="Wrap" Margin="0,0,0,24"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="Cancel" Style="{StaticResource SecondaryButton}"
+                                        Command="{Binding CancelDeleteCommand}" Margin="0,0,12,0"/>
+                                <Button Content="Delete" Style="{StaticResource PrimaryButton}"
+                                        Command="{Binding ExecuteDeleteCommand}"
+                                        Background="{StaticResource ExpenseBrush}"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>

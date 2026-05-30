@@ -22,6 +22,31 @@
                             Command="{Binding ShowAddCommand}" VerticalAlignment="Center"/>
                 </Grid>
 
+                <!-- Loading -->
+                <ProgressBar IsIndeterminate="True" Height="3" Margin="0,0,0,16"
+                             Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
+                             Background="Transparent" Foreground="{StaticResource PrimaryBrush}"/>
+
+                <!-- Empty State -->
+                <Border Padding="60" Visibility="{Binding Goals.Count, Converter={StaticResource BoolToVis}}">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Goals.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="No goals yet" FontSize="20" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Click '+ Add Goal' to set your first financial goal"
+                                   FontSize="14" Foreground="{StaticResource TextHintBrush}"
+                                   HorizontalAlignment="Center" Margin="0,12,0,0"/>
+                    </StackPanel>
+                </Border>
+
                 <!-- Goal Cards -->
                 <ItemsControl ItemsSource="{Binding Goals}">
                     <ItemsControl.ItemsPanel>
@@ -40,10 +65,22 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{Binding Name}" FontSize="18"
                                                    FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"/>
-                                        <Button Grid.Column="1" Content="×" FontSize="14"
-                                                Background="Transparent" BorderThickness="0"
-                                                Foreground="{StaticResource TextHintBrush}" Cursor="Hand"
-                                                Padding="4,0"/>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                            <Button Content="+" FontSize="16" FontWeight="Bold"
+                                                    Background="Transparent" BorderThickness="1"
+                                                    BorderBrush="{StaticResource AccentBrush}"
+                                                    Foreground="{StaticResource AccentBrush}" Cursor="Hand"
+                                                    Padding="8,2" Margin="0,0,8,0"
+                                                    ToolTip="Add money to this goal"
+                                                    Command="{Binding DataContext.ShowProgressDialogCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    CommandParameter="{Binding}"/>
+                                            <Button Content="x" FontSize="14"
+                                                    Background="Transparent" BorderThickness="0"
+                                                    Foreground="{StaticResource TextHintBrush}" Cursor="Hand"
+                                                    Padding="4,0"
+                                                    Command="{Binding DataContext.ConfirmDeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    CommandParameter="{Binding Id}"/>
+                                        </StackPanel>
                                     </Grid>
 
                                     <!-- Progress Bar -->
@@ -96,7 +133,7 @@
                                                    FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-                                        <TextBlock Text="Estimated: " FontSize="12"
+                                        <TextBlock Text="Remaining: " FontSize="12"
                                                    Foreground="{StaticResource TextSecondaryBrush}"/>
                                         <TextBlock Text="{Binding EstimatedMonthsRemaining, StringFormat='{}{0} months'}"
                                                    FontSize="12" FontWeight="SemiBold"
@@ -151,6 +188,55 @@
                                         Command="{Binding CancelAddCommand}" Margin="0,0,12,0"/>
                                 <Button Content="Add" Style="{StaticResource PrimaryButton}"
                                         Command="{Binding ConfirmAddCommand}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Border>
+
+                <!-- Delete Confirmation Dialog -->
+                <Border Background="#80000000" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}"
+                        Panel.ZIndex="100">
+                    <Border Background="White" CornerRadius="20" Padding="32" Width="400"
+                            VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <StackPanel>
+                            <TextBlock Text="Delete Goal" FontSize="22" FontWeight="Bold"
+                                       Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12"/>
+                            <TextBlock Text="Are you sure you want to delete this goal? This action cannot be undone."
+                                       FontSize="14" Foreground="{StaticResource TextSecondaryBrush}"
+                                       TextWrapping="Wrap" Margin="0,0,0,24"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="Cancel" Style="{StaticResource SecondaryButton}"
+                                        Command="{Binding CancelDeleteCommand}" Margin="0,0,12,0"/>
+                                <Button Content="Delete" Style="{StaticResource PrimaryButton}"
+                                        Command="{Binding ExecuteDeleteCommand}"
+                                        Background="{StaticResource ExpenseBrush}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Border>
+
+                <!-- Progress Update Dialog -->
+                <Border Background="#80000000" Visibility="{Binding IsProgressDialogOpen, Converter={StaticResource BoolToVis}}"
+                        Panel.ZIndex="100">
+                    <Border Background="White" CornerRadius="20" Padding="32" Width="400"
+                            VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <StackPanel>
+                            <TextBlock Text="Add Progress" FontSize="22" FontWeight="Bold"
+                                       Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                            <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,20">
+                                <Run Text="Add money to: "/>
+                                <Run Text="{Binding ProgressGoalName, Mode=OneWay}" FontWeight="SemiBold"/>
+                            </TextBlock>
+
+                            <TextBlock Text="Amount to Add" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                            <TextBox Text="{Binding ProgressAddAmount, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource InputStyle}" Margin="0,0,0,24"/>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="Cancel" Style="{StaticResource SecondaryButton}"
+                                        Command="{Binding CancelProgressCommand}" Margin="0,0,12,0"/>
+                                <Button Content="Add" Style="{StaticResource PrimaryButton}"
+                                        Command="{Binding ConfirmProgressCommand}"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>

@@ -11,15 +11,28 @@ namespace WealthOS.Presentation.ViewModels;
 public partial class TransactionsViewModel : ObservableObject
 {
     private readonly TransactionService _service;
+    private readonly AccountService _accountService;
 
     [ObservableProperty]
     private ObservableCollection<TransactionDto> _transactions = [];
+
+    [ObservableProperty]
+    private ObservableCollection<AccountDto> _accounts = [];
+
+    [ObservableProperty]
+    private AccountDto? _selectedAccount;
 
     [ObservableProperty]
     private bool _isLoading;
 
     [ObservableProperty]
     private bool _isAddDialogOpen;
+
+    [ObservableProperty]
+    private bool _isConfirmDeleteOpen;
+
+    [ObservableProperty]
+    private Guid _pendingDeleteId;
 
     [ObservableProperty]
     private TransactionType _newType = TransactionType.Expense;
@@ -38,9 +51,10 @@ public partial class TransactionsViewModel : ObservableObject
 
     public TransactionType[] TransactionTypes { get; } = Enum.GetValues<TransactionType>();
 
-    public TransactionsViewModel(TransactionService service)
+    public TransactionsViewModel(TransactionService service, AccountService accountService)
     {
         _service = service;
+        _accountService = accountService;
         _ = LoadDataAsync();
     }
 
@@ -58,6 +72,9 @@ public partial class TransactionsViewModel : ObservableObject
                 items = items.Where(t => t.Type == FilterType.Value);
 
             Transactions = new ObservableCollection<TransactionDto>(items);
+
+            var accountList = await _accountService.GetAllAccountsAsync();
+            Accounts = new ObservableCollection<AccountDto>(accountList);
         }
         finally
         {
@@ -72,6 +89,7 @@ public partial class TransactionsViewModel : ObservableObject
         NewAmount = 0;
         NewNote = null;
         NewDate = DateTime.Today;
+        SelectedAccount = Accounts.FirstOrDefault();
         IsAddDialogOpen = true;
     }
 
@@ -81,7 +99,7 @@ public partial class TransactionsViewModel : ObservableObject
     [RelayCommand]
     private async Task ConfirmAddAsync()
     {
-        if (NewAmount <= 0) return;
+        if (NewAmount <= 0 || SelectedAccount == null) return;
 
         var transaction = new Transaction
         {
@@ -89,11 +107,29 @@ public partial class TransactionsViewModel : ObservableObject
             Amount = NewAmount,
             Note = NewNote,
             OccurredAt = NewDate,
-            AccountId = Guid.Empty
+            AccountId = SelectedAccount.Id
         };
 
         await _service.AddTransactionAsync(transaction);
         IsAddDialogOpen = false;
+        await LoadDataAsync();
+    }
+
+    [RelayCommand]
+    private void ConfirmDelete(Guid id)
+    {
+        PendingDeleteId = id;
+        IsConfirmDeleteOpen = true;
+    }
+
+    [RelayCommand]
+    private void CancelDelete() => IsConfirmDeleteOpen = false;
+
+    [RelayCommand]
+    private async Task ExecuteDeleteAsync()
+    {
+        await _service.DeleteTransactionAsync(PendingDeleteId);
+        IsConfirmDeleteOpen = false;
         await LoadDataAsync();
     }
 

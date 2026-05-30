@@ -48,15 +48,16 @@ public partial class App : System.Windows.Application
         services.AddSingleton<LiabilityService>();
         services.AddSingleton<TransactionService>();
         services.AddSingleton<GoalService>();
+        services.AddSingleton<AccountService>();
 
         services.AddSingleton<NavigationService>();
 
-        services.AddTransient<DashboardViewModel>();
-        services.AddTransient<AssetsViewModel>();
-        services.AddTransient<LiabilitiesViewModel>();
-        services.AddTransient<TransactionsViewModel>();
-        services.AddTransient<GoalsViewModel>();
-        services.AddTransient<MainWindowViewModel>();
+        services.AddSingleton<DashboardViewModel>();
+        services.AddSingleton<AssetsViewModel>();
+        services.AddSingleton<LiabilitiesViewModel>();
+        services.AddSingleton<TransactionsViewModel>();
+        services.AddSingleton<GoalsViewModel>();
+        services.AddSingleton<MainWindowViewModel>();
         services.AddTransient<MainWindow>();
     }
 

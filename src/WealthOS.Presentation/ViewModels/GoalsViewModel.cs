@@ -22,6 +22,24 @@ public partial class GoalsViewModel : ObservableObject
     private bool _isAddDialogOpen;
 
     [ObservableProperty]
+    private bool _isConfirmDeleteOpen;
+
+    [ObservableProperty]
+    private bool _isProgressDialogOpen;
+
+    [ObservableProperty]
+    private Guid _pendingDeleteId;
+
+    [ObservableProperty]
+    private Guid _progressGoalId;
+
+    [ObservableProperty]
+    private string _progressGoalName = string.Empty;
+
+    [ObservableProperty]
+    private decimal _progressAddAmount;
+
+    [ObservableProperty]
     private string _newName = string.Empty;
 
     [ObservableProperty]
@@ -91,23 +109,50 @@ public partial class GoalsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task DeleteGoalAsync(Guid id)
+    private void ConfirmDelete(Guid id)
     {
-        await _service.DeleteGoalAsync(id);
+        PendingDeleteId = id;
+        IsConfirmDeleteOpen = true;
+    }
+
+    [RelayCommand]
+    private void CancelDelete() => IsConfirmDeleteOpen = false;
+
+    [RelayCommand]
+    private async Task ExecuteDeleteAsync()
+    {
+        await _service.DeleteGoalAsync(PendingDeleteId);
+        IsConfirmDeleteOpen = false;
         await LoadDataAsync();
     }
 
     [RelayCommand]
-    private async Task UpdateGoalProgressAsync((Guid id, decimal amount) args)
+    private void ShowProgressDialog(GoalDto goal)
     {
-        var goal = await _service.GetGoalAsync(args.id);
+        ProgressGoalId = goal.Id;
+        ProgressGoalName = goal.Name;
+        ProgressAddAmount = 0;
+        IsProgressDialogOpen = true;
+    }
+
+    [RelayCommand]
+    private void CancelProgress() => IsProgressDialogOpen = false;
+
+    [RelayCommand]
+    private async Task ConfirmProgressAsync()
+    {
+        if (ProgressAddAmount <= 0) return;
+
+        var goal = await _service.GetGoalAsync(ProgressGoalId);
         if (goal != null)
         {
-            goal.CurrentAmount = args.amount;
+            goal.CurrentAmount += ProgressAddAmount;
             if (goal.CurrentAmount >= goal.TargetAmount)
                 goal.Status = GoalStatus.Completed;
             await _service.UpdateGoalAsync(goal);
-            await LoadDataAsync();
         }
+
+        IsProgressDialogOpen = false;
+        await LoadDataAsync();
     }
 }

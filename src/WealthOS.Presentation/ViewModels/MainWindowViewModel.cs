@@ -61,14 +61,27 @@ public partial class MainWindowViewModel : ObservableObject
 
         CurrentPage = page;
 
-        Navigation.NavigateTo(page switch
+        var target = page switch
         {
-            "Dashboard" => _dashboardVm,
+            "Dashboard" => (ObservableObject)_dashboardVm,
             "Assets" => _assetsVm,
             "Liabilities" => _liabilitiesVm,
             "Transactions" => _transactionsVm,
             "Goals" => _goalsVm,
-            _ => _dashboardVm
-        });
+            _ => (ObservableObject)_dashboardVm
+        };
+
+        Navigation.NavigateTo(target);
+
+        RefreshPageData(target);
+    }
+
+    private static void RefreshPageData(ObservableObject vm)
+    {
+        if (vm is DashboardViewModel dash) _ = dash.LoadDataCommand.ExecuteAsync(null);
+        else if (vm is AssetsViewModel assets) _ = assets.LoadDataCommand.ExecuteAsync(null);
+        else if (vm is LiabilitiesViewModel liab) _ = liab.LoadDataCommand.ExecuteAsync(null);
+        else if (vm is TransactionsViewModel trans) _ = trans.LoadDataCommand.ExecuteAsync(null);
+        else if (vm is GoalsViewModel goals) _ = goals.LoadDataCommand.ExecuteAsync(null);
     }
 }

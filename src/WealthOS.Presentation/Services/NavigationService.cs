@@ -5,7 +5,7 @@ namespace WealthOS.Presentation.Services;
 public partial class NavigationService : ObservableObject
 {
     [ObservableProperty]
-    private ObservableObject _currentViewModel;
+    private ObservableObject? _currentViewModel;
 
     public event Action? NavigationChanged;
 

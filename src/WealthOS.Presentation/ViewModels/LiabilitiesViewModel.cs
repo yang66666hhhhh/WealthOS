@@ -25,6 +25,12 @@ public partial class LiabilitiesViewModel : ObservableObject
     private bool _isAddDialogOpen;
 
     [ObservableProperty]
+    private bool _isConfirmDeleteOpen;
+
+    [ObservableProperty]
+    private Guid _pendingDeleteId;
+
+    [ObservableProperty]
     private string _newName = string.Empty;
 
     [ObservableProperty]
@@ -107,9 +113,20 @@ public partial class LiabilitiesViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task DeleteLiabilityAsync(Guid id)
+    private void ConfirmDelete(Guid id)
     {
-        await _service.DeleteLiabilityAsync(id);
+        PendingDeleteId = id;
+        IsConfirmDeleteOpen = true;
+    }
+
+    [RelayCommand]
+    private void CancelDelete() => IsConfirmDeleteOpen = false;
+
+    [RelayCommand]
+    private async Task ExecuteDeleteAsync()
+    {
+        await _service.DeleteLiabilityAsync(PendingDeleteId);
+        IsConfirmDeleteOpen = false;
         await LoadDataAsync();
     }
 }

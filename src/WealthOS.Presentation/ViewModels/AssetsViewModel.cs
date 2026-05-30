@@ -22,6 +22,12 @@ public partial class AssetsViewModel : ObservableObject
     private bool _isAddDialogOpen;
 
     [ObservableProperty]
+    private bool _isConfirmDeleteOpen;
+
+    [ObservableProperty]
+    private Guid _pendingDeleteId;
+
+    [ObservableProperty]
     private string _newName = string.Empty;
 
     [ObservableProperty]
@@ -80,10 +86,7 @@ public partial class AssetsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void CancelAdd()
-    {
-        IsAddDialogOpen = false;
-    }
+    private void CancelAdd() => IsAddDialogOpen = false;
 
     [RelayCommand]
     private async Task ConfirmAddAsync()
@@ -106,9 +109,20 @@ public partial class AssetsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task DeleteAssetAsync(Guid id)
+    private void ConfirmDelete(Guid id)
     {
-        await _service.DeleteAssetAsync(id);
+        PendingDeleteId = id;
+        IsConfirmDeleteOpen = true;
+    }
+
+    [RelayCommand]
+    private void CancelDelete() => IsConfirmDeleteOpen = false;
+
+    [RelayCommand]
+    private async Task ExecuteDeleteAsync()
+    {
+        await _service.DeleteAssetAsync(PendingDeleteId);
+        IsConfirmDeleteOpen = false;
         await LoadDataAsync();
     }
 

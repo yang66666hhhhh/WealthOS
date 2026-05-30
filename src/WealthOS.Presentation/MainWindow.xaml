@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:WealthOS.Presentation.ViewModels"
         xmlns:views="clr-namespace:WealthOS.Presentation.Views"
-        xmlns:conv="clr-namespace:WealthOS.Presentation.Converters"
         mc:Ignorable="d"
         Title="WealthOS - Personal Wealth Operating System"
         Height="900" Width="1400"
@@ -18,7 +17,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Theme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <conv:BoolToVisibilityConverter x:Key="BoolToVis"/>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -50,11 +48,18 @@
                     <Button Command="{Binding NavigateToCommand}" CommandParameter="Dashboard"
                             Background="Transparent" BorderThickness="0" Cursor="Hand"
                             HorizontalContentAlignment="Left" Padding="0">
-                        <Border x:Name="BgDashboard" CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <Border.Background>
-                                <SolidColorBrush Color="{StaticResource SidebarActiveColor}"/>
-                            </Border.Background>
-                            <TextBlock Text="🏠  Dashboard" FontSize="14">
+                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsDashboardSelected}" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock Text="&#x1F3E0;  Dashboard" FontSize="14">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -73,7 +78,17 @@
                             Background="Transparent" BorderThickness="0" Cursor="Hand"
                             HorizontalContentAlignment="Left" Padding="0">
                         <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <TextBlock Text="💰  Assets" FontSize="14">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsAssetsSelected}" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock Text="&#x1F4B0;  Assets" FontSize="14">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -92,7 +107,17 @@
                             Background="Transparent" BorderThickness="0" Cursor="Hand"
                             HorizontalContentAlignment="Left" Padding="0">
                         <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <TextBlock Text="📉  Liabilities" FontSize="14">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsLiabilitiesSelected}" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock Text="&#x1F4C9;  Liabilities" FontSize="14">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -111,7 +136,17 @@
                             Background="Transparent" BorderThickness="0" Cursor="Hand"
                             HorizontalContentAlignment="Left" Padding="0">
                         <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <TextBlock Text="📊  Transactions" FontSize="14">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsTransactionsSelected}" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock Text="&#x1F4CA;  Transactions" FontSize="14">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -130,7 +165,17 @@
                             Background="Transparent" BorderThickness="0" Cursor="Hand"
                             HorizontalContentAlignment="Left" Padding="0">
                         <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <TextBlock Text="🎯  Goals" FontSize="14">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsGoalsSelected}" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock Text="&#x1F3AF;  Goals" FontSize="14">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -150,7 +195,7 @@
                 <!-- Footer -->
                 <StackPanel Grid.Row="2" Margin="24,0,24,24">
                     <Border Background="{StaticResource SidebarActiveBrush}" CornerRadius="12" Padding="16,12">
-                        <TextBlock Text="v1.0.0 MVP" FontSize="11"
+                        <TextBlock Text="v1.1.0" FontSize="11"
                                    Foreground="{StaticResource SidebarTextBrush}"/>
                     </Border>
                 </StackPanel>

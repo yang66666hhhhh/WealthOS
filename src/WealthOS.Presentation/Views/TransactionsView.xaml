@@ -30,94 +30,125 @@
                             Command="{Binding ShowAddCommand}" VerticalAlignment="Center"/>
                 </Grid>
 
+                <!-- Loading -->
+                <ProgressBar IsIndeterminate="True" Height="3" Margin="0,0,0,16"
+                             Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
+                             Background="Transparent" Foreground="{StaticResource PrimaryBrush}"/>
+
                 <!-- Filter -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                     <Button Content="All" Margin="0,0,8,0" Padding="12,6" FontSize="12"
                             Background="Transparent" BorderThickness="1"
-                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"/>
+                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"
+                            Command="{Binding FilterByTypeCommand}" CommandParameter="{x:Null}"/>
                     <Button Content="Income" Margin="0,0,8,0" Padding="12,6" FontSize="12"
                             Background="Transparent" BorderThickness="1"
-                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"/>
+                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"
+                            Command="{Binding FilterByTypeCommand}" CommandParameter="Income"/>
                     <Button Content="Expense" Margin="0,0,8,0" Padding="12,6" FontSize="12"
                             Background="Transparent" BorderThickness="1"
-                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"/>
+                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"
+                            Command="{Binding FilterByTypeCommand}" CommandParameter="Expense"/>
                 </StackPanel>
 
                 <!-- Transaction List -->
                 <Border Style="{StaticResource CardStyle}">
-                    <ItemsControl ItemsSource="{Binding Transactions}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Padding="0,14" BorderThickness="0,0,0,1"
-                                        BorderBrush="{StaticResource BorderBrush}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Ellipse Grid.Column="0" Width="10" Height="10" Margin="0,0,14,0">
-                                            <Ellipse.Style>
-                                                <Style TargetType="Ellipse">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Type}" Value="Income">
-                                                            <Setter Property="Fill" Value="{StaticResource IncomeBrush}"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Type}" Value="Expense">
-                                                            <Setter Property="Fill" Value="{StaticResource ExpenseBrush}"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Type}" Value="Transfer">
-                                                            <Setter Property="Fill" Value="{StaticResource TransferBrush}"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Ellipse.Style>
-                                        </Ellipse>
-                                        <StackPanel Grid.Column="1">
-                                            <TextBlock Text="{Binding Note, FallbackValue='Transaction'}"
-                                                       FontSize="14" FontWeight="Medium"
-                                                       Foreground="{StaticResource TextPrimaryBrush}"/>
-                                            <TextBlock FontSize="12" Foreground="{StaticResource TextSecondaryBrush}">
-                                                <Run Text="{Binding CategoryName, FallbackValue=''}"/>
-                                                <Run Text="{Binding AccountName, FallbackValue=''}"/>
-                                                <Run Text=" · "/>
-                                                <Run Text="{Binding OccurredAt, StringFormat='yyyy-MM-dd'}"/>
+                    <StackPanel>
+                        <!-- Empty State -->
+                        <Border Padding="40" Visibility="{Binding Transactions.Count, Converter={StaticResource BoolToVis}}">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Transactions.Count}" Value="0">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="No transactions yet" FontSize="16"
+                                           Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Add your first transaction to get started"
+                                           FontSize="13" Foreground="{StaticResource TextHintBrush}"
+                                           HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <ItemsControl ItemsSource="{Binding Transactions}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Padding="0,14" BorderThickness="0,0,0,1"
+                                            BorderBrush="{StaticResource BorderBrush}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Ellipse Grid.Column="0" Width="10" Height="10" Margin="0,0,14,0">
+                                                <Ellipse.Style>
+                                                    <Style TargetType="Ellipse">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Type}" Value="Income">
+                                                                <Setter Property="Fill" Value="{StaticResource IncomeBrush}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Type}" Value="Expense">
+                                                                <Setter Property="Fill" Value="{StaticResource ExpenseBrush}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Type}" Value="Transfer">
+                                                                <Setter Property="Fill" Value="{StaticResource TransferBrush}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Ellipse.Style>
+                                            </Ellipse>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="{Binding Note, FallbackValue='Transaction'}"
+                                                           FontSize="14" FontWeight="Medium"
+                                                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                                                <TextBlock FontSize="12" Foreground="{StaticResource TextSecondaryBrush}">
+                                                    <Run Text="{Binding AccountName, FallbackValue=''}"/>
+                                                    <Run Text=" · "/>
+                                                    <Run Text="{Binding OccurredAt, StringFormat='yyyy-MM-dd'}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="2" FontSize="15" FontWeight="SemiBold"
+                                                       VerticalAlignment="Center" Margin="0,0,16,0">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Type}" Value="Income">
+                                                                <Setter Property="Foreground" Value="{StaticResource IncomeBrush}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Type}" Value="Expense">
+                                                                <Setter Property="Foreground" Value="{StaticResource ExpenseBrush}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Type}" Value="Transfer">
+                                                                <Setter Property="Foreground" Value="{StaticResource TransferBrush}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                                <TextBlock.Text>
+                                                    <MultiBinding Converter="{StaticResource SignConv}">
+                                                        <Binding Path="Type"/>
+                                                        <Binding Path="Amount"/>
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
                                             </TextBlock>
-                                        </StackPanel>
-                                        <TextBlock Grid.Column="2" FontSize="15" FontWeight="SemiBold"
-                                                   VerticalAlignment="Center" Margin="0,0,16,0">
-                                            <TextBlock.Style>
-                                                <Style TargetType="TextBlock">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Type}" Value="Income">
-                                                            <Setter Property="Foreground" Value="{StaticResource IncomeBrush}"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Type}" Value="Expense">
-                                                            <Setter Property="Foreground" Value="{StaticResource ExpenseBrush}"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Type}" Value="Transfer">
-                                                            <Setter Property="Foreground" Value="{StaticResource TransferBrush}"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </TextBlock.Style>
-                                            <TextBlock.Text>
-                                                <MultiBinding Converter="{StaticResource SignConv}">
-                                                    <Binding Path="Type"/>
-                                                    <Binding Path="Amount"/>
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                        <Button Grid.Column="3" Content="×" FontSize="14"
-                                                Background="Transparent" BorderThickness="0"
-                                                Foreground="{StaticResource TextHintBrush}" Cursor="Hand"
-                                                Padding="4,0" VerticalAlignment="Center"/>
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                                            <Button Grid.Column="3" Content="x" FontSize="14"
+                                                    Background="Transparent" BorderThickness="0"
+                                                    Foreground="{StaticResource TextHintBrush}" Cursor="Hand"
+                                                    Padding="4,0" VerticalAlignment="Center"
+                                                    Command="{Binding DataContext.ConfirmDeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    CommandParameter="{Binding Id}"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
                 </Border>
 
                 <!-- Add Dialog -->
@@ -132,6 +163,11 @@
                             <TextBlock Text="Type" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
                             <ComboBox ItemsSource="{Binding Source={StaticResource TransactionTypes}}"
                                       SelectedItem="{Binding NewType}" Margin="0,0,0,16"/>
+
+                            <TextBlock Text="Account" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                            <ComboBox ItemsSource="{Binding Accounts}"
+                                      SelectedItem="{Binding SelectedAccount}"
+                                      DisplayMemberPath="Name" Margin="0,0,0,16"/>
 
                             <TextBlock Text="Amount" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
                             <TextBox Text="{Binding NewAmount, UpdateSourceTrigger=PropertyChanged}"
@@ -149,6 +185,28 @@
                                         Command="{Binding CancelAddCommand}" Margin="0,0,12,0"/>
                                 <Button Content="Add" Style="{StaticResource PrimaryButton}"
                                         Command="{Binding ConfirmAddCommand}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Border>
+
+                <!-- Delete Confirmation Dialog -->
+                <Border Background="#80000000" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}"
+                        Panel.ZIndex="100">
+                    <Border Background="White" CornerRadius="20" Padding="32" Width="400"
+                            VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <StackPanel>
+                            <TextBlock Text="Delete Transaction" FontSize="22" FontWeight="Bold"
+                                       Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12"/>
+                            <TextBlock Text="Are you sure you want to delete this transaction? The account balance will be reversed."
+                                       FontSize="14" Foreground="{StaticResource TextSecondaryBrush}"
+                                       TextWrapping="Wrap" Margin="0,0,0,24"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="Cancel" Style="{StaticResource SecondaryButton}"
+                                        Command="{Binding CancelDeleteCommand}" Margin="0,0,12,0"/>
+                                <Button Content="Delete" Style="{StaticResource PrimaryButton}"
+                                        Command="{Binding ExecuteDeleteCommand}"
+                                        Background="{StaticResource ExpenseBrush}"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>
