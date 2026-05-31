@@ -66,6 +66,9 @@ public partial class TransactionsViewModel : ViewModelBase
     [ObservableProperty]
     private TransactionType? _filterType;
 
+    [ObservableProperty]
+    private string _selectedFilter = "All";
+
     public TransactionType[] TransactionTypes { get; } = Enum.GetValues<TransactionType>();
 
     public TransactionsViewModel(TransactionService service, AccountService accountService, CategoryService categoryService)
@@ -250,6 +253,7 @@ public partial class TransactionsViewModel : ViewModelBase
             _ => null
         };
         FilterType = type;
+        SelectedFilter = type?.ToString() ?? "All";
         ApplyFilters();
     }
 }
