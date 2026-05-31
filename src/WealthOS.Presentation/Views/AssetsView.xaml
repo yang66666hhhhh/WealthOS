@@ -28,9 +28,10 @@
                     </Button>
                 </Grid>
 
-                <ProgressBar IsIndeterminate="True" Height="3" Margin="0,0,0,16"
-                             Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
-                             Background="Transparent" Foreground="{StaticResource PrimaryBrush}"/>
+                <!-- 加载指示器 -->
+                <Border Background="{StaticResource PrimaryBrush}" 
+                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
+                        Height="3" CornerRadius="2" Margin="0,0,0,16" HorizontalAlignment="Left" Width="120"/>
 
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                     <Button Margin="0,0,8,0" Padding="12,6" FontSize="12" Cursor="Hand"
@@ -112,10 +113,11 @@
                         </Style>
                     </Border.Style>
                     <StackPanel HorizontalAlignment="Center">
-                        <TextBlock FontSize="20" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center">
+                        <TextBlock Style="{StaticResource EmptyStateIconStyle}" Text="&#x1F4B0;"/>
+                        <TextBlock Style="{StaticResource EmptyStateTitleStyle}">
                             <TextBlock.Text><Binding Source="{StaticResource Assets.NoAssets}"/></TextBlock.Text>
                         </TextBlock>
-                        <TextBlock FontSize="14" Foreground="{StaticResource TextHintBrush}" HorizontalAlignment="Center" Margin="0,12,0,0">
+                        <TextBlock Style="{StaticResource EmptyStateHintStyle}">
                             <TextBlock.Text><Binding Source="{StaticResource Assets.NoAssetsHint}"/></TextBlock.Text>
                         </TextBlock>
                     </StackPanel>
@@ -127,29 +129,49 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Style="{StaticResource CardStyle}" Margin="0,0,16,16" Width="260">
+                            <Border CornerRadius="16" Padding="20" Margin="0,0,16,16" Width="260"
+                                    BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                                    Background="{StaticResource CardBackgroundBrush}">
                                 <StackPanel>
-                                    <Grid Margin="0,0,0,12">
+                                    <Grid Margin="0,0,0,16">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding Institution}" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                        <!-- 机构标签 -->
+                                        <Border Grid.Column="0" CornerRadius="6" Padding="8,4" 
+                                                Background="{StaticResource SurfaceBrush}" HorizontalAlignment="Left">
+                                            <TextBlock Text="{Binding Institution}" FontSize="11" 
+                                                       Foreground="{StaticResource TextTertiaryBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                        <!-- 操作按钮 -->
                                         <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                            <Button Content="&#x270E;" FontSize="14" Background="Transparent" BorderThickness="0" Foreground="{StaticResource PrimaryBrush}" Cursor="Hand" Padding="4,0"
-                                                    Command="{Binding DataContext.ShowEditCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding Id}"/>
-                                            <Button Content="&#x2716;" FontSize="12" Background="Transparent" BorderThickness="0" Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="4,0"
+                                            <Button Content="&#x270E;" FontSize="14" Background="Transparent" BorderThickness="0" 
+                                                    Foreground="{StaticResource TextTertiaryBrush}" Cursor="Hand" Padding="6,2"
+                                                    Command="{Binding DataContext.ShowEditCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
+                                                    CommandParameter="{Binding Id}"/>
+                                            <Button Content="&#x2716;" FontSize="12" Background="Transparent" BorderThickness="0" 
+                                                    Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="6,2"
                                                     Command="{Binding DataContext.ConfirmDeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                     CommandParameter="{Binding Id}"/>
                                         </StackPanel>
                                     </Grid>
-                                    <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
-                                    <TextBlock FontSize="26" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}">
+                                    <!-- 资产名称 -->
+                                    <TextBlock Text="{Binding Name}" FontSize="15" FontWeight="SemiBold" 
+                                               Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12"/>
+                                    <!-- 金额 -->
+                                    <TextBlock FontSize="24" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}">
                                         <TextBlock.Text><Binding Path="CurrentValue" Converter="{StaticResource CurrencyConv}"/></TextBlock.Text>
                                     </TextBlock>
-                                    <TextBlock Margin="0,8,0,0" FontSize="13" Foreground="{StaticResource AccentBrush}">
-                                        <TextBlock.Text><Binding Path="ChangePercentage" StringFormat="{}{0:+0.0;-0.0}%"/></TextBlock.Text>
-                                    </TextBlock>
+                                    <!-- 变化率 -->
+                                    <Border CornerRadius="6" Padding="8,4" Margin="0,12,0,0" HorizontalAlignment="Left">
+                                        <Border.Background>
+                                            <SolidColorBrush Color="{StaticResource AccentLightColor}"/>
+                                        </Border.Background>
+                                        <TextBlock FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}">
+                                            <TextBlock.Text><Binding Path="ChangePercentage" StringFormat="{}{0:+0.0;-0.0}%"/></TextBlock.Text>
+                                        </TextBlock>
+                                    </Border>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
