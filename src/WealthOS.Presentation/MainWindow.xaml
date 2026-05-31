@@ -419,6 +419,40 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Margin="24,0,24,24">
+                    <Button Command="{Binding NavigateToCommand}" CommandParameter="Settings"
+                            Background="Transparent" BorderThickness="0" Cursor="Hand"
+                            HorizontalContentAlignment="Left" Padding="0" Margin="0,0,0,8">
+                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsSettingsSelected}" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock FontSize="14">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsSettingsSelected}" Value="True">
+                                                <Setter Property="Foreground" Value="{StaticResource SidebarActiveTextBrush}"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}&#x2699;  {0}">
+                                        <Binding Source="{DynamicResource Nav.Settings}"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Border>
+                    </Button>
                     <Button Command="{Binding ToggleLanguageCommand}"
                             Background="Transparent" BorderThickness="0" Cursor="Hand"
                             HorizontalContentAlignment="Stretch" Padding="0" Margin="0,0,0,8">
@@ -478,6 +512,9 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type vm:ReportsViewModel}">
                     <views:ReportsView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+                    <views:SettingsView/>
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>

@@ -193,6 +193,21 @@
     <sys:String x:Key="Reports.TopExpense">Top Expense Categories</sys:String>
     <sys:String x:Key="Reports.TopIncome">Top Income Categories</sys:String>
 
+    <!-- Settings -->
+    <sys:String x:Key="Nav.Settings">Settings</sys:String>
+    <sys:String x:Key="Settings.Title">Settings</sys:String>
+    <sys:String x:Key="Settings.Language">Language</sys:String>
+    <sys:String x:Key="Settings.LanguageDesc">Switch between Chinese and English</sys:String>
+    <sys:String x:Key="Settings.ToggleLang">Switch Language</sys:String>
+    <sys:String x:Key="Settings.Database">Database</sys:String>
+    <sys:String x:Key="Settings.DbPath">Path:</sys:String>
+    <sys:String x:Key="Settings.DbSize">Size:</sys:String>
+    <sys:String x:Key="Settings.LastBackup">Last Backup:</sys:String>
+    <sys:String x:Key="Settings.Backup">Backup &amp; Restore</sys:String>
+    <sys:String x:Key="Settings.BackupDesc">Backup your data regularly to prevent data loss</sys:String>
+    <sys:String x:Key="Settings.BackupBtn">Backup Now</sys:String>
+    <sys:String x:Key="Settings.RestoreBtn">Restore from File</sys:String>
+
     <!-- Language -->
     <sys:String x:Key="Lang.Switch">中文</sys:String>
     <sys:String x:Key="Lang.Current">EN</sys:String>

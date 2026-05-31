@@ -17,6 +17,7 @@ public partial class MainWindowViewModel : ObservableObject
     private readonly AnalyticsViewModel _analyticsVm;
     private readonly TimelineViewModel _timelineVm;
     private readonly ReportsViewModel _reportsVm;
+    private readonly SettingsViewModel _settingsVm;
 
     public NavigationService Navigation { get; }
     public LocalizationService Localization { get; }
@@ -57,6 +58,9 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private bool _isReportsSelected;
 
+    [ObservableProperty]
+    private bool _isSettingsSelected;
+
     public MainWindowViewModel(
         NavigationService navigation,
         LocalizationService localization,
@@ -70,7 +74,8 @@ public partial class MainWindowViewModel : ObservableObject
         FixedAssetsViewModel fixedAssetsVm,
         AnalyticsViewModel analyticsVm,
         TimelineViewModel timelineVm,
-        ReportsViewModel reportsVm)
+        ReportsViewModel reportsVm,
+        SettingsViewModel settingsVm)
     {
         Navigation = navigation;
         Localization = localization;
@@ -85,6 +90,7 @@ public partial class MainWindowViewModel : ObservableObject
         _analyticsVm = analyticsVm;
         _timelineVm = timelineVm;
         _reportsVm = reportsVm;
+        _settingsVm = settingsVm;
 
         Navigation.NavigateTo(_dashboardVm);
     }
@@ -103,6 +109,7 @@ public partial class MainWindowViewModel : ObservableObject
         IsAnalyticsSelected = page == "Analytics";
         IsTimelineSelected = page == "Timeline";
         IsReportsSelected = page == "Reports";
+        IsSettingsSelected = page == "Settings";
 
         CurrentPage = page;
 
@@ -119,6 +126,7 @@ public partial class MainWindowViewModel : ObservableObject
             "Analytics" => _analyticsVm,
             "Timeline" => _timelineVm,
             "Reports" => _reportsVm,
+            "Settings" => _settingsVm,
             _ => (ObservableObject)_dashboardVm
         };
 

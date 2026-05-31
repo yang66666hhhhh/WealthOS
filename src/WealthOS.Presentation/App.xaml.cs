@@ -69,6 +69,7 @@ public partial class App : System.Windows.Application
         services.AddSingleton<AnalyticsViewModel>();
         services.AddSingleton<TimelineViewModel>();
         services.AddSingleton<ReportsViewModel>();
+        services.AddSingleton<SettingsViewModel>();
         services.AddSingleton<MainWindowViewModel>();
         services.AddTransient<MainWindow>();
     }
