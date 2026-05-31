@@ -26,7 +26,7 @@ public class DashboardService
         _netWorthRepo = netWorthRepo;
     }
 
-    public async Task<DashboardDto> GetDashboardAsync()
+    public async Task<DashboardDto> GetDashboardAsync(int historyDays = 90)
     {
         var totalAssets = await _assetRepo.GetTotalValueAsync();
         var totalLiabilities = await _liabilityRepo.GetTotalBalanceAsync();
@@ -65,7 +65,7 @@ public class DashboardService
             .OrderByDescending(a => a.Value)
             .ToList();
 
-        var historyStart = now.AddDays(-90);
+        var historyStart = now.AddDays(-historyDays);
         var snapshots = await _netWorthRepo.GetByDateRangeAsync(historyStart, now);
         var netWorthHistory = snapshots
             .OrderBy(s => s.SnapshotDate)

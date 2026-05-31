@@ -137,7 +137,7 @@
                                 </TextBlock>
                                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                                     <Button Content="30d" Margin="4,0" Padding="12,6" FontSize="12" Cursor="Hand"
-                                            Command="{Binding SetTimeRangeCommand}" CommandParameter="30d">
+                                            Command="{Binding SetTimeRangeAsyncCommand}" CommandParameter="30d">
                                         <Button.Style>
                                             <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
                                                 <Setter Property="Padding" Value="12,6"/>
@@ -153,7 +153,7 @@
                                         </Button.Style>
                                     </Button>
                                     <Button Content="90d" Margin="4,0" Padding="12,6" FontSize="12" Cursor="Hand"
-                                            Command="{Binding SetTimeRangeCommand}" CommandParameter="90d">
+                                            Command="{Binding SetTimeRangeAsyncCommand}" CommandParameter="90d">
                                         <Button.Style>
                                             <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
                                                 <Setter Property="Padding" Value="12,6"/>
@@ -169,7 +169,7 @@
                                         </Button.Style>
                                     </Button>
                                     <Button Content="1y" Margin="4,0" Padding="12,6" FontSize="12" Cursor="Hand"
-                                            Command="{Binding SetTimeRangeCommand}" CommandParameter="1y">
+                                            Command="{Binding SetTimeRangeAsyncCommand}" CommandParameter="1y">
                                         <Button.Style>
                                             <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
                                                 <Setter Property="Padding" Value="12,6"/>

@@ -39,7 +39,15 @@ public partial class DashboardViewModel : ObservableObject
         IsLoading = true;
         try
         {
-            Dashboard = await _service.GetDashboardAsync();
+            var days = SelectedTimeRange switch
+            {
+                0 => 30,
+                1 => 90,
+                2 => 365,
+                3 => 3650,
+                _ => 90
+            };
+            Dashboard = await _service.GetDashboardAsync(days);
             UpdateCharts();
         }
         finally
@@ -49,7 +57,7 @@ public partial class DashboardViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void SetTimeRange(string range)
+    private async Task SetTimeRangeAsync(string range)
     {
         SelectedTimeRange = range switch
         {
@@ -59,6 +67,7 @@ public partial class DashboardViewModel : ObservableObject
             "all" => 3,
             _ => 1
         };
+        await LoadDataAsync();
     }
 
     private void UpdateCharts()
