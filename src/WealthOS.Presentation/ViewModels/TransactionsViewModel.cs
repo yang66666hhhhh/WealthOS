@@ -12,6 +12,7 @@ public partial class TransactionsViewModel : ObservableObject
 {
     private readonly TransactionService _service;
     private readonly AccountService _accountService;
+    private List<TransactionDto> _allTransactions = [];
 
     [ObservableProperty]
     private ObservableCollection<TransactionDto> _transactions = [];
@@ -21,6 +22,9 @@ public partial class TransactionsViewModel : ObservableObject
 
     [ObservableProperty]
     private AccountDto? _selectedAccount;
+
+    [ObservableProperty]
+    private string _searchText = string.Empty;
 
     [ObservableProperty]
     private bool _isLoading;
@@ -74,18 +78,41 @@ public partial class TransactionsViewModel : ObservableObject
             var start = end.AddDays(-90);
             var items = await _service.GetTransactionsAsync(start, end);
 
-            if (FilterType.HasValue)
-                items = items.Where(t => t.Type == FilterType.Value);
-
-            Transactions = new ObservableCollection<TransactionDto>(items);
+            _allTransactions = items.ToList();
 
             var accountList = await _accountService.GetAllAccountsAsync();
             Accounts = new ObservableCollection<AccountDto>(accountList);
+
+            ApplyFilters();
         }
         finally
         {
             IsLoading = false;
         }
+    }
+
+    partial void OnSearchTextChanged(string value)
+    {
+        ApplyFilters();
+    }
+
+    private void ApplyFilters()
+    {
+        var filtered = _allTransactions.AsEnumerable();
+
+        if (FilterType.HasValue)
+            filtered = filtered.Where(t => t.Type == FilterType.Value);
+
+        if (!string.IsNullOrWhiteSpace(SearchText))
+        {
+            var search = SearchText.ToLower();
+            filtered = filtered.Where(t =>
+                (t.Note != null && t.Note.ToLower().Contains(search)) ||
+                t.AccountName.ToLower().Contains(search) ||
+                (t.CategoryName != null && t.CategoryName.ToLower().Contains(search)));
+        }
+
+        Transactions = new ObservableCollection<TransactionDto>(filtered);
     }
 
     [RelayCommand]
@@ -179,6 +206,6 @@ public partial class TransactionsViewModel : ObservableObject
     private async Task FilterByTypeAsync(TransactionType? type)
     {
         FilterType = type;
-        await LoadDataAsync();
+        ApplyFilters();
     }
 }

@@ -1,5 +1,6 @@
 using WealthOS.Application.DTOs;
 using WealthOS.Application.Interfaces;
+using WealthOS.Domain.Entities;
 using WealthOS.Domain.Enums;
 
 namespace WealthOS.Application.Services;
@@ -103,5 +104,46 @@ public class ReportService
         }
 
         await System.IO.File.WriteAllLinesAsync(filePath, lines, System.Text.Encoding.UTF8);
+    }
+
+    public async Task<int> ImportTransactionsFromCsvAsync(string filePath, Guid accountId)
+    {
+        var lines = await System.IO.File.ReadAllLinesAsync(filePath, System.Text.Encoding.UTF8);
+        var count = 0;
+
+        foreach (var line in lines.Skip(1))
+        {
+            var parts = line.Split(',');
+            if (parts.Length < 3) continue;
+
+            var typeStr = parts[1].Trim();
+            var type = typeStr switch
+            {
+                "收入" => TransactionType.Income,
+                "支出" => TransactionType.Expense,
+                "转账" => TransactionType.Transfer,
+                _ => (TransactionType?)null
+            };
+
+            if (!type.HasValue) continue;
+            if (!decimal.TryParse(parts[2].Trim(), out var amount)) continue;
+            if (!DateTime.TryParse(parts[0].Trim(), out var date)) continue;
+
+            var note = parts.Length > 3 ? parts[3].Trim() : null;
+
+            var transaction = new Transaction
+            {
+                Type = type.Value,
+                Amount = amount,
+                OccurredAt = date,
+                AccountId = accountId,
+                Note = note
+            };
+
+            await _transactionRepo.AddAsync(transaction);
+            count++;
+        }
+
+        return count;
     }
 }

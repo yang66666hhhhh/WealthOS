@@ -33,6 +33,11 @@
                              Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
                              Background="Transparent" Foreground="{StaticResource PrimaryBrush}"/>
 
+                <!-- Search -->
+                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource InputStyle}" Margin="0,0,0,16"
+                         Tag="{DynamicResource Transactions.Search}"/>
+
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                     <Button Margin="0,0,8,0" Padding="12,6" FontSize="12" Background="Transparent" BorderThickness="1"
                             BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"
