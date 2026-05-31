@@ -2,49 +2,49 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- ============================================ -->
-    <!--  色彩系统 - 清新现代的蓝色调 -->
+    <!--  色彩系统 - 温暖现代风 -->
     <!-- ============================================ -->
     
-    <!-- 主色调 - 渐变蓝 -->
-    <Color x:Key="PrimaryColor">#2563EB</Color>
-    <Color x:Key="PrimaryLightColor">#DBEAFE</Color>
-    <Color x:Key="PrimaryDarkColor">#1D4ED8</Color>
-    <Color x:Key="PrimaryMutedColor">#93C5FD</Color>
+    <!-- 主色调 - 温暖紫蓝 -->
+    <Color x:Key="PrimaryColor">#6366F1</Color>
+    <Color x:Key="PrimaryLightColor">#EEF2FF</Color>
+    <Color x:Key="PrimaryDarkColor">#4F46E5</Color>
+    <Color x:Key="PrimaryMutedColor">#A5B4FC</Color>
     
-    <!-- 强调色 - 翠绿 -->
-    <Color x:Key="AccentColor">#059669</Color>
+    <!-- 强调色 - 翡翠绿 -->
+    <Color x:Key="AccentColor">#10B981</Color>
     <Color x:Key="AccentLightColor">#D1FAE5</Color>
     
     <!-- 中性色 - 温暖灰 -->
-    <Color x:Key="BackgroundColor">#F8FAFC</Color>
+    <Color x:Key="BackgroundColor">#F9FAFB</Color>
     <Color x:Key="CardBackgroundColor">#FFFFFF</Color>
-    <Color x:Key="SurfaceColor">#F1F5F9</Color>
-    <Color x:Key="SurfaceHoverColor">#E2E8F0</Color>
+    <Color x:Key="SurfaceColor">#F3F4F6</Color>
+    <Color x:Key="SurfaceHoverColor">#E5E7EB</Color>
     
-    <!-- 文字色 - 层次分明 -->
-    <Color x:Key="TextPrimaryColor">#0F172A</Color>
-    <Color x:Key="TextSecondaryColor">#475569</Color>
-    <Color x:Key="TextTertiaryColor">#94A3B8</Color>
-    <Color x:Key="TextHintColor">#CBD5E1</Color>
+    <!-- 文字色 -->
+    <Color x:Key="TextPrimaryColor">#111827</Color>
+    <Color x:Key="TextSecondaryColor">#6B7280</Color>
+    <Color x:Key="TextTertiaryColor">#9CA3AF</Color>
+    <Color x:Key="TextHintColor">#D1D5DB</Color>
     
-    <!-- 边框色 - 柔和细腻 -->
-    <Color x:Key="BorderColor">#E2E8F0</Color>
-    <Color x:Key="BorderLightColor">#F1F5F9</Color>
-    <Color x:Key="FocusBorderColor">#2563EB</Color>
+    <!-- 边框色 -->
+    <Color x:Key="BorderColor">#E5E7EB</Color>
+    <Color x:Key="BorderLightColor">#F3F4F6</Color>
+    <Color x:Key="FocusBorderColor">#6366F1</Color>
     
-    <!-- 功能色 - 鲜明但不刺眼 -->
-    <Color x:Key="IncomeColor">#059669</Color>
-    <Color x:Key="IncomeLightColor">#D1FAE5</Color>
-    <Color x:Key="ExpenseColor">#DC2626</Color>
-    <Color x:Key="ExpenseLightColor">#FEE2E2</Color>
-    <Color x:Key="TransferColor">#2563EB</Color>
-    <Color x:Key="TransferLightColor">#DBEAFE</Color>
+    <!-- 功能色 - 鲜艳但舒适 -->
+    <Color x:Key="IncomeColor">#10B981</Color>
+    <Color x:Key="IncomeLightColor">#ECFDF5</Color>
+    <Color x:Key="ExpenseColor">#EF4444</Color>
+    <Color x:Key="ExpenseLightColor">#FEF2F2</Color>
+    <Color x:Key="TransferColor">#6366F1</Color>
+    <Color x:Key="TransferLightColor">#EEF2FF</Color>
     
-    <!-- 侧边栏 - 深邃优雅 -->
-    <Color x:Key="SidebarColor">#0F172A</Color>
-    <Color x:Key="SidebarHoverColor">#1E293B</Color>
-    <Color x:Key="SidebarActiveColor">#1E40AF</Color>
-    <Color x:Key="SidebarTextColor">#94A3B8</Color>
+    <!-- 侧边栏 - 深紫渐变 -->
+    <Color x:Key="SidebarColor">#1E1B4B</Color>
+    <Color x:Key="SidebarHoverColor">#312E81</Color>
+    <Color x:Key="SidebarActiveColor">#4338CA</Color>
+    <Color x:Key="SidebarTextColor">#A5B4FC</Color>
     <Color x:Key="SidebarActiveTextColor">#FFFFFF</Color>
     
     <!-- 对话框 -->
@@ -52,43 +52,37 @@
     <Color x:Key="DialogBackgroundColor">#FFFFFF</Color>
     
     <!-- 状态色 -->
-    <Color x:Key="SuccessColor">#059669</Color>
-    <Color x:Key="WarningColor">#D97706</Color>
-    <Color x:Key="ErrorColor">#DC2626</Color>
-    <Color x:Key="InfoColor">#2563EB</Color>
+    <Color x:Key="SuccessColor">#10B981</Color>
+    <Color x:Key="WarningColor">#F59E0B</Color>
+    <Color x:Key="ErrorColor">#EF4444</Color>
+    <Color x:Key="InfoColor">#6366F1</Color>
 
     <!-- ============================================ -->
     <!--  画刷资源 -->
     <!-- ============================================ -->
     
-    <!-- 主色调 -->
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
     <SolidColorBrush x:Key="PrimaryLightBrush" Color="{StaticResource PrimaryLightColor}"/>
     <SolidColorBrush x:Key="PrimaryDarkBrush" Color="{StaticResource PrimaryDarkColor}"/>
     <SolidColorBrush x:Key="PrimaryMutedBrush" Color="{StaticResource PrimaryMutedColor}"/>
     
-    <!-- 强调色 -->
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
     <SolidColorBrush x:Key="AccentLightBrush" Color="{StaticResource AccentLightColor}"/>
     
-    <!-- 中性色 -->
     <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}"/>
     <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource CardBackgroundColor}"/>
     <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}"/>
     <SolidColorBrush x:Key="SurfaceHoverBrush" Color="{StaticResource SurfaceHoverColor}"/>
     
-    <!-- 文字色 -->
     <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}"/>
     <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}"/>
     <SolidColorBrush x:Key="TextTertiaryBrush" Color="{StaticResource TextTertiaryColor}"/>
     <SolidColorBrush x:Key="TextHintBrush" Color="{StaticResource TextHintColor}"/>
     
-    <!-- 边框色 -->
     <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}"/>
     <SolidColorBrush x:Key="BorderLightBrush" Color="{StaticResource BorderLightColor}"/>
     <SolidColorBrush x:Key="FocusBorderBrush" Color="{StaticResource FocusBorderColor}"/>
     
-    <!-- 功能色 -->
     <SolidColorBrush x:Key="IncomeBrush" Color="{StaticResource IncomeColor}"/>
     <SolidColorBrush x:Key="IncomeLightBrush" Color="{StaticResource IncomeLightColor}"/>
     <SolidColorBrush x:Key="ExpenseBrush" Color="{StaticResource ExpenseColor}"/>
@@ -96,18 +90,15 @@
     <SolidColorBrush x:Key="TransferBrush" Color="{StaticResource TransferColor}"/>
     <SolidColorBrush x:Key="TransferLightBrush" Color="{StaticResource TransferLightColor}"/>
     
-    <!-- 侧边栏 -->
     <SolidColorBrush x:Key="SidebarBrush" Color="{StaticResource SidebarColor}"/>
     <SolidColorBrush x:Key="SidebarHoverBrush" Color="{StaticResource SidebarHoverColor}"/>
     <SolidColorBrush x:Key="SidebarActiveBrush" Color="{StaticResource SidebarActiveColor}"/>
     <SolidColorBrush x:Key="SidebarTextBrush" Color="{StaticResource SidebarTextColor}"/>
     <SolidColorBrush x:Key="SidebarActiveTextBrush" Color="{StaticResource SidebarActiveTextColor}"/>
     
-    <!-- 对话框 -->
     <SolidColorBrush x:Key="DialogOverlayBrush" Color="{StaticResource DialogOverlayColor}"/>
     <SolidColorBrush x:Key="DialogBackgroundBrush" Color="{StaticResource DialogBackgroundColor}"/>
     
-    <!-- 状态色 -->
     <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}"/>
     <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}"/>
     <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}"/>
@@ -121,12 +112,11 @@
     <CornerRadius x:Key="ButtonCornerRadius">12</CornerRadius>
     <CornerRadius x:Key="InputCornerRadius">12</CornerRadius>
     <CornerRadius x:Key="DialogCornerRadius">24</CornerRadius>
-    <CornerRadius x:Key="BadgeCornerRadius">8</CornerRadius>
+    <CornerRadius x:Key="BadgeCornerRadius">20</CornerRadius>
+    <CornerRadius x:Key="SmallCornerRadius">8</CornerRadius>
     
     <Thickness x:Key="CardPadding">24</Thickness>
     <Thickness x:Key="PagePadding">32</Thickness>
-    <Thickness x:Key="SectionSpacing">0,0,0,24</Thickness>
-    <Thickness x:Key="ItemSpacing">0,0,0,16</Thickness>
 
     <!-- ============================================ -->
     <!--  卡片样式 - 精致优雅 -->
@@ -137,16 +127,16 @@
         <Setter Property="CornerRadius" Value="{StaticResource CardCornerRadius}"/>
         <Setter Property="Padding" Value="{StaticResource CardPadding}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{StaticResource BorderLightBrush}"/>
-        <Setter Property="Effect">
-            <Setter.Value>
-                <DropShadowEffect BlurRadius="16" ShadowDepth="1" Opacity="0.04" Color="#000000"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+    </Style>
+
+    <!-- 高亮卡片 - 带彩色左边框 -->
+    <Style x:Key="AccentCardStyle" TargetType="Border" BasedOn="{StaticResource CardStyle}">
+        <Setter Property="BorderThickness" Value="0,0,0,3"/>
     </Style>
 
     <!-- ============================================ -->
-    <!--  文字样式 - 清晰层次 -->
+    <!--  文字样式 -->
     <!-- ============================================ -->
     
     <Style x:Key="PageTitleStyle" TargetType="TextBlock">
@@ -177,7 +167,7 @@
     </Style>
 
     <!-- ============================================ -->
-    <!--  按钮样式 - 现代感 -->
+    <!--  按钮样式 -->
     <!-- ============================================ -->
     
     <!-- 主按钮 -->
@@ -195,8 +185,7 @@
                     <Border x:Name="border" 
                             Background="{TemplateBinding Background}"
                             CornerRadius="{StaticResource ButtonCornerRadius}"
-                            Padding="{TemplateBinding Padding}"
-                            BorderThickness="0">
+                            Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -205,12 +194,7 @@
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryDarkBrush}"/>
-                            <Setter TargetName="border" Property="RenderTransform">
-                                <Setter.Value>
-                                    <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="border" Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                            <Setter TargetName="border" Property="Opacity" Value="0.9"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="border" Property="Opacity" Value="0.5"/>
@@ -244,11 +228,11 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource SurfaceBrush}"/>
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryLightBrush}"/>
                             <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource PrimaryMutedBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource SurfaceHoverBrush}"/>
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryLightBrush}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="border" Property="Opacity" Value="0.5"/>
@@ -279,10 +263,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#B91C1C"/>
+                            <Setter TargetName="border" Property="Background" Value="#DC2626"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#991B1B"/>
+                            <Setter TargetName="border" Property="Opacity" Value="0.9"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="border" Property="Opacity" Value="0.5"/>
@@ -323,7 +307,7 @@
     </Style>
 
     <!-- ============================================ -->
-    <!--  导航样式 - 沉稳大气 -->
+    <!--  导航样式 -->
     <!-- ============================================ -->
     
     <Style x:Key="NavItemStyle" TargetType="Button">
@@ -342,7 +326,7 @@
                             Background="{TemplateBinding Background}"
                             CornerRadius="10" 
                             Padding="{TemplateBinding Padding}"
-                            Margin="8,1">
+                            Margin="8,2">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="Center"/>
                     </Border>
@@ -363,7 +347,7 @@
     </Style>
 
     <!-- ============================================ -->
-    <!--  输入框样式 - 简洁清爽 -->
+    <!--  输入框样式 -->
     <!-- ============================================ -->
     
     <Style x:Key="InputStyle" TargetType="TextBox">
@@ -437,18 +421,16 @@
 
     <Style x:Key="BadgeStyle" TargetType="Border">
         <Setter Property="CornerRadius" Value="{StaticResource BadgeCornerRadius}"/>
-        <Setter Property="Padding" Value="10,4"/>
+        <Setter Property="Padding" Value="12,6"/>
         <Setter Property="Background" Value="{StaticResource PrimaryLightBrush}"/>
     </Style>
 
-    <!-- 标签芯片样式 -->
     <Style x:Key="ChipStyle" TargetType="Border">
         <Setter Property="CornerRadius" Value="8"/>
         <Setter Property="Padding" Value="12,6"/>
         <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
     </Style>
 
-    <!-- 空状态图标样式 -->
     <Style x:Key="EmptyStateIconStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="48"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -468,6 +450,19 @@
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Foreground" Value="{StaticResource TextTertiaryBrush}"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+
+    <!-- 统计卡片数值样式 -->
+    <Style x:Key="StatValueStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+    </Style>
+
+    <Style x:Key="StatLabelStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Foreground" Value="{StaticResource TextTertiaryBrush}"/>
     </Style>
 
 </ResourceDictionary>
