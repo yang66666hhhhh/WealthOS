@@ -1,3 +1,5 @@
+using System.IO;
+using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows;
 
@@ -5,6 +7,10 @@ namespace WealthOS.Presentation.Services;
 
 public partial class LocalizationService : ObservableObject
 {
+    private static readonly string SettingsPath = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        "WealthOS", "settings.json");
+
     [ObservableProperty]
     private bool _isChinese;
 
@@ -16,14 +22,61 @@ public partial class LocalizationService : ObservableObject
 
     public LocalizationService()
     {
+        LoadSettings();
+    }
+
+    private void LoadSettings()
+    {
+        try
+        {
+            if (File.Exists(SettingsPath))
+            {
+                var json = File.ReadAllText(SettingsPath);
+                var settings = JsonSerializer.Deserialize<SettingsData>(json);
+                if (settings != null)
+                {
+                    IsChinese = settings.IsChinese;
+                    IsDarkMode = settings.IsDarkMode;
+                    return;
+                }
+            }
+        }
+        catch
+        {
+            // 如果加载失败，使用默认值
+        }
+
         IsChinese = true;
         IsDarkMode = false;
+    }
+
+    private void SaveSettings()
+    {
+        try
+        {
+            var directory = Path.GetDirectoryName(SettingsPath);
+            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+
+            var settings = new SettingsData
+            {
+                IsChinese = IsChinese,
+                IsDarkMode = IsDarkMode
+            };
+            var json = JsonSerializer.Serialize(settings);
+            File.WriteAllText(SettingsPath, json);
+        }
+        catch
+        {
+            // 如果保存失败，静默忽略
+        }
     }
 
     public void ToggleLanguage()
     {
         IsChinese = !IsChinese;
         ApplyLanguage();
+        SaveSettings();
         LanguageChanged?.Invoke();
     }
 
@@ -31,6 +84,7 @@ public partial class LocalizationService : ObservableObject
     {
         IsDarkMode = !IsDarkMode;
         ApplyTheme();
+        SaveSettings();
         ThemeChanged?.Invoke();
     }
 
@@ -76,5 +130,11 @@ public partial class LocalizationService : ObservableObject
             app.Resources.MergedDictionaries.Remove(existing);
 
         app.Resources.MergedDictionaries.Insert(0, dict);
+    }
+
+    private class SettingsData
+    {
+        public bool IsChinese { get; set; } = true;
+        public bool IsDarkMode { get; set; }
     }
 }
