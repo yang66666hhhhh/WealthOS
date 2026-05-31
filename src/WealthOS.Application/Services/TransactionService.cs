@@ -1,5 +1,6 @@
 using WealthOS.Application.DTOs;
 using WealthOS.Application.Interfaces;
+using WealthOS.Domain.Common;
 using WealthOS.Domain.Entities;
 using WealthOS.Domain.Enums;
 
@@ -51,13 +52,7 @@ public class TransactionService
 
         var id = await _transactionRepo.AddAsync(transaction);
 
-        account.Balance += transaction.Type switch
-        {
-            TransactionType.Income => transaction.Amount,
-            TransactionType.Expense => -transaction.Amount,
-            TransactionType.Transfer => -transaction.Amount,
-            _ => 0
-        };
+        account.Balance += transaction.GetBalanceImpact();
         account.UpdatedAt = DateTime.UtcNow;
         await _accountRepo.UpdateAsync(account);
 
@@ -85,13 +80,7 @@ public class TransactionService
         var account = await _accountRepo.GetByIdAsync(transaction.AccountId);
         if (account != null)
         {
-            account.Balance -= transaction.Type switch
-            {
-                TransactionType.Income => transaction.Amount,
-                TransactionType.Expense => -transaction.Amount,
-                TransactionType.Transfer => -transaction.Amount,
-                _ => 0
-            };
+            account.Balance -= transaction.GetBalanceImpact();
             account.UpdatedAt = DateTime.UtcNow;
             await _accountRepo.UpdateAsync(account);
         }
@@ -122,21 +111,8 @@ public class TransactionService
         var account = await _accountRepo.GetByIdAsync(originalTransaction.AccountId)
             ?? throw new InvalidOperationException($"Account {originalTransaction.AccountId} not found.");
 
-        account.Balance -= originalTransaction.Type switch
-        {
-            TransactionType.Income => originalTransaction.Amount,
-            TransactionType.Expense => -originalTransaction.Amount,
-            TransactionType.Transfer => -originalTransaction.Amount,
-            _ => 0
-        };
-
-        account.Balance += updatedTransaction.Type switch
-        {
-            TransactionType.Income => updatedTransaction.Amount,
-            TransactionType.Expense => -updatedTransaction.Amount,
-            TransactionType.Transfer => -updatedTransaction.Amount,
-            _ => 0
-        };
+        account.Balance -= originalTransaction.GetBalanceImpact();
+        account.Balance += updatedTransaction.GetBalanceImpact();
 
         account.UpdatedAt = DateTime.UtcNow;
         await _accountRepo.UpdateAsync(account);
