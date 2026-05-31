@@ -23,7 +23,7 @@
                     <TextBlock Grid.Column="0" Style="{StaticResource PageTitleStyle}">
                         <TextBlock.Text><Binding Source="{StaticResource Liabilities.Title}"/></TextBlock.Text>
                     </TextBlock>
-                    <Button Grid.Column="1" Style="{StaticResource PrimaryButton}" Command="{Binding ShowAddCommand}" VerticalAlignment="Center">
+                    <Button Grid.Column="1" Style="{StaticResource PrimaryButton}" Command="{Binding ShowAddDialogCommand}" VerticalAlignment="Center">
                         <Button.Content><Binding Source="{StaticResource Liabilities.Add}"/></Button.Content>
                     </Button>
                 </Grid>

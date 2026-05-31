@@ -181,7 +181,7 @@
                                            FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"/>
                                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                                     <Button Content="30d" Margin="4,0" Padding="10,4" FontSize="11" Cursor="Hand"
-                                            Command="{Binding SetTimeRangeAsyncCommand}" CommandParameter="30d">
+                                            Command="{Binding SetTimeRangeCommand}" CommandParameter="30d">
                                         <Button.Style>
                                             <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
                                                 <Setter Property="Padding" Value="10,4"/>
@@ -197,7 +197,7 @@
                                         </Button.Style>
                                     </Button>
                                     <Button Content="90d" Margin="4,0" Padding="10,4" FontSize="11" Cursor="Hand"
-                                            Command="{Binding SetTimeRangeAsyncCommand}" CommandParameter="90d">
+                                            Command="{Binding SetTimeRangeCommand}" CommandParameter="90d">
                                         <Button.Style>
                                             <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
                                                 <Setter Property="Padding" Value="10,4"/>
@@ -213,7 +213,7 @@
                                         </Button.Style>
                                     </Button>
                                     <Button Content="1y" Margin="4,0" Padding="10,4" FontSize="11" Cursor="Hand"
-                                            Command="{Binding SetTimeRangeAsyncCommand}" CommandParameter="1y">
+                                            Command="{Binding SetTimeRangeCommand}" CommandParameter="1y">
                                         <Button.Style>
                                             <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
                                                 <Setter Property="Padding" Value="10,4"/>
@@ -397,15 +397,8 @@
                                             </TextBlock.Text>
                                         </TextBlock>
                                     </Grid>
-                                    <Border CornerRadius="4" Height="6" Background="{StaticResource SurfaceBrush}">
-                                        <Border CornerRadius="4" HorizontalAlignment="Left" Background="{StaticResource AccentBrush}">
-                                            <Border.Width>
-                                                <MultiBinding StringFormat="{}{0}%">
-                                                    <Binding Path="Dashboard.SavingsRate"/>
-                                                </MultiBinding>
-                                            </Border.Width>
-                                        </Border>
-                                    </Border>
+                                    <ProgressBar Value="{Binding Dashboard.SavingsRate}" Maximum="100" Height="6"
+                                                 Background="{StaticResource SurfaceBrush}" Foreground="{StaticResource AccentBrush}"/>
                                 </StackPanel>
                                 <!-- 负债率 -->
                                 <StackPanel>
@@ -418,15 +411,8 @@
                                             </TextBlock.Text>
                                         </TextBlock>
                                     </Grid>
-                                    <Border CornerRadius="4" Height="6" Background="{StaticResource SurfaceBrush}">
-                                        <Border CornerRadius="4" HorizontalAlignment="Left" Background="{StaticResource ExpenseBrush}">
-                                            <Border.Width>
-                                                <MultiBinding StringFormat="{}{0}%">
-                                                    <Binding Path="Dashboard.DebtRatio"/>
-                                                </MultiBinding>
-                                            </Border.Width>
-                                        </Border>
-                                    </Border>
+                                    <ProgressBar Value="{Binding Dashboard.DebtRatio}" Maximum="100" Height="6"
+                                                 Background="{StaticResource SurfaceBrush}" Foreground="{StaticResource ExpenseBrush}"/>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
