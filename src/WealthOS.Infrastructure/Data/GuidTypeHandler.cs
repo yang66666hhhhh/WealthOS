@@ -17,7 +17,27 @@ public class GuidTypeHandler : SqlMapper.TypeHandler<Guid>
             Guid guid => guid,
             string s => Guid.Parse(s),
             byte[] bytes => new Guid(bytes),
-            _ => throw new ArgumentException($"Cannot convert {value.GetType()} to Guid")
+            _ => throw new ArgumentException($"Cannot convert {value?.GetType()} to Guid")
+        };
+    }
+}
+
+public class NullableGuidTypeHandler : SqlMapper.TypeHandler<Guid?>
+{
+    public override void SetValue(IDbDataParameter parameter, Guid? value)
+    {
+        parameter.Value = value?.ToString();
+    }
+
+    public override Guid? Parse(object value)
+    {
+        return value switch
+        {
+            null => null,
+            Guid guid => guid,
+            string s => string.IsNullOrEmpty(s) ? null : Guid.Parse(s),
+            byte[] bytes => new Guid(bytes),
+            _ => null
         };
     }
 }

@@ -18,6 +18,7 @@ public partial class App : System.Windows.Application
     public App()
     {
         SqlMapper.AddTypeHandler(new GuidTypeHandler());
+        SqlMapper.AddTypeHandler(new NullableGuidTypeHandler());
         
         var services = new ServiceCollection();
         ConfigureServices(services);
