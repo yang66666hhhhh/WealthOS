@@ -157,6 +157,30 @@
     <sys:String x:Key="Investments.DeleteTitle">删除持仓</sys:String>
     <sys:String x:Key="Investments.DeleteMessage">确定要删除此持仓吗？</sys:String>
 
+    <!-- Fixed Assets -->
+    <sys:String x:Key="Nav.FixedAssets">固定资产</sys:String>
+    <sys:String x:Key="FixedAssets.Title">固定资产</sys:String>
+    <sys:String x:Key="FixedAssets.InitialValue">购入价值</sys:String>
+    <sys:String x:Key="FixedAssets.CurrentValue">当前价值</sys:String>
+    <sys:String x:Key="FixedAssets.Depreciation">累计折旧</sys:String>
+    <sys:String x:Key="FixedAssets.PurchasePrice">购入价格</sys:String>
+    <sys:String x:Key="FixedAssets.Estimated">估算价值</sys:String>
+    <sys:String x:Key="FixedAssets.Rate">折旧率：</sys:String>
+    <sys:String x:Key="FixedAssets.Age">已用：</sys:String>
+    <sys:String x:Key="FixedAssets.NoAssets">暂无固定资产</sys:String>
+    <sys:String x:Key="FixedAssets.NoAssetsHint">在资产页面添加带折旧率的资产</sys:String>
+
+    <!-- Analytics -->
+    <sys:String x:Key="Nav.Analytics">分析</sys:String>
+    <sys:String x:Key="Analytics.Title">分析</sys:String>
+    <sys:String x:Key="Analytics.IncomeExpenseTrend">收支趋势（近 6 个月）</sys:String>
+    <sys:String x:Key="Analytics.AssetDistribution">资产分布</sys:String>
+
+    <!-- Timeline -->
+    <sys:String x:Key="Nav.Timeline">时间轴</sys:String>
+    <sys:String x:Key="Timeline.Title">时间轴</sys:String>
+    <sys:String x:Key="Timeline.NoData">暂无交易记录</sys:String>
+
     <!-- Language -->
     <sys:String x:Key="Lang.Switch">EN</sys:String>
     <sys:String x:Key="Lang.Current">中</sys:String>

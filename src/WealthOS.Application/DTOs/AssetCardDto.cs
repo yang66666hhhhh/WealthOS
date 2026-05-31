@@ -12,6 +12,10 @@ public record AssetCardDto
     public string Currency { get; init; } = "CNY";
     public string Institution { get; init; } = string.Empty;
     public string? Note { get; init; }
+    public decimal? DepreciationRate { get; init; }
+    public DateTime? PurchaseDate { get; init; }
     public decimal ChangeAmount { get; init; }
     public decimal ChangePercentage { get; init; }
+    public int? AgeMonths { get; init; }
+    public decimal? DepreciatedValue { get; init; }
 }

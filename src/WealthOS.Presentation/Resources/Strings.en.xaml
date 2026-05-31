@@ -157,6 +157,30 @@
     <sys:String x:Key="Investments.DeleteTitle">Delete Holding</sys:String>
     <sys:String x:Key="Investments.DeleteMessage">Are you sure you want to delete this holding?</sys:String>
 
+    <!-- Fixed Assets -->
+    <sys:String x:Key="Nav.FixedAssets">Fixed Assets</sys:String>
+    <sys:String x:Key="FixedAssets.Title">Fixed Assets</sys:String>
+    <sys:String x:Key="FixedAssets.InitialValue">Purchase Value</sys:String>
+    <sys:String x:Key="FixedAssets.CurrentValue">Current Value</sys:String>
+    <sys:String x:Key="FixedAssets.Depreciation">Total Depreciation</sys:String>
+    <sys:String x:Key="FixedAssets.PurchasePrice">Purchase Price</sys:String>
+    <sys:String x:Key="FixedAssets.Estimated">Estimated Value</sys:String>
+    <sys:String x:Key="FixedAssets.Rate">Rate:</sys:String>
+    <sys:String x:Key="FixedAssets.Age">Age:</sys:String>
+    <sys:String x:Key="FixedAssets.NoAssets">No fixed assets tracked</sys:String>
+    <sys:String x:Key="FixedAssets.NoAssetsHint">Add assets with depreciation rate in Assets page</sys:String>
+
+    <!-- Analytics -->
+    <sys:String x:Key="Nav.Analytics">Analytics</sys:String>
+    <sys:String x:Key="Analytics.Title">Analytics</sys:String>
+    <sys:String x:Key="Analytics.IncomeExpenseTrend">Income vs Expense (6 months)</sys:String>
+    <sys:String x:Key="Analytics.AssetDistribution">Asset Distribution</sys:String>
+
+    <!-- Timeline -->
+    <sys:String x:Key="Nav.Timeline">Timeline</sys:String>
+    <sys:String x:Key="Timeline.Title">Timeline</sys:String>
+    <sys:String x:Key="Timeline.NoData">No transaction history yet</sys:String>
+
     <!-- Language -->
     <sys:String x:Key="Lang.Switch">中文</sys:String>
     <sys:String x:Key="Lang.Current">EN</sys:String>

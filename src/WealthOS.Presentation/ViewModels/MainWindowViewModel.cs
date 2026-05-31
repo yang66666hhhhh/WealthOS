@@ -13,6 +13,9 @@ public partial class MainWindowViewModel : ObservableObject
     private readonly GoalsViewModel _goalsVm;
     private readonly AccountsViewModel _accountsVm;
     private readonly InvestmentsViewModel _investmentsVm;
+    private readonly FixedAssetsViewModel _fixedAssetsVm;
+    private readonly AnalyticsViewModel _analyticsVm;
+    private readonly TimelineViewModel _timelineVm;
 
     public NavigationService Navigation { get; }
     public LocalizationService Localization { get; }
@@ -41,6 +44,15 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private bool _isInvestmentsSelected;
 
+    [ObservableProperty]
+    private bool _isFixedAssetsSelected;
+
+    [ObservableProperty]
+    private bool _isAnalyticsSelected;
+
+    [ObservableProperty]
+    private bool _isTimelineSelected;
+
     public MainWindowViewModel(
         NavigationService navigation,
         LocalizationService localization,
@@ -50,7 +62,10 @@ public partial class MainWindowViewModel : ObservableObject
         TransactionsViewModel transactionsVm,
         GoalsViewModel goalsVm,
         AccountsViewModel accountsVm,
-        InvestmentsViewModel investmentsVm)
+        InvestmentsViewModel investmentsVm,
+        FixedAssetsViewModel fixedAssetsVm,
+        AnalyticsViewModel analyticsVm,
+        TimelineViewModel timelineVm)
     {
         Navigation = navigation;
         Localization = localization;
@@ -61,6 +76,9 @@ public partial class MainWindowViewModel : ObservableObject
         _goalsVm = goalsVm;
         _accountsVm = accountsVm;
         _investmentsVm = investmentsVm;
+        _fixedAssetsVm = fixedAssetsVm;
+        _analyticsVm = analyticsVm;
+        _timelineVm = timelineVm;
 
         Navigation.NavigateTo(_dashboardVm);
     }
@@ -75,6 +93,9 @@ public partial class MainWindowViewModel : ObservableObject
         IsGoalsSelected = page == "Goals";
         IsAccountsSelected = page == "Accounts";
         IsInvestmentsSelected = page == "Investments";
+        IsFixedAssetsSelected = page == "FixedAssets";
+        IsAnalyticsSelected = page == "Analytics";
+        IsTimelineSelected = page == "Timeline";
 
         CurrentPage = page;
 
@@ -87,6 +108,9 @@ public partial class MainWindowViewModel : ObservableObject
             "Goals" => _goalsVm,
             "Accounts" => _accountsVm,
             "Investments" => _investmentsVm,
+            "FixedAssets" => _fixedAssetsVm,
+            "Analytics" => _analyticsVm,
+            "Timeline" => _timelineVm,
             _ => (ObservableObject)_dashboardVm
         };
 
@@ -110,5 +134,8 @@ public partial class MainWindowViewModel : ObservableObject
         else if (vm is GoalsViewModel goals) _ = goals.LoadDataCommand.ExecuteAsync(null);
         else if (vm is AccountsViewModel accounts) _ = accounts.LoadDataCommand.ExecuteAsync(null);
         else if (vm is InvestmentsViewModel investments) _ = investments.LoadDataCommand.ExecuteAsync(null);
+        else if (vm is FixedAssetsViewModel fixedAssets) _ = fixedAssets.LoadDataCommand.ExecuteAsync(null);
+        else if (vm is AnalyticsViewModel analytics) _ = analytics.LoadDataCommand.ExecuteAsync(null);
+        else if (vm is TimelineViewModel timeline) _ = timeline.LoadDataCommand.ExecuteAsync(null);
     }
 }
