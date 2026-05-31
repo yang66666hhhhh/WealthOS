@@ -114,18 +114,18 @@
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
                     <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
-                            <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,24">
+                            <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Liabilities.AddTitle}"/></TextBlock.Text>
                             </TextBlock>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                            <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Liabilities.Name}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBox Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                            <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Liabilities.Type}"/></TextBlock.Text>
                             </TextBlock>
                             <ComboBox ItemsSource="{Binding Source={StaticResource LiabilityTypes}}" SelectedItem="{Binding NewType}" Margin="0,0,0,16"/>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                            <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Liabilities.Institution}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBox Text="{Binding NewInstitution, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
@@ -136,23 +136,23 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                    <TextBlock Style="{StaticResource LabelStyle}">
                                         <TextBlock.Text><Binding Source="{StaticResource Liabilities.Balance}"/></TextBlock.Text>
                                     </TextBlock>
                                     <TextBox Text="{Binding NewBalance, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2">
-                                    <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                    <TextBlock Style="{StaticResource LabelStyle}">
                                         <TextBlock.Text><Binding Source="{StaticResource Liabilities.InterestRate}"/></TextBlock.Text>
                                     </TextBlock>
                                     <TextBox Text="{Binding NewInterestRate, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}"/>
                                 </StackPanel>
                             </Grid>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                            <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Liabilities.MonthlyPayment}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBox Text="{Binding NewMonthlyPayment, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                            <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Liabilities.StartDate}"/></TextBlock.Text>
                             </TextBlock>
                             <DatePicker SelectedDate="{Binding NewStartDate}" Margin="0,0,0,24"/>
@@ -172,7 +172,7 @@
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
                     <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
-                            <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12">
+                            <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Liabilities.DeleteTitle}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" TextWrapping="Wrap" Margin="0,0,0,24">
@@ -182,7 +182,7 @@
                                 <Button Style="{StaticResource SecondaryButton}" Command="{Binding CancelDeleteCommand}" Margin="0,0,12,0">
                                     <Button.Content><Binding Source="{StaticResource Common.Cancel}"/></Button.Content>
                                 </Button>
-                                <Button Style="{StaticResource PrimaryButton}" Command="{Binding ExecuteDeleteCommand}" Background="{StaticResource ExpenseBrush}">
+                                <Button Style="{StaticResource DangerButton}" Command="{Binding ExecuteDeleteCommand}">
                                     <Button.Content><Binding Source="{StaticResource Common.Delete}"/></Button.Content>
                                 </Button>
                             </StackPanel>

@@ -129,10 +129,10 @@
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
                     <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
-                            <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,24">
+                            <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Goals.AddTitle}"/></TextBlock.Text>
                             </TextBlock>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                            <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Goals.Name}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBox Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
@@ -143,23 +143,23 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                    <TextBlock Style="{StaticResource LabelStyle}">
                                         <TextBlock.Text><Binding Source="{StaticResource Goals.TargetAmount}"/></TextBlock.Text>
                                     </TextBlock>
                                     <TextBox Text="{Binding NewTargetAmount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2">
-                                    <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                    <TextBlock Style="{StaticResource LabelStyle}">
                                         <TextBlock.Text><Binding Source="{StaticResource Goals.CurrentAmount}"/></TextBlock.Text>
                                     </TextBlock>
                                     <TextBox Text="{Binding NewCurrentAmount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}"/>
                                 </StackPanel>
                             </Grid>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                            <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Goals.TargetDate}"/></TextBlock.Text>
                             </TextBlock>
                             <DatePicker SelectedDate="{Binding NewTargetDate}" Margin="0,0,0,16"/>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                            <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Goals.Note}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBox Text="{Binding NewNote, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,24"/>
@@ -179,7 +179,7 @@
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
                     <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
-                            <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12">
+                            <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Goals.DeleteTitle}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" TextWrapping="Wrap" Margin="0,0,0,24">
@@ -189,7 +189,7 @@
                                 <Button Style="{StaticResource SecondaryButton}" Command="{Binding CancelDeleteCommand}" Margin="0,0,12,0">
                                     <Button.Content><Binding Source="{StaticResource Common.Cancel}"/></Button.Content>
                                 </Button>
-                                <Button Style="{StaticResource PrimaryButton}" Command="{Binding ExecuteDeleteCommand}" Background="{StaticResource ExpenseBrush}">
+                                <Button Style="{StaticResource DangerButton}" Command="{Binding ExecuteDeleteCommand}">
                                     <Button.Content><Binding Source="{StaticResource Common.Delete}"/></Button.Content>
                                 </Button>
                             </StackPanel>
@@ -208,7 +208,7 @@
                                 <Run><Run.Text><Binding Source="{StaticResource Goals.ProgressLabel}" Mode="OneWay"/></Run.Text></Run>
                                 <Run Text="{Binding ProgressGoalName, Mode=OneWay}" FontWeight="SemiBold"/>
                             </TextBlock>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                            <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Goals.ProgressAmount}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBox Text="{Binding ProgressAddAmount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,24"/>

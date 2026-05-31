@@ -172,10 +172,10 @@
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
                     <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
-                            <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,24">
+                            <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Budgets.AddTitle}"/></TextBlock.Text>
                             </TextBlock>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                            <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Budgets.Name}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBox Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
@@ -186,19 +186,19 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                    <TextBlock Style="{StaticResource LabelStyle}">
                                         <TextBlock.Text><Binding Source="{StaticResource Budgets.Amount}"/></TextBlock.Text>
                                     </TextBlock>
                                     <TextBox Text="{Binding NewAmount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2">
-                                    <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                    <TextBlock Style="{StaticResource LabelStyle}">
                                         <TextBlock.Text><Binding Source="{StaticResource Budgets.Spent}"/></TextBlock.Text>
                                     </TextBlock>
                                     <TextBox Text="{Binding NewSpent, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}"/>
                                 </StackPanel>
                             </Grid>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                            <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Budgets.Note}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBox Text="{Binding NewNote, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,24"/>
@@ -218,10 +218,10 @@
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsEditDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
                     <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
-                            <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,24">
+                            <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Budgets.EditTitle}"/></TextBlock.Text>
                             </TextBlock>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                            <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Budgets.Name}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBox Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
@@ -232,19 +232,19 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                    <TextBlock Style="{StaticResource LabelStyle}">
                                         <TextBlock.Text><Binding Source="{StaticResource Budgets.Amount}"/></TextBlock.Text>
                                     </TextBlock>
                                     <TextBox Text="{Binding NewAmount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2">
-                                    <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                    <TextBlock Style="{StaticResource LabelStyle}">
                                         <TextBlock.Text><Binding Source="{StaticResource Budgets.Spent}"/></TextBlock.Text>
                                     </TextBlock>
                                     <TextBox Text="{Binding NewSpent, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}"/>
                                 </StackPanel>
                             </Grid>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                            <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Budgets.Note}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBox Text="{Binding NewNote, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,24"/>
@@ -264,7 +264,7 @@
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
                     <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
-                            <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12">
+                            <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Budgets.DeleteTitle}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" TextWrapping="Wrap" Margin="0,0,0,24">
@@ -274,7 +274,7 @@
                                 <Button Style="{StaticResource SecondaryButton}" Command="{Binding CancelDeleteCommand}" Margin="0,0,12,0">
                                     <Button.Content><Binding Source="{StaticResource Common.Cancel}"/></Button.Content>
                                 </Button>
-                                <Button Style="{StaticResource PrimaryButton}" Command="{Binding ExecuteDeleteCommand}" Background="{StaticResource ExpenseBrush}">
+                                <Button Style="{StaticResource DangerButton}" Command="{Binding ExecuteDeleteCommand}">
                                     <Button.Content><Binding Source="{StaticResource Common.Delete}"/></Button.Content>
                                 </Button>
                             </StackPanel>
