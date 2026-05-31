@@ -9,61 +9,99 @@
     </UserControl.Resources>
 
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="32,24">
+        <Border Background="{StaticResource PrimaryBrush}" 
+                Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
+                Panel.ZIndex="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="3"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="28,24">
             <StackPanel MaxWidth="1200">
-                <TextBlock Style="{StaticResource PageTitleStyle}">
-                    <TextBlock.Text><Binding Source="{StaticResource FixedAssets.Title}"/></TextBlock.Text>
-                </TextBlock>
+                <!-- 页面标题 -->
+                <Grid Margin="0,0,0,24">
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource FixedAssets.Title}" FontSize="24" FontWeight="Bold" 
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBlock FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" Margin="0,4,0,0">
+                            <Run Text="&#x1F3E2; "/>
+                            <Run Text="{DynamicResource FixedAssets.Subtitle}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
 
-                <ProgressBar IsIndeterminate="True" Height="3" Margin="0,0,0,16"
-                             Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
-                             Background="Transparent" Foreground="{StaticResource PrimaryBrush}"/>
-
-                <!-- Summary -->
+                <!-- KPI 统计卡片 -->
                 <Grid Margin="0,0,0,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="12"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="12"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <!-- 购入价值 -->
+                    <Border Grid.Column="0" CornerRadius="14" Padding="20,16"
+                            BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                            Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,8">
-                                <TextBlock.Text><Binding Source="{StaticResource FixedAssets.InitialValue}"/></TextBlock.Text>
-                            </TextBlock>
-                            <TextBlock FontSize="28" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="#EFF6FF"/>
+                                    </Border.Background>
+                                    <TextBlock Text="&#x1F4B0;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Text="{DynamicResource FixedAssets.InitialValue}" FontSize="12" 
+                                           Foreground="{StaticResource TextTertiaryBrush}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}">
                                 <TextBlock.Text><Binding Path="TotalInitialValue" Converter="{StaticResource CurrencyConv}"/></TextBlock.Text>
                             </TextBlock>
                         </StackPanel>
                     </Border>
 
-                    <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                    <!-- 当前价值 -->
+                    <Border Grid.Column="2" CornerRadius="14" Padding="20,16"
+                            BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                            Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,8">
-                                <TextBlock.Text><Binding Source="{StaticResource FixedAssets.CurrentValue}"/></TextBlock.Text>
-                            </TextBlock>
-                            <TextBlock FontSize="28" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="#ECFDF5"/>
+                                    </Border.Background>
+                                    <TextBlock Text="&#x1F4CA;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Text="{DynamicResource FixedAssets.CurrentValue}" FontSize="12" 
+                                           Foreground="{StaticResource TextTertiaryBrush}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource AccentBrush}">
                                 <TextBlock.Text><Binding Path="TotalCurrentValue" Converter="{StaticResource CurrencyConv}"/></TextBlock.Text>
                             </TextBlock>
                         </StackPanel>
                     </Border>
 
-                    <Border Grid.Column="4" Style="{StaticResource CardStyle}">
+                    <!-- 累计折旧 -->
+                    <Border Grid.Column="4" CornerRadius="14" Padding="20,16"
+                            BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                            Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,8">
-                                <TextBlock.Text><Binding Source="{StaticResource FixedAssets.Depreciation}"/></TextBlock.Text>
-                            </TextBlock>
-                            <TextBlock FontSize="28" FontWeight="Bold" Foreground="{StaticResource ExpenseBrush}">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="#FEF2F2"/>
+                                    </Border.Background>
+                                    <TextBlock Text="&#x1F4C9;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Text="{DynamicResource FixedAssets.Depreciation}" FontSize="12" 
+                                           Foreground="{StaticResource TextTertiaryBrush}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource ExpenseBrush}">
                                 <TextBlock.Text><Binding Path="TotalDepreciation" Converter="{StaticResource CurrencyConv}"/></TextBlock.Text>
                             </TextBlock>
                         </StackPanel>
                     </Border>
                 </Grid>
 
-                <!-- Empty State -->
+                <!-- 空状态 -->
                 <Border Padding="60" Visibility="{Binding FixedAssets.Count, Converter={StaticResource BoolToVis}}">
                     <Border.Style>
                         <Style TargetType="Border">
@@ -73,40 +111,61 @@
                         </Style>
                     </Border.Style>
                     <StackPanel HorizontalAlignment="Center">
-                        <TextBlock FontSize="20" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center">
+                        <TextBlock Style="{StaticResource EmptyStateIconStyle}" Text="&#x1F3E2;"/>
+                        <TextBlock Style="{StaticResource EmptyStateTitleStyle}">
                             <TextBlock.Text><Binding Source="{StaticResource FixedAssets.NoAssets}"/></TextBlock.Text>
                         </TextBlock>
-                        <TextBlock FontSize="14" Foreground="{StaticResource TextHintBrush}" HorizontalAlignment="Center" Margin="0,12,0,0">
+                        <TextBlock Style="{StaticResource EmptyStateHintStyle}">
                             <TextBlock.Text><Binding Source="{StaticResource FixedAssets.NoAssetsHint}"/></TextBlock.Text>
                         </TextBlock>
                     </StackPanel>
                 </Border>
 
-                <!-- Asset Cards -->
+                <!-- 资产卡片列表 -->
                 <ItemsControl ItemsSource="{Binding FixedAssets}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Style="{StaticResource CardStyle}" Margin="0,0,16,16" Width="300">
+                            <Border CornerRadius="14" Padding="20" Margin="0,0,16,16" Width="300"
+                                    BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                                    Background="{StaticResource CardBackgroundBrush}">
                                 <StackPanel>
-                                    <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12"/>
-                                    <Grid>
+                                    <!-- 标题行 -->
+                                    <Grid Margin="0,0,0,16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                            <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,10,0">
+                                                <Border.Background>
+                                                    <SolidColorBrush Color="#FEF3C7"/>
+                                                </Border.Background>
+                                                <TextBlock Text="&#x1F3E2;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <TextBlock Text="{Binding Name}" FontSize="15" FontWeight="SemiBold" 
+                                                       Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <!-- 价值对比 -->
+                                    <Grid Margin="0,0,0,12">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0">
-                                            <TextBlock FontSize="11" Foreground="{StaticResource TextSecondaryBrush}">
+                                            <TextBlock FontSize="11" Foreground="{StaticResource TextTertiaryBrush}">
                                                 <TextBlock.Text><Binding Source="{StaticResource FixedAssets.PurchasePrice}"/></TextBlock.Text>
                                             </TextBlock>
-                                            <TextBlock FontSize="16" FontWeight="Bold">
+                                            <TextBlock FontSize="16" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}">
                                                 <TextBlock.Text><Binding Path="InitialValue" Converter="{StaticResource CurrencyConv}"/></TextBlock.Text>
                                             </TextBlock>
                                         </StackPanel>
                                         <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-                                            <TextBlock FontSize="11" Foreground="{StaticResource TextSecondaryBrush}">
+                                            <TextBlock FontSize="11" Foreground="{StaticResource TextTertiaryBrush}">
                                                 <TextBlock.Text><Binding Source="{StaticResource FixedAssets.Estimated}"/></TextBlock.Text>
                                             </TextBlock>
                                             <TextBlock FontSize="16" FontWeight="Bold" Foreground="{StaticResource AccentBrush}">
@@ -114,13 +173,15 @@
                                             </TextBlock>
                                         </StackPanel>
                                     </Grid>
-                                    <Border Background="{StaticResource SurfaceBrush}" CornerRadius="6" Padding="8,6" Margin="0,12,0,0">
+
+                                    <!-- 折旧信息 -->
+                                    <Border CornerRadius="8" Padding="12" Background="{StaticResource SurfaceBrush}">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,12,0">
+                                            <TextBlock FontSize="12" Foreground="{StaticResource TextTertiaryBrush}" Margin="0,0,16,0">
                                                 <Run><Run.Text><Binding Source="{StaticResource FixedAssets.Rate}" Mode="OneWay"/></Run.Text></Run>
                                                 <Run Text="{Binding DepreciationRate, StringFormat='{}{0}%'}"/>
                                             </TextBlock>
-                                            <TextBlock FontSize="12" Foreground="{StaticResource TextSecondaryBrush}">
+                                            <TextBlock FontSize="12" Foreground="{StaticResource TextTertiaryBrush}">
                                                 <Run><Run.Text><Binding Source="{StaticResource FixedAssets.Age}" Mode="OneWay"/></Run.Text></Run>
                                                 <Run Text="{Binding AgeMonths, StringFormat='{}{0} 个月'}"/>
                                             </TextBlock>
@@ -131,6 +192,8 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+
+                <Border Height="20"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

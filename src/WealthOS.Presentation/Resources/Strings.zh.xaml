@@ -176,6 +176,7 @@
     <!-- Fixed Assets -->
     <sys:String x:Key="Nav.FixedAssets">固定资产</sys:String>
     <sys:String x:Key="FixedAssets.Title">固定资产</sys:String>
+    <sys:String x:Key="FixedAssets.Subtitle">追踪您的固定资产折旧</sys:String>
     <sys:String x:Key="FixedAssets.InitialValue">购入价值</sys:String>
     <sys:String x:Key="FixedAssets.CurrentValue">当前价值</sys:String>
     <sys:String x:Key="FixedAssets.Depreciation">累计折旧</sys:String>

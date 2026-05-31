@@ -176,6 +176,7 @@
     <!-- Fixed Assets -->
     <sys:String x:Key="Nav.FixedAssets">Fixed Assets</sys:String>
     <sys:String x:Key="FixedAssets.Title">Fixed Assets</sys:String>
+    <sys:String x:Key="FixedAssets.Subtitle">Track your fixed asset depreciation</sys:String>
     <sys:String x:Key="FixedAssets.InitialValue">Purchase Value</sys:String>
     <sys:String x:Key="FixedAssets.CurrentValue">Current Value</sys:String>
     <sys:String x:Key="FixedAssets.Depreciation">Total Depreciation</sys:String>
