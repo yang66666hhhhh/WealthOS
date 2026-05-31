@@ -56,6 +56,7 @@ public partial class App : System.Windows.Application
         services.AddSingleton<InvestmentService>();
         services.AddSingleton<ReportService>();
         services.AddSingleton<BudgetService>();
+        services.AddSingleton<SeedDataService>();
 
         services.AddSingleton<NavigationService>();
         services.AddSingleton<LocalizationService>();
@@ -101,6 +102,16 @@ public partial class App : System.Windows.Application
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"分类种子数据失败: {ex.Message}");
+        }
+
+        try
+        {
+            var seedDataService = _services.GetRequiredService<SeedDataService>();
+            await seedDataService.SeedAllAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"初始数据填充失败: {ex.Message}");
         }
 
         try
