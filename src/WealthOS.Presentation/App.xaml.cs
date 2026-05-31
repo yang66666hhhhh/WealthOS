@@ -8,6 +8,7 @@ using WealthOS.Infrastructure.Data;
 using WealthOS.Infrastructure.Repositories;
 using WealthOS.Presentation.Services;
 using WealthOS.Presentation.ViewModels;
+using WealthOS.Presentation.Views;
 
 namespace WealthOS.Presentation;
 
@@ -83,6 +84,14 @@ public partial class App : System.Windows.Application
         services.AddTransient<MainWindow>();
     }
 
+    private static void ShowErrorAndShutdown(string title, string message, string? stackTrace = null)
+    {
+        System.Diagnostics.Debug.WriteLine($"{title}: {message}");
+        var errorWindow = new StartupErrorWindow(title, message, stackTrace);
+        errorWindow.ShowDialog();
+        Current.Shutdown();
+    }
+
     protected override async void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
@@ -94,8 +103,7 @@ public partial class App : System.Windows.Application
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"数据库初始化失败：{ex.Message}\n\n{ex.StackTrace}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-            Shutdown();
+            ShowErrorAndShutdown("数据库初始化失败", ex.Message, ex.StackTrace);
             return;
         }
 
@@ -136,8 +144,7 @@ public partial class App : System.Windows.Application
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"窗口创建失败：{ex.Message}\n\n{ex.InnerException?.Message}\n\n{ex.StackTrace}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-            Shutdown();
+            ShowErrorAndShutdown("窗口创建失败", ex.Message, ex.StackTrace);
         }
     }
 }
