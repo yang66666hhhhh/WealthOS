@@ -152,6 +152,7 @@
     <!-- Investments -->
     <sys:String x:Key="Nav.Investments">Investments</sys:String>
     <sys:String x:Key="Investments.Title">Investments</sys:String>
+    <sys:String x:Key="Investments.Subtitle">Manage your portfolio</sys:String>
     <sys:String x:Key="Investments.Add">+ Add Holding</sys:String>
     <sys:String x:Key="Investments.AddTitle">Add Holding</sys:String>
     <sys:String x:Key="Investments.EditTitle">Edit Holding</sys:String>

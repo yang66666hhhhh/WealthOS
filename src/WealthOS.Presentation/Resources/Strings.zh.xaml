@@ -151,7 +151,8 @@
 
     <!-- Investments -->
     <sys:String x:Key="Nav.Investments">投资</sys:String>
-    <sys:String x:Key="Investments.Title">投资</sys:String>
+    <sys:String x:Key="Investments.Title">投资持仓</sys:String>
+    <sys:String x:Key="Investments.Subtitle">管理您的投资组合</sys:String>
     <sys:String x:Key="Investments.Add">+ 添加持仓</sys:String>
     <sys:String x:Key="Investments.AddTitle">添加持仓</sys:String>
     <sys:String x:Key="Investments.EditTitle">编辑持仓</sys:String>

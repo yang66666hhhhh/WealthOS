@@ -13,65 +13,105 @@
     </UserControl.Resources>
 
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="32,24">
+        <Border Background="{StaticResource PrimaryBrush}" 
+                Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
+                Panel.ZIndex="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="3"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="28,24">
             <StackPanel MaxWidth="1200">
+                <!-- 页面标题 -->
                 <Grid Margin="0,0,0,24">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Style="{StaticResource PageTitleStyle}">
-                        <TextBlock.Text><Binding Source="{StaticResource Investments.Title}"/></TextBlock.Text>
-                    </TextBlock>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="{DynamicResource Investments.Title}" FontSize="24" FontWeight="Bold" 
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBlock FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" Margin="0,4,0,0">
+                            <Run Text="&#x1F4C8; "/>
+                            <Run Text="{DynamicResource Investments.Subtitle}"/>
+                        </TextBlock>
+                    </StackPanel>
                     <Button Grid.Column="1" Style="{StaticResource PrimaryButton}" Command="{Binding ShowAddDialogCommand}" VerticalAlignment="Center">
-                        <Button.Content><Binding Source="{StaticResource Investments.Add}"/></Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#x2795;" FontSize="14" Margin="0,0,8,0"/>
+                            <TextBlock Text="{DynamicResource Investments.Add}"/>
+                        </StackPanel>
                     </Button>
                 </Grid>
 
-                <ProgressBar IsIndeterminate="True" Height="3" Margin="0,0,0,16"
-                             Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
-                             Background="Transparent" Foreground="{StaticResource PrimaryBrush}"/>
-
-                <!-- Summary Cards -->
+                <!-- KPI 统计卡片 -->
                 <Grid Margin="0,0,0,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="12"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="12"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <!-- 总市值 -->
+                    <Border Grid.Column="0" CornerRadius="14" Padding="20,16"
+                            BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                            Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,8">
-                                <TextBlock.Text><Binding Source="{StaticResource Investments.TotalValue}"/></TextBlock.Text>
-                            </TextBlock>
-                            <TextBlock FontSize="28" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="#EEF2FF"/>
+                                    </Border.Background>
+                                    <TextBlock Text="&#x1F4CA;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Text="{DynamicResource Investments.TotalValue}" FontSize="12" 
+                                           Foreground="{StaticResource TextTertiaryBrush}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}">
                                 <TextBlock.Text><Binding Path="TotalValue" Converter="{StaticResource CurrencyConv}"/></TextBlock.Text>
                             </TextBlock>
                         </StackPanel>
                     </Border>
 
-                    <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                    <!-- 总成本 -->
+                    <Border Grid.Column="2" CornerRadius="14" Padding="20,16"
+                            BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                            Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,8">
-                                <TextBlock.Text><Binding Source="{StaticResource Investments.TotalCost}"/></TextBlock.Text>
-                            </TextBlock>
-                            <TextBlock FontSize="28" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="#FEF2F2"/>
+                                    </Border.Background>
+                                    <TextBlock Text="&#x1F4B0;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Text="{DynamicResource Investments.TotalCost}" FontSize="12" 
+                                           Foreground="{StaticResource TextTertiaryBrush}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}">
                                 <TextBlock.Text><Binding Path="TotalCost" Converter="{StaticResource CurrencyConv}"/></TextBlock.Text>
                             </TextBlock>
                         </StackPanel>
                     </Border>
 
-                    <Border Grid.Column="4" Style="{StaticResource CardStyle}">
+                    <!-- 盈亏 -->
+                    <Border Grid.Column="4" CornerRadius="14" Padding="20,16"
+                            BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                            Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,8">
-                                <TextBlock.Text><Binding Source="{StaticResource Investments.ProfitLoss}"/></TextBlock.Text>
-                            </TextBlock>
-                            <TextBlock FontSize="28" FontWeight="Bold">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="#ECFDF5"/>
+                                    </Border.Background>
+                                    <TextBlock Text="&#x1F4C8;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Text="{DynamicResource Investments.ProfitLoss}" FontSize="12" 
+                                           Foreground="{StaticResource TextTertiaryBrush}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock FontSize="22" FontWeight="Bold">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding TotalProfitLoss}" Value="0">
                                                 <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
@@ -90,7 +130,7 @@
                     </Border>
                 </Grid>
 
-                <!-- Empty State -->
+                <!-- 空状态 -->
                 <Border Padding="60" Visibility="{Binding Holdings.Count, Converter={StaticResource BoolToVis}}">
                     <Border.Style>
                         <Style TargetType="Border">
@@ -100,22 +140,47 @@
                         </Style>
                     </Border.Style>
                     <StackPanel HorizontalAlignment="Center">
-                        <TextBlock FontSize="20" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center">
+                        <TextBlock Style="{StaticResource EmptyStateIconStyle}" Text="&#x1F4C8;"/>
+                        <TextBlock Style="{StaticResource EmptyStateTitleStyle}">
                             <TextBlock.Text><Binding Source="{StaticResource Investments.NoHoldings}"/></TextBlock.Text>
                         </TextBlock>
-                        <TextBlock FontSize="14" Foreground="{StaticResource TextHintBrush}" HorizontalAlignment="Center" Margin="0,12,0,0">
+                        <TextBlock Style="{StaticResource EmptyStateHintStyle}">
                             <TextBlock.Text><Binding Source="{StaticResource Investments.NoHoldingsHint}"/></TextBlock.Text>
                         </TextBlock>
                     </StackPanel>
                 </Border>
 
-                <!-- Holdings List -->
-                <Border Style="{StaticResource CardStyle}">
+                <!-- 持仓列表 -->
+                <Border CornerRadius="14" Padding="0" Margin="0,0,0,20"
+                        BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                        Background="{StaticResource CardBackgroundBrush}">
                     <StackPanel>
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{DynamicResource Investments.Symbol}" FontSize="12" 
+                                       FontWeight="SemiBold" Foreground="{StaticResource TextTertiaryBrush}"/>
+                            <TextBlock Grid.Column="1" Text="{DynamicResource Investments.CurrentPrice}" FontSize="12" 
+                                       FontWeight="SemiBold" Foreground="{StaticResource TextTertiaryBrush}" 
+                                       HorizontalAlignment="Right" Margin="16,0"/>
+                            <TextBlock Grid.Column="2" Text="{DynamicResource Investments.TotalValue}" FontSize="12" 
+                                       FontWeight="SemiBold" Foreground="{StaticResource TextTertiaryBrush}" 
+                                       HorizontalAlignment="Right" Margin="16,0"/>
+                            <TextBlock Grid.Column="3" Text="{DynamicResource Investments.PL}" FontSize="12" 
+                                       FontWeight="SemiBold" Foreground="{StaticResource TextTertiaryBrush}" 
+                                       HorizontalAlignment="Right" Margin="16,0"/>
+                            <TextBlock Grid.Column="4" Width="60"/>
+                        </Grid>
+
                         <ItemsControl ItemsSource="{Binding Holdings}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Padding="0,14" BorderThickness="0,0,0,1" BorderBrush="{StaticResource BorderBrush}">
+                                    <Border Padding="16,12" BorderThickness="0,0,0,1" BorderBrush="{StaticResource BorderLightBrush}">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
@@ -127,52 +192,81 @@
 
                                             <StackPanel Grid.Column="0">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Symbol}" FontSize="15" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}"/>
-                                                    <TextBlock Text="{Binding Name}" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="8,0,0,0"/>
+                                                    <Border CornerRadius="6" Padding="8,4" Margin="0,0,8,0">
+                                                        <Border.Background>
+                                                            <SolidColorBrush Color="#EEF2FF"/>
+                                                        </Border.Background>
+                                                        <TextBlock Text="{Binding Symbol}" FontSize="13" FontWeight="Bold" 
+                                                                   Foreground="{StaticResource PrimaryBrush}"/>
+                                                    </Border>
+                                                    <TextBlock Text="{Binding Name}" FontSize="13" 
+                                                               Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center"/>
                                                 </StackPanel>
-                                                <TextBlock FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,4,0,0">
+                                                <TextBlock FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" Margin="0,4,0,0">
                                                     <Run Text="{Binding Quantity}"/>
                                                     <Run Text=" × "/>
                                                     <Run Text="{Binding AverageCost, StringFormat='￥{0:N2}'}"/>
                                                 </TextBlock>
                                             </StackPanel>
 
-                                            <StackPanel Grid.Column="1" HorizontalAlignment="Right" Margin="16,0">
-                                                <TextBlock FontSize="11" Foreground="{StaticResource TextSecondaryBrush}">
-                                                    <TextBlock.Text><Binding Source="{StaticResource Investments.CurrentPrice}"/></TextBlock.Text>
-                                                </TextBlock>
-                                                <TextBlock Text="{Binding CurrentPrice, StringFormat='￥{0:N2}'}" FontSize="14" FontWeight="SemiBold"/>
+                                            <TextBlock Grid.Column="1" FontSize="13" FontWeight="SemiBold" 
+                                                       VerticalAlignment="Center" HorizontalAlignment="Right" Margin="16,0">
+                                                <TextBlock.Text><Binding Path="CurrentPrice" StringFormat="￥{0:N2}"/></TextBlock.Text>
+                                            </TextBlock>
+
+                                            <TextBlock Grid.Column="2" FontSize="13" FontWeight="SemiBold"
+                                                       VerticalAlignment="Center" HorizontalAlignment="Right" Margin="16,0">
+                                                <TextBlock.Text><Binding Path="TotalValue" Converter="{StaticResource CurrencyConv}"/></TextBlock.Text>
+                                            </TextBlock>
+
+                                            <StackPanel Grid.Column="3" HorizontalAlignment="Right" Margin="16,0" VerticalAlignment="Center">
+                                                <Border CornerRadius="6" Padding="8,4">
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="Background">
+                                                                <Setter.Value>
+                                                                    <SolidColorBrush Color="#ECFDF5"/>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ProfitLoss}" Value="0">
+                                                                    <Setter Property="Background">
+                                                                        <Setter.Value>
+                                                                            <SolidColorBrush Color="#F3F4F6"/>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <TextBlock FontSize="12" FontWeight="SemiBold">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding ProfitLoss}" Value="0">
+                                                                        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}{0} ({1:F1}%)">
+                                                                <Binding Path="ProfitLoss" Converter="{StaticResource CurrencyConv}"/>
+                                                                <Binding Path="ProfitLossPercentage"/>
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </Border>
                                             </StackPanel>
 
-                                            <StackPanel Grid.Column="2" HorizontalAlignment="Right" Margin="16,0">
-                                                <TextBlock FontSize="11" Foreground="{StaticResource TextSecondaryBrush}">
-                                                    <TextBlock.Text><Binding Source="{StaticResource Investments.TotalValue}"/></TextBlock.Text>
-                                                </TextBlock>
-                                                <TextBlock FontSize="14" FontWeight="SemiBold">
-                                                    <TextBlock.Text><Binding Path="TotalValue" Converter="{StaticResource CurrencyConv}"/></TextBlock.Text>
-                                                </TextBlock>
-                                            </StackPanel>
-
-                                            <StackPanel Grid.Column="3" HorizontalAlignment="Right" Margin="16,0">
-                                                <TextBlock FontSize="11" Foreground="{StaticResource TextSecondaryBrush}">
-                                                    <TextBlock.Text><Binding Source="{StaticResource Investments.PL}"/></TextBlock.Text>
-                                                </TextBlock>
-                                                <TextBlock FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}">
-                                                    <TextBlock.Text>
-                                                        <MultiBinding StringFormat="{}{0} ({1:F1}%)">
-                                                            <Binding Path="ProfitLoss" Converter="{StaticResource CurrencyConv}"/>
-                                                            <Binding Path="ProfitLossPercentage"/>
-                                                        </MultiBinding>
-                                                    </TextBlock.Text>
-                                                </TextBlock>
-                                            </StackPanel>
-
-                                            <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0,0,0">
-                                                <Button Content="e" FontSize="14" Background="Transparent" BorderThickness="0"
-                                                        Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="4,0"
+                                            <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
+                                                <Button Content="&#x270E;" FontSize="14" Background="Transparent" BorderThickness="0"
+                                                        Foreground="{StaticResource TextTertiaryBrush}" Cursor="Hand" Padding="6,2"
                                                         Command="{Binding DataContext.ShowEditDialogCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                         CommandParameter="{Binding Id}"/>
-                                                <Button Content="&#x2716;" FontSize="12" Background="Transparent" BorderThickness="0" Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="4,0"
+                                                <Button Content="&#x2716;" FontSize="12" Background="Transparent" BorderThickness="0"
+                                                        Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="6,2"
                                                         Command="{Binding DataContext.ConfirmDeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                         CommandParameter="{Binding Id}"/>
                                             </StackPanel>
@@ -186,7 +280,7 @@
 
                 <!-- Add Dialog -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="16" Padding="28" Width="460" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Investments.AddTitle}"/></TextBlock.Text>
@@ -194,7 +288,7 @@
                             <Grid Margin="0,0,0,16">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="12"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
@@ -217,7 +311,7 @@
                             <Grid Margin="0,0,0,16">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="12"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
@@ -255,7 +349,7 @@
 
                 <!-- Edit Dialog -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsEditDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="16" Padding="28" Width="460" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Investments.EditTitle}"/></TextBlock.Text>
@@ -263,7 +357,7 @@
                             <Grid Margin="0,0,0,16">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="12"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
@@ -286,7 +380,7 @@
                             <Grid Margin="0,0,0,16">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="12"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
@@ -324,12 +418,12 @@
 
                 <!-- Delete Confirmation -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="16" Padding="28" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Investments.DeleteTitle}"/></TextBlock.Text>
                             </TextBlock>
-                            <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" TextWrapping="Wrap" Margin="0,0,0,24">
+                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" TextWrapping="Wrap" Margin="0,0,0,24">
                                 <TextBlock.Text><Binding Source="{StaticResource Investments.DeleteMessage}"/></TextBlock.Text>
                             </TextBlock>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -343,6 +437,8 @@
                         </StackPanel>
                     </Border>
                 </Border>
+
+                <Border Height="20"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>
