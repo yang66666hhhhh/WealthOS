@@ -41,3 +41,25 @@ public class NullableGuidTypeHandler : SqlMapper.TypeHandler<Guid?>
         };
     }
 }
+
+public class DecimalTypeHandler : SqlMapper.TypeHandler<decimal>
+{
+    public override void SetValue(IDbDataParameter parameter, decimal value)
+    {
+        parameter.Value = (double)value;
+    }
+
+    public override decimal Parse(object value)
+    {
+        return value switch
+        {
+            decimal d => d,
+            double d => (decimal)d,
+            float f => (decimal)f,
+            int i => i,
+            long l => l,
+            string s => decimal.Parse(s),
+            _ => 0m
+        };
+    }
+}

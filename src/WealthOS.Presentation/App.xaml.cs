@@ -19,6 +19,7 @@ public partial class App : System.Windows.Application
     {
         SqlMapper.AddTypeHandler(new GuidTypeHandler());
         SqlMapper.AddTypeHandler(new NullableGuidTypeHandler());
+        SqlMapper.AddTypeHandler(new DecimalTypeHandler());
         
         var services = new ServiceCollection();
         ConfigureServices(services);
