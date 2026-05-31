@@ -34,11 +34,20 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0" Margin="24,28,24,32">
-                    <TextBlock Text="WealthOS" FontSize="22" FontWeight="Bold"
-                               Foreground="White" Margin="0,0,0,4"/>
-                    <TextBlock Text="Personal Wealth Operating System"
-                               FontSize="11" Foreground="{StaticResource SidebarTextBrush}"/>
+                <StackPanel Grid.Row="0" Margin="24,28,24,36">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                        <Border Width="40" Height="40" CornerRadius="12" 
+                                Background="{StaticResource PrimaryBrush}" Margin="0,0,12,0">
+                            <TextBlock Text="W" FontSize="20" FontWeight="Bold" Foreground="White"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="WealthOS" FontSize="18" FontWeight="Bold"
+                                       Foreground="White"/>
+                            <TextBlock Text="v1.1.0" FontSize="11" 
+                                       Foreground="{StaticResource SidebarTextBrush}" Opacity="0.7"/>
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1">
