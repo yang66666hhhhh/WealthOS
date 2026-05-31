@@ -90,8 +90,7 @@
                                         <StackPanel Grid.Column="1" Orientation="Horizontal">
                                             <Button Content="e" FontSize="12" Background="Transparent" BorderThickness="0"
                                                     Foreground="{StaticResource PrimaryBrush}" Cursor="Hand" Padding="4,0"
-                                                    Command="{Binding DataContext.ShowEditCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                    CommandParameter="{Binding}"/>
+                                                    Command="{Binding DataContext.ShowEditCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding Id}"/>
                                             <Button Content="x" FontSize="14" Background="Transparent" BorderThickness="0"
                                                     Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="4,0"
                                                     Command="{Binding DataContext.ConfirmDeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
