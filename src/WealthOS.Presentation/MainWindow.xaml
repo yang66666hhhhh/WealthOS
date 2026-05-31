@@ -22,11 +22,13 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="220"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="0" Background="{StaticResource SidebarBrush}">
+        <!-- 侧边栏 -->
+        <Border Grid.Column="0" Background="{StaticResource SidebarBrush}" 
+                BorderThickness="0,0,1,0" BorderBrush="{StaticResource BorderBrush}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -34,40 +36,35 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0" Margin="24,28,24,36">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                        <Border Width="40" Height="40" CornerRadius="12" 
-                                Background="{StaticResource PrimaryBrush}" Margin="0,0,12,0">
-                            <TextBlock Text="W" FontSize="20" FontWeight="Bold" Foreground="White"
+                <!-- Logo 区域 -->
+                <StackPanel Grid.Row="0" Margin="20,24,20,28">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="36" Height="36" CornerRadius="10" 
+                                Background="{StaticResource PrimaryBrush}" Margin="0,0,10,0">
+                            <TextBlock Text="W" FontSize="18" FontWeight="Bold" Foreground="White"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="WealthOS" FontSize="18" FontWeight="Bold"
-                                       Foreground="White"/>
-                            <TextBlock Text="v1.1.0" FontSize="11" 
-                                       Foreground="{StaticResource SidebarTextBrush}" Opacity="0.7"/>
+                            <TextBlock Text="WealthOS" FontSize="16" FontWeight="Bold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"/>
+                            <TextBlock Text="v1.1.0" FontSize="10" 
+                                       Foreground="{StaticResource TextTertiaryBrush}"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
 
-                <StackPanel Grid.Row="1">
-                    <Button Command="{Binding NavigateToCommand}" CommandParameter="Dashboard"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand"
-                            HorizontalContentAlignment="Left" Padding="0">
-                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsDashboardSelected}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
+                <!-- 导航按钮 -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <!-- 主要导航 -->
+                        <TextBlock Text="{DynamicResource Nav.MainSection}" FontSize="11" FontWeight="Medium"
+                                   Foreground="{StaticResource TextTertiaryBrush}" Margin="20,0,20,8"/>
+                        
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="Dashboard"
+                                Style="{StaticResource NavItemStyle}" HorizontalContentAlignment="Left">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#x1F3E0;" FontSize="14" Margin="0,0,8,0"/>
-                                <TextBlock Text="{DynamicResource Nav.Dashboard}" FontSize="14">
+                                <TextBlock Text="&#x1F3E0;" FontSize="14" Margin="0,0,10,0"/>
+                                <TextBlock Text="{DynamicResource Nav.Dashboard}">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -81,25 +78,14 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </StackPanel>
-                        </Border>
-                    </Button>
-                    <Button Command="{Binding NavigateToCommand}" CommandParameter="Assets"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand"
-                            HorizontalContentAlignment="Left" Padding="0">
-                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsAssetsSelected}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
+                            
+                        </Button>
+
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="Assets"
+                                Style="{StaticResource NavItemStyle}" HorizontalContentAlignment="Left">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#x1F4B0;" FontSize="14" Margin="0,0,8,0"/>
-                                <TextBlock Text="{DynamicResource Nav.Assets}" FontSize="14">
+                                <TextBlock Text="&#x1F4B0;" FontSize="14" Margin="0,0,10,0"/>
+                                <TextBlock Text="{DynamicResource Nav.Assets}">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -113,25 +99,14 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </StackPanel>
-                        </Border>
-                    </Button>
-                    <Button Command="{Binding NavigateToCommand}" CommandParameter="Liabilities"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand"
-                            HorizontalContentAlignment="Left" Padding="0">
-                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsLiabilitiesSelected}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
+                            
+                        </Button>
+
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="Liabilities"
+                                Style="{StaticResource NavItemStyle}" HorizontalContentAlignment="Left">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#x1F4C9;" FontSize="14" Margin="0,0,8,0"/>
-                                <TextBlock Text="{DynamicResource Nav.Liabilities}" FontSize="14">
+                                <TextBlock Text="&#x1F4C9;" FontSize="14" Margin="0,0,10,0"/>
+                                <TextBlock Text="{DynamicResource Nav.Liabilities}">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -145,25 +120,14 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </StackPanel>
-                        </Border>
-                    </Button>
-                    <Button Command="{Binding NavigateToCommand}" CommandParameter="Transactions"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand"
-                            HorizontalContentAlignment="Left" Padding="0">
-                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsTransactionsSelected}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
+                            
+                        </Button>
+
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="Transactions"
+                                Style="{StaticResource NavItemStyle}" HorizontalContentAlignment="Left">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#x1F4CA;" FontSize="14" Margin="0,0,8,0"/>
-                                <TextBlock Text="{DynamicResource Nav.Transactions}" FontSize="14">
+                                <TextBlock Text="&#x1F4CA;" FontSize="14" Margin="0,0,10,0"/>
+                                <TextBlock Text="{DynamicResource Nav.Transactions}">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -177,25 +141,14 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </StackPanel>
-                        </Border>
-                    </Button>
-                    <Button Command="{Binding NavigateToCommand}" CommandParameter="Goals"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand"
-                            HorizontalContentAlignment="Left" Padding="0">
-                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsGoalsSelected}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
+                            
+                        </Button>
+
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="Goals"
+                                Style="{StaticResource NavItemStyle}" HorizontalContentAlignment="Left">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#x1F3AF;" FontSize="14" Margin="0,0,8,0"/>
-                                <TextBlock Text="{DynamicResource Nav.Goals}" FontSize="14">
+                                <TextBlock Text="&#x1F3AF;" FontSize="14" Margin="0,0,10,0"/>
+                                <TextBlock Text="{DynamicResource Nav.Goals}">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -209,25 +162,14 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </StackPanel>
-                        </Border>
-                    </Button>
-                    <Button Command="{Binding NavigateToCommand}" CommandParameter="Budgets"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand"
-                            HorizontalContentAlignment="Left" Padding="0">
-                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsBudgetsSelected}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
+                            
+                        </Button>
+
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="Budgets"
+                                Style="{StaticResource NavItemStyle}" HorizontalContentAlignment="Left">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#x1F4B0;" FontSize="14" Margin="0,0,8,0"/>
-                                <TextBlock Text="{DynamicResource Nav.Budgets}" FontSize="14">
+                                <TextBlock Text="&#x1F4B0;" FontSize="14" Margin="0,0,10,0"/>
+                                <TextBlock Text="{DynamicResource Nav.Budgets}">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -241,25 +183,18 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </StackPanel>
-                        </Border>
-                    </Button>
-                    <Button Command="{Binding NavigateToCommand}" CommandParameter="Accounts"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand"
-                            HorizontalContentAlignment="Left" Padding="0">
-                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsAccountsSelected}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
+                            
+                        </Button>
+
+                        <!-- 更多导航 -->
+                        <TextBlock Text="{DynamicResource Nav.MoreSection}" FontSize="11" FontWeight="Medium"
+                                   Foreground="{StaticResource TextTertiaryBrush}" Margin="20,16,20,8"/>
+
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="Accounts"
+                                Style="{StaticResource NavItemStyle}" HorizontalContentAlignment="Left">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#x1F3E6;" FontSize="14" Margin="0,0,8,0"/>
-                                <TextBlock Text="{DynamicResource Nav.Accounts}" FontSize="14">
+                                <TextBlock Text="&#x1F3E6;" FontSize="14" Margin="0,0,10,0"/>
+                                <TextBlock Text="{DynamicResource Nav.Accounts}">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -273,25 +208,14 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </StackPanel>
-                        </Border>
-                    </Button>
-                    <Button Command="{Binding NavigateToCommand}" CommandParameter="Investments"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand"
-                            HorizontalContentAlignment="Left" Padding="0">
-                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsInvestmentsSelected}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
+                            
+                        </Button>
+
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="Investments"
+                                Style="{StaticResource NavItemStyle}" HorizontalContentAlignment="Left">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#x1F4C8;" FontSize="14" Margin="0,0,8,0"/>
-                                <TextBlock Text="{DynamicResource Nav.Investments}" FontSize="14">
+                                <TextBlock Text="&#x1F4C8;" FontSize="14" Margin="0,0,10,0"/>
+                                <TextBlock Text="{DynamicResource Nav.Investments}">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -305,25 +229,14 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </StackPanel>
-                        </Border>
-                    </Button>
-                    <Button Command="{Binding NavigateToCommand}" CommandParameter="FixedAssets"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand"
-                            HorizontalContentAlignment="Left" Padding="0">
-                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsFixedAssetsSelected}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
+                            
+                        </Button>
+
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="FixedAssets"
+                                Style="{StaticResource NavItemStyle}" HorizontalContentAlignment="Left">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#x1F3E2;" FontSize="14" Margin="0,0,8,0"/>
-                                <TextBlock Text="{DynamicResource Nav.FixedAssets}" FontSize="14">
+                                <TextBlock Text="&#x1F3E2;" FontSize="14" Margin="0,0,10,0"/>
+                                <TextBlock Text="{DynamicResource Nav.FixedAssets}">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -337,25 +250,14 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </StackPanel>
-                        </Border>
-                    </Button>
-                    <Button Command="{Binding NavigateToCommand}" CommandParameter="Analytics"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand"
-                            HorizontalContentAlignment="Left" Padding="0">
-                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsAnalyticsSelected}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
+                            
+                        </Button>
+
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="Analytics"
+                                Style="{StaticResource NavItemStyle}" HorizontalContentAlignment="Left">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#x1F4CA;" FontSize="14" Margin="0,0,8,0"/>
-                                <TextBlock Text="{DynamicResource Nav.Analytics}" FontSize="14">
+                                <TextBlock Text="&#x1F4CA;" FontSize="14" Margin="0,0,10,0"/>
+                                <TextBlock Text="{DynamicResource Nav.Analytics}">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -369,25 +271,14 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </StackPanel>
-                        </Border>
-                    </Button>
-                    <Button Command="{Binding NavigateToCommand}" CommandParameter="Timeline"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand"
-                            HorizontalContentAlignment="Left" Padding="0">
-                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsTimelineSelected}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
+                            
+                        </Button>
+
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="Timeline"
+                                Style="{StaticResource NavItemStyle}" HorizontalContentAlignment="Left">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#x1F4C5;" FontSize="14" Margin="0,0,8,0"/>
-                                <TextBlock Text="{DynamicResource Nav.Timeline}" FontSize="14">
+                                <TextBlock Text="&#x1F4C5;" FontSize="14" Margin="0,0,10,0"/>
+                                <TextBlock Text="{DynamicResource Nav.Timeline}">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -401,25 +292,14 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </StackPanel>
-                        </Border>
-                    </Button>
-                    <Button Command="{Binding NavigateToCommand}" CommandParameter="Reports"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand"
-                            HorizontalContentAlignment="Left" Padding="0">
-                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsReportsSelected}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
+                            
+                        </Button>
+
+                        <Button Command="{Binding NavigateToCommand}" CommandParameter="Reports"
+                                Style="{StaticResource NavItemStyle}" HorizontalContentAlignment="Left">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#x1F4CB;" FontSize="14" Margin="0,0,8,0"/>
-                                <TextBlock Text="{DynamicResource Nav.Reports}" FontSize="14">
+                                <TextBlock Text="&#x1F4CB;" FontSize="14" Margin="0,0,10,0"/>
+                                <TextBlock Text="{DynamicResource Nav.Reports}">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -433,64 +313,52 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </StackPanel>
-                        </Border>
-                    </Button>
+                            
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- 底部设置和语言切换 -->
+                <StackPanel Grid.Row="2" Margin="12,0,12,16">
+                    <Border Height="1" Background="{StaticResource BorderBrush}" Margin="8,0,8,12"/>
+                    
                     <Button Command="{Binding NavigateToCommand}" CommandParameter="Settings"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand"
-                            HorizontalContentAlignment="Left" Padding="0">
-                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsSettingsSelected}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#x2699;" FontSize="14" Margin="0,0,8,0"/>
-                                <TextBlock Text="{DynamicResource Nav.Settings}" FontSize="14">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsSettingsSelected}" Value="True">
-                                                    <Setter Property="Foreground" Value="{StaticResource SidebarActiveTextBrush}"/>
-                                                    <Setter Property="FontWeight" Value="SemiBold"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </StackPanel>
-                        </Border>
+                            Style="{StaticResource NavItemStyle}" HorizontalContentAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#x2699;" FontSize="14" Margin="0,0,10,0"/>
+                            <TextBlock Text="{DynamicResource Nav.Settings}">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsSettingsSelected}" Value="True">
+                                                <Setter Property="Foreground" Value="{StaticResource SidebarActiveTextBrush}"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                        
                     </Button>
-                    <Button Command="{Binding ToggleLanguageCommand}"
-                            Background="Transparent" BorderThickness="0" Cursor="Hand"
-                            HorizontalContentAlignment="Stretch" Padding="0" Margin="0,0,0,8">
-                        <Border Background="{StaticResource SidebarActiveBrush}" CornerRadius="12" Padding="16,12">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{DynamicResource Lang.Current}" FontSize="13" FontWeight="SemiBold"
-                                           Foreground="{StaticResource SidebarActiveTextBrush}"/>
-                                <TextBlock Grid.Column="1" Text="{DynamicResource Lang.Switch}" FontSize="11"
-                                           Foreground="{StaticResource SidebarTextBrush}"/>
-                            </Grid>
-                        </Border>
+
+                    <!-- 语言切换 -->
+                    <Button Command="{Binding ToggleLanguageCommand}" 
+                            Style="{StaticResource NavItemStyle}" HorizontalContentAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#x1F310;" FontSize="14" Margin="0,0,10,0"/>
+                            <TextBlock Text="{DynamicResource Lang.Current}" FontSize="12"/>
+                            <TextBlock Text=" / " FontSize="12" Foreground="{StaticResource TextHintBrush}" Margin="4,0"/>
+                            <TextBlock Text="{DynamicResource Lang.Switch}" FontSize="12" 
+                                       Foreground="{StaticResource PrimaryBrush}"/>
+                        </StackPanel>
                     </Button>
-                    <Border Background="{StaticResource SidebarActiveBrush}" CornerRadius="12" Padding="16,12">
-                        <TextBlock Text="{DynamicResource App.Version}" FontSize="11"
-                                   Foreground="{StaticResource SidebarTextBrush}"/>
-                    </Border>
                 </StackPanel>
             </Grid>
         </Border>
 
+        <!-- 主内容区域 -->
         <ContentControl Grid.Column="1"
                         Content="{Binding Navigation.CurrentViewModel}">
             <ContentControl.Resources>
