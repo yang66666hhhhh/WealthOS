@@ -16,7 +16,7 @@ public partial class LocalizationService : ObservableObject
 
     public LocalizationService()
     {
-        IsChinese = false;
+        IsChinese = true;
         IsDarkMode = false;
     }
 
