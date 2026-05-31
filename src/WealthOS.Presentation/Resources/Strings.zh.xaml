@@ -135,6 +135,28 @@
     <sys:String x:Key="Accounts.DeleteMessage">确定要删除此账户吗？相关交易记录将保留。</sys:String>
     <sys:String x:Key="Accounts.TotalBalance">账户总额</sys:String>
 
+    <!-- Investments -->
+    <sys:String x:Key="Nav.Investments">投资</sys:String>
+    <sys:String x:Key="Investments.Title">投资</sys:String>
+    <sys:String x:Key="Investments.Add">+ 添加持仓</sys:String>
+    <sys:String x:Key="Investments.AddTitle">添加持仓</sys:String>
+    <sys:String x:Key="Investments.EditTitle">编辑持仓</sys:String>
+    <sys:String x:Key="Investments.Symbol">代码</sys:String>
+    <sys:String x:Key="Investments.Name">名称</sys:String>
+    <sys:String x:Key="Investments.Type">类型</sys:String>
+    <sys:String x:Key="Investments.Quantity">数量</sys:String>
+    <sys:String x:Key="Investments.AverageCost">成本价</sys:String>
+    <sys:String x:Key="Investments.CurrentPrice">当前价</sys:String>
+    <sys:String x:Key="Investments.Note">备注</sys:String>
+    <sys:String x:Key="Investments.TotalValue">总市值</sys:String>
+    <sys:String x:Key="Investments.TotalCost">总成本</sys:String>
+    <sys:String x:Key="Investments.ProfitLoss">盈亏</sys:String>
+    <sys:String x:Key="Investments.PL">盈亏</sys:String>
+    <sys:String x:Key="Investments.NoHoldings">暂无持仓</sys:String>
+    <sys:String x:Key="Investments.NoHoldingsHint">点击「添加持仓」开始追踪您的第一笔投资</sys:String>
+    <sys:String x:Key="Investments.DeleteTitle">删除持仓</sys:String>
+    <sys:String x:Key="Investments.DeleteMessage">确定要删除此持仓吗？</sys:String>
+
     <!-- Language -->
     <sys:String x:Key="Lang.Switch">EN</sys:String>
     <sys:String x:Key="Lang.Current">中</sys:String>

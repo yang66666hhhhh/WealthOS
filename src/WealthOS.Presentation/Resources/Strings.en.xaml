@@ -135,6 +135,28 @@
     <sys:String x:Key="Accounts.DeleteMessage">Are you sure you want to delete this account? All related transactions will be kept.</sys:String>
     <sys:String x:Key="Accounts.TotalBalance">Total Balance</sys:String>
 
+    <!-- Investments -->
+    <sys:String x:Key="Nav.Investments">Investments</sys:String>
+    <sys:String x:Key="Investments.Title">Investments</sys:String>
+    <sys:String x:Key="Investments.Add">+ Add Holding</sys:String>
+    <sys:String x:Key="Investments.AddTitle">Add Holding</sys:String>
+    <sys:String x:Key="Investments.EditTitle">Edit Holding</sys:String>
+    <sys:String x:Key="Investments.Symbol">Symbol</sys:String>
+    <sys:String x:Key="Investments.Name">Name</sys:String>
+    <sys:String x:Key="Investments.Type">Type</sys:String>
+    <sys:String x:Key="Investments.Quantity">Quantity</sys:String>
+    <sys:String x:Key="Investments.AverageCost">Average Cost</sys:String>
+    <sys:String x:Key="Investments.CurrentPrice">Current Price</sys:String>
+    <sys:String x:Key="Investments.Note">Note</sys:String>
+    <sys:String x:Key="Investments.TotalValue">Total Value</sys:String>
+    <sys:String x:Key="Investments.TotalCost">Total Cost</sys:String>
+    <sys:String x:Key="Investments.ProfitLoss">Profit / Loss</sys:String>
+    <sys:String x:Key="Investments.PL">P/L</sys:String>
+    <sys:String x:Key="Investments.NoHoldings">No holdings yet</sys:String>
+    <sys:String x:Key="Investments.NoHoldingsHint">Click '+ Add Holding' to track your first investment</sys:String>
+    <sys:String x:Key="Investments.DeleteTitle">Delete Holding</sys:String>
+    <sys:String x:Key="Investments.DeleteMessage">Are you sure you want to delete this holding?</sys:String>
+
     <!-- Language -->
     <sys:String x:Key="Lang.Switch">中文</sys:String>
     <sys:String x:Key="Lang.Current">EN</sys:String>

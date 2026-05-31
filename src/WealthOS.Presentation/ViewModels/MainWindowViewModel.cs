@@ -12,6 +12,7 @@ public partial class MainWindowViewModel : ObservableObject
     private readonly TransactionsViewModel _transactionsVm;
     private readonly GoalsViewModel _goalsVm;
     private readonly AccountsViewModel _accountsVm;
+    private readonly InvestmentsViewModel _investmentsVm;
 
     public NavigationService Navigation { get; }
     public LocalizationService Localization { get; }
@@ -37,6 +38,9 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private bool _isAccountsSelected;
 
+    [ObservableProperty]
+    private bool _isInvestmentsSelected;
+
     public MainWindowViewModel(
         NavigationService navigation,
         LocalizationService localization,
@@ -45,7 +49,8 @@ public partial class MainWindowViewModel : ObservableObject
         LiabilitiesViewModel liabilitiesVm,
         TransactionsViewModel transactionsVm,
         GoalsViewModel goalsVm,
-        AccountsViewModel accountsVm)
+        AccountsViewModel accountsVm,
+        InvestmentsViewModel investmentsVm)
     {
         Navigation = navigation;
         Localization = localization;
@@ -55,6 +60,7 @@ public partial class MainWindowViewModel : ObservableObject
         _transactionsVm = transactionsVm;
         _goalsVm = goalsVm;
         _accountsVm = accountsVm;
+        _investmentsVm = investmentsVm;
 
         Navigation.NavigateTo(_dashboardVm);
     }
@@ -68,6 +74,7 @@ public partial class MainWindowViewModel : ObservableObject
         IsTransactionsSelected = page == "Transactions";
         IsGoalsSelected = page == "Goals";
         IsAccountsSelected = page == "Accounts";
+        IsInvestmentsSelected = page == "Investments";
 
         CurrentPage = page;
 
@@ -79,6 +86,7 @@ public partial class MainWindowViewModel : ObservableObject
             "Transactions" => _transactionsVm,
             "Goals" => _goalsVm,
             "Accounts" => _accountsVm,
+            "Investments" => _investmentsVm,
             _ => (ObservableObject)_dashboardVm
         };
 
@@ -101,5 +109,6 @@ public partial class MainWindowViewModel : ObservableObject
         else if (vm is TransactionsViewModel trans) _ = trans.LoadDataCommand.ExecuteAsync(null);
         else if (vm is GoalsViewModel goals) _ = goals.LoadDataCommand.ExecuteAsync(null);
         else if (vm is AccountsViewModel accounts) _ = accounts.LoadDataCommand.ExecuteAsync(null);
+        else if (vm is InvestmentsViewModel investments) _ = investments.LoadDataCommand.ExecuteAsync(null);
     }
 }
