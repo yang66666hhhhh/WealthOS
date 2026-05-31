@@ -110,8 +110,7 @@
                                                     Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="4,0"
                                                     Command="{Binding DataContext.ShowEditDialogCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                     CommandParameter="{Binding Id}"/>
-                                            <Button Content="x" FontSize="14" Background="Transparent" BorderThickness="0"
-                                                    Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="4,0"
+                                            <Button Content="&#x2716;" FontSize="12" Background="Transparent" BorderThickness="0" Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="4,0"
                                                     Command="{Binding DataContext.ConfirmDeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                     CommandParameter="{Binding Id}"/>
                                         </StackPanel>
