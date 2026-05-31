@@ -25,13 +25,19 @@
     <sys:String x:Key="Dashboard.Liabilities">负债</sys:String>
     <sys:String x:Key="Dashboard.TotalAssets">总资产</sys:String>
     <sys:String x:Key="Dashboard.SavingsRate">储蓄率</sys:String>
+    <sys:String x:Key="Dashboard.DebtRatio">负债率</sys:String>
     <sys:String x:Key="Dashboard.AssetAllocation">资产配置</sys:String>
-    <sys:String x:Key="Dashboard.NetWorthTrend">净资产趋势</sys:String>
+    <sys:String x:Key="Dashboard.NetWorthTrend">资产趋势</sys:String>
     <sys:String x:Key="Dashboard.RecentTransactions">最近交易</sys:String>
     <sys:String x:Key="Dashboard.NoTransactions">暂无交易记录</sys:String>
     <sys:String x:Key="Dashboard.NoTransactionsHint">添加第一笔交易开始记录</sys:String>
     <sys:String x:Key="Dashboard.AddTransaction">记一笔</sys:String>
     <sys:String x:Key="Dashboard.ViewAll">查看全部</sys:String>
+    <sys:String x:Key="Dashboard.MonthIncome">本月收入</sys:String>
+    <sys:String x:Key="Dashboard.MonthExpense">本月支出</sys:String>
+    <sys:String x:Key="Dashboard.FinancialHealth">财务健康度</sys:String>
+    <sys:String x:Key="Dashboard.QuickActions">快捷操作</sys:String>
+    <sys:String x:Key="Dashboard.ViewReports">查看报告</sys:String>
 
     <!-- Assets -->
     <sys:String x:Key="Assets.Title">资产</sys:String>

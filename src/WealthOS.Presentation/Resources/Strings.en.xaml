@@ -25,6 +25,7 @@
     <sys:String x:Key="Dashboard.Liabilities">Liabilities</sys:String>
     <sys:String x:Key="Dashboard.TotalAssets">Total Assets</sys:String>
     <sys:String x:Key="Dashboard.SavingsRate">Savings Rate</sys:String>
+    <sys:String x:Key="Dashboard.DebtRatio">Debt Ratio</sys:String>
     <sys:String x:Key="Dashboard.AssetAllocation">Asset Allocation</sys:String>
     <sys:String x:Key="Dashboard.NetWorthTrend">Net Worth Trend</sys:String>
     <sys:String x:Key="Dashboard.RecentTransactions">Recent Transactions</sys:String>
@@ -32,6 +33,11 @@
     <sys:String x:Key="Dashboard.NoTransactionsHint">Add your first transaction to get started</sys:String>
     <sys:String x:Key="Dashboard.AddTransaction">Add Transaction</sys:String>
     <sys:String x:Key="Dashboard.ViewAll">View All</sys:String>
+    <sys:String x:Key="Dashboard.MonthIncome">Month Income</sys:String>
+    <sys:String x:Key="Dashboard.MonthExpense">Month Expense</sys:String>
+    <sys:String x:Key="Dashboard.FinancialHealth">Financial Health</sys:String>
+    <sys:String x:Key="Dashboard.QuickActions">Quick Actions</sys:String>
+    <sys:String x:Key="Dashboard.ViewReports">View Reports</sys:String>
 
     <!-- Assets -->
     <sys:String x:Key="Assets.Title">Assets</sys:String>

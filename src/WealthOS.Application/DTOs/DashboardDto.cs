@@ -9,6 +9,9 @@ public record DashboardDto
     public decimal CashTotal { get; init; }
     public decimal InvestmentTotal { get; init; }
     public decimal SavingsRate { get; init; }
+    public decimal DebtRatio { get; init; }
+    public decimal MonthIncome { get; init; }
+    public decimal MonthExpense { get; init; }
     public List<AssetAllocationDto> AssetAllocations { get; init; } = [];
     public List<NetWorthPointDto> NetWorthHistory { get; init; } = [];
     public List<TransactionDto> RecentTransactions { get; init; } = [];

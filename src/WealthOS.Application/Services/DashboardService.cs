@@ -45,6 +45,7 @@ public class DashboardService
         var monthIncome = await _transactionRepo.GetTotalByTypeAsync(TransactionType.Income, monthStart, now);
         var monthExpense = await _transactionRepo.GetTotalByTypeAsync(TransactionType.Expense, monthStart, now);
         var savingsRate = monthIncome > 0 ? (monthIncome - monthExpense) / monthIncome * 100 : 0;
+        var debtRatio = totalAssets > 0 ? totalLiabilities / totalAssets * 100 : 0;
 
         var prevMonthStart = monthStart.AddMonths(-1);
         var prevSnapshot = (await _netWorthRepo.GetByDateRangeAsync(prevMonthStart, monthStart))
@@ -100,6 +101,9 @@ public class DashboardService
             CashTotal = cashTotal,
             InvestmentTotal = investmentTotal,
             SavingsRate = savingsRate,
+            DebtRatio = debtRatio,
+            MonthIncome = monthIncome,
+            MonthExpense = monthExpense,
             AssetAllocations = assetAllocations,
             NetWorthHistory = netWorthHistory,
             RecentTransactions = recentTransactions
