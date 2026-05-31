@@ -36,7 +36,7 @@ public class ReportService
             .GroupBy(t => new { t.OccurredAt.Year, t.OccurredAt.Month })
             .Select(g => new MonthlyBreakdownDto
             {
-                Month = $"{g.Key.Month:D2}月",
+                Month = $"{g.Key.Month:D2}",
                 Income = g.Where(t => t.Type == TransactionType.Income).Sum(t => t.Amount),
                 Expense = g.Where(t => t.Type == TransactionType.Expense).Sum(t => t.Amount)
             })
@@ -48,7 +48,7 @@ public class ReportService
             .GroupBy(t => t.CategoryId!.Value)
             .Select(g => new CategoryBreakdownDto
             {
-                Category = categories.TryGetValue(g.Key, out var cat) ? cat.Name : "未分类",
+                Category = categories.TryGetValue(g.Key, out var cat) ? cat.Name : "Uncategorized",
                 Amount = g.Sum(t => t.Amount),
                 Percentage = totalExpense > 0 ? g.Sum(t => t.Amount) / totalExpense * 100 : 0
             })
@@ -61,7 +61,7 @@ public class ReportService
             .GroupBy(t => t.CategoryId!.Value)
             .Select(g => new CategoryBreakdownDto
             {
-                Category = categories.TryGetValue(g.Key, out var cat) ? cat.Name : "未分类",
+                Category = categories.TryGetValue(g.Key, out var cat) ? cat.Name : "Uncategorized",
                 Amount = g.Sum(t => t.Amount),
                 Percentage = totalIncome > 0 ? g.Sum(t => t.Amount) / totalIncome * 100 : 0
             })
@@ -89,18 +89,18 @@ public class ReportService
     public async Task ExportTransactionsToCsvAsync(string filePath, DateTime start, DateTime end)
     {
         var transactions = await _transactionRepo.GetByDateRangeAsync(start, end);
-        var lines = new List<string> { "日期,类型,金额,备注" };
+        var lines = new List<string> { "Date,Type,Amount,Note" };
 
         foreach (var t in transactions.OrderByDescending(x => x.OccurredAt))
         {
             var typeStr = t.Type switch
             {
-                TransactionType.Income => "收入",
-                TransactionType.Expense => "支出",
-                TransactionType.Transfer => "转账",
-                _ => "未知"
+                TransactionType.Income => "Income",
+                TransactionType.Expense => "Expense",
+                TransactionType.Transfer => "Transfer",
+                _ => "Unknown"
             };
-            lines.Add($"{t.OccurredAt:yyyy-MM-dd},{typeStr},{t.Amount},{t.Note ?? ""}");
+            lines.Add($"{t.OccurredAt:yyyy-MM-dd},{typeStr},{t.Amount},\"{t.Note ?? ""}\"");
         }
 
         await System.IO.File.WriteAllLinesAsync(filePath, lines, System.Text.Encoding.UTF8);
@@ -116,12 +116,12 @@ public class ReportService
             var parts = line.Split(',');
             if (parts.Length < 3) continue;
 
-            var typeStr = parts[1].Trim();
+            var typeStr = parts[1].Trim().ToLower();
             var type = typeStr switch
             {
-                "收入" => TransactionType.Income,
-                "支出" => TransactionType.Expense,
-                "转账" => TransactionType.Transfer,
+                "income" or "收入" => TransactionType.Income,
+                "expense" or "支出" => TransactionType.Expense,
+                "transfer" or "转账" => TransactionType.Transfer,
                 _ => (TransactionType?)null
             };
 
@@ -129,7 +129,7 @@ public class ReportService
             if (!decimal.TryParse(parts[2].Trim(), out var amount)) continue;
             if (!DateTime.TryParse(parts[0].Trim(), out var date)) continue;
 
-            var note = parts.Length > 3 ? parts[3].Trim() : null;
+            var note = parts.Length > 3 ? parts[3].Trim().Trim('"') : null;
 
             var transaction = new Transaction
             {
