@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WealthOS.Application.DTOs;
@@ -7,7 +7,7 @@ using WealthOS.Domain.Entities;
 
 namespace WealthOS.Presentation.ViewModels;
 
-public partial class BudgetsViewModel : ObservableObject
+public partial class BudgetsViewModel : ViewModelBase
 {
     private readonly BudgetService _service;
 
@@ -66,15 +66,18 @@ public partial class BudgetsViewModel : ObservableObject
     private async Task LoadDataAsync()
     {
         IsLoading = true;
-        try
-        {
+        ClearError();
+        try {
             var items = await _service.GetBudgetsAsync(SelectedYear, SelectedMonth);
             Budgets = new ObservableCollection<BudgetDto>(items);
             TotalBudget = items.Sum(b => b.Amount);
             TotalSpent = items.Sum(b => b.Spent);
         }
-        finally
+        catch (Exception ex)
         {
+            SetError(ex);
+        }
+        finally {
             IsLoading = false;
         }
     }

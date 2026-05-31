@@ -9,7 +9,7 @@ using WealthOS.Application.Services;
 
 namespace WealthOS.Presentation.ViewModels;
 
-public partial class DashboardViewModel : ObservableObject
+public partial class DashboardViewModel : ViewModelBase
 {
     private readonly DashboardService _service;
 
@@ -37,6 +37,7 @@ public partial class DashboardViewModel : ObservableObject
     private async Task LoadDataAsync()
     {
         IsLoading = true;
+        ClearError();
         try
         {
             var days = SelectedTimeRange switch
@@ -49,6 +50,10 @@ public partial class DashboardViewModel : ObservableObject
             };
             Dashboard = await _service.GetDashboardAsync(days);
             UpdateCharts();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
         }
         finally
         {

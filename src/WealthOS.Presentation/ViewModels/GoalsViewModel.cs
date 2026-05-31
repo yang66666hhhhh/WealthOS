@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WealthOS.Application.DTOs;
@@ -8,7 +8,7 @@ using WealthOS.Domain.Enums;
 
 namespace WealthOS.Presentation.ViewModels;
 
-public partial class GoalsViewModel : ObservableObject
+public partial class GoalsViewModel : ViewModelBase
 {
     private readonly GoalService _service;
 
@@ -70,13 +70,16 @@ public partial class GoalsViewModel : ObservableObject
     private async Task LoadDataAsync()
     {
         IsLoading = true;
-        try
-        {
+        ClearError();
+        try {
             var items = await _service.GetAllGoalsAsync();
             Goals = new ObservableCollection<GoalDto>(items);
         }
-        finally
+        catch (Exception ex)
         {
+            SetError(ex);
+        }
+        finally {
             IsLoading = false;
         }
     }

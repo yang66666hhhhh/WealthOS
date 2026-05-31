@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
 using WealthOS.Application.DTOs;
@@ -6,7 +6,7 @@ using WealthOS.Application.Services;
 
 namespace WealthOS.Presentation.ViewModels;
 
-public partial class ReportsViewModel : ObservableObject
+public partial class ReportsViewModel : ViewModelBase
 {
     private readonly ReportService _reportService;
 
@@ -31,12 +31,15 @@ public partial class ReportsViewModel : ObservableObject
     private async Task LoadReportAsync()
     {
         IsLoading = true;
-        try
-        {
+        ClearError();
+        try {
             Report = await _reportService.GenerateAnnualReportAsync(SelectedYear);
         }
-        finally
+        catch (Exception ex)
         {
+            SetError(ex);
+        }
+        finally {
             IsLoading = false;
         }
     }

@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WealthOS.Application.DTOs;
@@ -8,7 +8,7 @@ using WealthOS.Domain.Enums;
 
 namespace WealthOS.Presentation.ViewModels;
 
-public partial class TransactionsViewModel : ObservableObject
+public partial class TransactionsViewModel : ViewModelBase
 {
     private readonly TransactionService _service;
     private readonly AccountService _accountService;
@@ -72,8 +72,8 @@ public partial class TransactionsViewModel : ObservableObject
     private async Task LoadDataAsync()
     {
         IsLoading = true;
-        try
-        {
+        ClearError();
+        try {
             var end = DateTime.UtcNow;
             var start = end.AddDays(-90);
             var items = await _service.GetTransactionsAsync(start, end);
@@ -85,8 +85,11 @@ public partial class TransactionsViewModel : ObservableObject
 
             ApplyFilters();
         }
-        finally
+        catch (Exception ex)
         {
+            SetError(ex);
+        }
+        finally {
             IsLoading = false;
         }
     }

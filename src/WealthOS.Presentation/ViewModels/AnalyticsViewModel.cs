@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LiveChartsCore;
@@ -11,7 +11,7 @@ using WealthOS.Domain.Enums;
 
 namespace WealthOS.Presentation.ViewModels;
 
-public partial class AnalyticsViewModel : ObservableObject
+public partial class AnalyticsViewModel : ViewModelBase
 {
     private readonly DashboardService _dashboardService;
     private readonly TransactionService _transactionService;
@@ -34,8 +34,8 @@ public partial class AnalyticsViewModel : ObservableObject
     private async Task LoadDataAsync()
     {
         IsLoading = true;
-        try
-        {
+        ClearError();
+        try {
             var dashboard = await _dashboardService.GetDashboardAsync();
 
             var now = DateTime.UtcNow;
@@ -95,8 +95,11 @@ public partial class AnalyticsViewModel : ObservableObject
             OnPropertyChanged(nameof(IncomeExpenseXAxes));
             OnPropertyChanged(nameof(AssetTrendSeries));
         }
-        finally
+        catch (Exception ex)
         {
+            SetError(ex);
+        }
+        finally {
             IsLoading = false;
         }
     }

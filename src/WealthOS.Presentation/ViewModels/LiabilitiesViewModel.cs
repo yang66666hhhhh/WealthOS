@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WealthOS.Application.DTOs;
@@ -8,7 +8,7 @@ using WealthOS.Domain.Enums;
 
 namespace WealthOS.Presentation.ViewModels;
 
-public partial class LiabilitiesViewModel : ObservableObject
+public partial class LiabilitiesViewModel : ViewModelBase
 {
     private readonly LiabilityService _service;
 
@@ -69,14 +69,17 @@ public partial class LiabilitiesViewModel : ObservableObject
     private async Task LoadDataAsync()
     {
         IsLoading = true;
-        try
-        {
+        ClearError();
+        try {
             var items = await _service.GetAllLiabilitiesAsync();
             Liabilities = new ObservableCollection<LiabilityDto>(items);
             TotalBalance = items.Sum(l => l.Balance);
         }
-        finally
+        catch (Exception ex)
         {
+            SetError(ex);
+        }
+        finally {
             IsLoading = false;
         }
     }

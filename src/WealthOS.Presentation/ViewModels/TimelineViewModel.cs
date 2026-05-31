@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WealthOS.Application.DTOs;
@@ -7,7 +7,7 @@ using WealthOS.Domain.Enums;
 
 namespace WealthOS.Presentation.ViewModels;
 
-public partial class TimelineViewModel : ObservableObject
+public partial class TimelineViewModel : ViewModelBase
 {
     private readonly TransactionService _transactionService;
 
@@ -27,8 +27,8 @@ public partial class TimelineViewModel : ObservableObject
     private async Task LoadDataAsync()
     {
         IsLoading = true;
-        try
-        {
+        ClearError();
+        try {
             var now = DateTime.UtcNow;
             var start = now.AddDays(-90);
             var transactions = await _transactionService.GetTransactionsAsync(start, now);
@@ -46,8 +46,11 @@ public partial class TimelineViewModel : ObservableObject
 
             Days = new ObservableCollection<TimelineDayDto>(grouped);
         }
-        finally
+        catch (Exception ex)
         {
+            SetError(ex);
+        }
+        finally {
             IsLoading = false;
         }
     }

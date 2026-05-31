@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WealthOS.Application.DTOs;
@@ -8,7 +8,7 @@ using WealthOS.Domain.Enums;
 
 namespace WealthOS.Presentation.ViewModels;
 
-public partial class AssetsViewModel : ObservableObject
+public partial class AssetsViewModel : ViewModelBase
 {
     private readonly AssetService _service;
 
@@ -66,15 +66,18 @@ public partial class AssetsViewModel : ObservableObject
     private async Task LoadDataAsync()
     {
         IsLoading = true;
-        try
-        {
+        ClearError();
+        try {
             var assets = FilterType.HasValue
                 ? await _service.GetAssetsByTypeAsync(FilterType.Value)
                 : await _service.GetAllAssetsAsync();
             Assets = new ObservableCollection<AssetCardDto>(assets);
         }
-        finally
+        catch (Exception ex)
         {
+            SetError(ex);
+        }
+        finally {
             IsLoading = false;
         }
     }

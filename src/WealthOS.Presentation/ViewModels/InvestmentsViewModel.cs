@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WealthOS.Application.DTOs;
@@ -8,7 +8,7 @@ using WealthOS.Domain.Enums;
 
 namespace WealthOS.Presentation.ViewModels;
 
-public partial class InvestmentsViewModel : ObservableObject
+public partial class InvestmentsViewModel : ViewModelBase
 {
     private readonly InvestmentService _service;
 
@@ -78,8 +78,8 @@ public partial class InvestmentsViewModel : ObservableObject
     private async Task LoadDataAsync()
     {
         IsLoading = true;
-        try
-        {
+        ClearError();
+        try {
             var items = await _service.GetAllHoldingsAsync();
             Holdings = new ObservableCollection<InvestmentHoldingDto>(items);
             TotalValue = items.Sum(h => h.TotalValue);
@@ -87,8 +87,11 @@ public partial class InvestmentsViewModel : ObservableObject
             TotalProfitLoss = items.Sum(h => h.ProfitLoss);
             TotalProfitLossPercentage = TotalCost > 0 ? TotalProfitLoss / TotalCost * 100 : 0;
         }
-        finally
+        catch (Exception ex)
         {
+            SetError(ex);
+        }
+        finally {
             IsLoading = false;
         }
     }
