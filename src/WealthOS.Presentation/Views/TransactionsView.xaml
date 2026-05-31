@@ -103,6 +103,23 @@
                         </Button.Style>
                         <Button.Content><Binding Source="{StaticResource Transactions.Filter.Expense}"/></Button.Content>
                     </Button>
+                    <Button Margin="0,0,8,0" Padding="12,6" FontSize="12" Cursor="Hand"
+                            Command="{Binding FilterByTypeCommand}" CommandParameter="Transfer">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
+                                <Setter Property="Padding" Value="12,6"/>
+                                <Setter Property="FontSize" Value="12"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedFilter}" Value="Transfer">
+                                        <Setter Property="Background" Value="{StaticResource TransferBrush}"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.Content><Binding Source="{StaticResource Transactions.Filter.Transfer}"/></Button.Content>
+                    </Button>
                 </StackPanel>
 
                 <Border Style="{StaticResource CardStyle}" Padding="0">

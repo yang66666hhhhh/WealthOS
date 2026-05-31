@@ -97,6 +97,7 @@
     <sys:String x:Key="Transactions.Filter.All">All</sys:String>
     <sys:String x:Key="Transactions.Filter.Income">Income</sys:String>
     <sys:String x:Key="Transactions.Filter.Expense">Expense</sys:String>
+    <sys:String x:Key="Transactions.Filter.Transfer">Transfer</sys:String>
     <sys:String x:Key="Transactions.Search">Search transactions...</sys:String>
 
     <!-- Goals -->

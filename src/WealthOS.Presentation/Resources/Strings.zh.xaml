@@ -97,6 +97,7 @@
     <sys:String x:Key="Transactions.Filter.All">全部</sys:String>
     <sys:String x:Key="Transactions.Filter.Income">收入</sys:String>
     <sys:String x:Key="Transactions.Filter.Expense">支出</sys:String>
+    <sys:String x:Key="Transactions.Filter.Transfer">转账</sys:String>
     <sys:String x:Key="Transactions.Search">搜索交易...</sys:String>
 
     <!-- Goals -->
