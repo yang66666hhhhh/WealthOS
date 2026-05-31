@@ -87,10 +87,16 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{Binding Institution}" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
-                                        <Button Grid.Column="1" Content="x" FontSize="14" Background="Transparent" BorderThickness="0"
-                                                Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="4,0"
-                                                Command="{Binding DataContext.ConfirmDeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                CommandParameter="{Binding Id}"/>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                            <Button Content="e" FontSize="12" Background="Transparent" BorderThickness="0"
+                                                    Foreground="{StaticResource PrimaryBrush}" Cursor="Hand" Padding="4,0"
+                                                    Command="{Binding DataContext.ShowEditCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    CommandParameter="{Binding}"/>
+                                            <Button Content="x" FontSize="14" Background="Transparent" BorderThickness="0"
+                                                    Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="4,0"
+                                                    Command="{Binding DataContext.ConfirmDeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    CommandParameter="{Binding Id}"/>
+                                        </StackPanel>
                                     </Grid>
                                     <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
                                     <TextBlock FontSize="26" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}">
@@ -175,6 +181,60 @@
                                 </Button>
                                 <Button Style="{StaticResource DangerButton}" Command="{Binding ExecuteDeleteCommand}">
                                     <Button.Content><Binding Source="{StaticResource Common.Delete}"/></Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Border>
+
+                <!-- Edit Dialog -->
+                <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsEditDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource DialogTitleStyle}">
+                                <TextBlock.Text><Binding Source="{StaticResource Assets.EditTitle}"/></TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource LabelStyle}">
+                                <TextBlock.Text><Binding Source="{StaticResource Assets.Name}"/></TextBlock.Text>
+                            </TextBlock>
+                            <TextBox Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
+                            <TextBlock Style="{StaticResource LabelStyle}">
+                                <TextBlock.Text><Binding Source="{StaticResource Assets.Type}"/></TextBlock.Text>
+                            </TextBlock>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource AssetTypes}}" SelectedItem="{Binding NewType}" Margin="0,0,0,16"/>
+                            <TextBlock Style="{StaticResource LabelStyle}">
+                                <TextBlock.Text><Binding Source="{StaticResource Assets.Institution}"/></TextBlock.Text>
+                            </TextBlock>
+                            <TextBox Text="{Binding NewInstitution, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
+                            <Grid Margin="0,0,0,16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Style="{StaticResource LabelStyle}">
+                                        <TextBlock.Text><Binding Source="{StaticResource Assets.CurrentValue}"/></TextBlock.Text>
+                                    </TextBlock>
+                                    <TextBox Text="{Binding NewCurrentValue, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Style="{StaticResource LabelStyle}">
+                                        <TextBlock.Text><Binding Source="{StaticResource Assets.InitialValue}"/></TextBlock.Text>
+                                    </TextBlock>
+                                    <TextBox Text="{Binding NewInitialValue, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}"/>
+                                </StackPanel>
+                            </Grid>
+                            <TextBlock Style="{StaticResource LabelStyle}">
+                                <TextBlock.Text><Binding Source="{StaticResource Assets.Note}"/></TextBlock.Text>
+                            </TextBlock>
+                            <TextBox Text="{Binding NewNote, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,24"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Style="{StaticResource SecondaryButton}" Command="{Binding CancelEditCommand}" Margin="0,0,12,0">
+                                    <Button.Content><Binding Source="{StaticResource Common.Cancel}"/></Button.Content>
+                                </Button>
+                                <Button Style="{StaticResource PrimaryButton}" Command="{Binding ConfirmEditCommand}">
+                                    <Button.Content><Binding Source="{StaticResource Common.Save}"/></Button.Content>
                                 </Button>
                             </StackPanel>
                         </StackPanel>
