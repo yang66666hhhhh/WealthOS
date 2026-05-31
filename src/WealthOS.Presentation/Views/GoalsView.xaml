@@ -80,7 +80,7 @@
                                             </Button>
                                             <Button Content="&#x270E;" FontSize="14" Background="Transparent" BorderThickness="0" 
                                                     Foreground="{StaticResource TextTertiaryBrush}" Cursor="Hand" Padding="6,2"
-                                                    Command="{Binding DataContext.ShowEditCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding Id}"/>
+                                                    Command="{Binding DataContext.ShowEditDialogCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding Id}"/>
                                             <Button Content="&#x2716;" FontSize="12" Background="Transparent" BorderThickness="0" 
                                                     Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="6,2"
                                                     Command="{Binding DataContext.ConfirmDeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
