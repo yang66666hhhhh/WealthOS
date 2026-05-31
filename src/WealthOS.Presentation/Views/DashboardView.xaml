@@ -56,9 +56,9 @@
                             Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                <Border Width="36" Height="36" CornerRadius="{StaticResource IconCornerRadius}" Margin="0,0,12,0">
                                     <Border.Background>
-                                        <SolidColorBrush Color="#EFF6FF"/>
+                                        <SolidColorBrush Color="{StaticResource IconBgBlueColor}"/>
                                     </Border.Background>
                                     <TextBlock Text="&#x1F4BC;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
@@ -79,9 +79,9 @@
                             Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                <Border Width="36" Height="36" CornerRadius="{StaticResource IconCornerRadius}" Margin="0,0,12,0">
                                     <Border.Background>
-                                        <SolidColorBrush Color="#ECFDF5"/>
+                                        <SolidColorBrush Color="{StaticResource IconBgGreenColor}"/>
                                     </Border.Background>
                                     <TextBlock Text="&#x1F4B0;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
@@ -96,7 +96,7 @@
                             <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
                                 <Border CornerRadius="4" Padding="6,2" Margin="0,0,8,0">
                                     <Border.Background>
-                                        <SolidColorBrush Color="#ECFDF5"/>
+                                        <SolidColorBrush Color="{StaticResource IconBgGreenColor}"/>
                                     </Border.Background>
                                     <TextBlock FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}">
                                         <TextBlock.Text>
@@ -116,9 +116,9 @@
                             Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                <Border Width="36" Height="36" CornerRadius="{StaticResource IconCornerRadius}" Margin="0,0,12,0">
                                     <Border.Background>
-                                        <SolidColorBrush Color="#ECFDF5"/>
+                                        <SolidColorBrush Color="{StaticResource IconBgGreenColor}"/>
                                     </Border.Background>
                                     <TextBlock Text="&#x2191;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                Foreground="{StaticResource IncomeBrush}"/>
@@ -140,9 +140,9 @@
                             Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                <Border Width="36" Height="36" CornerRadius="{StaticResource IconCornerRadius}" Margin="0,0,12,0">
                                     <Border.Background>
-                                        <SolidColorBrush Color="#FEF2F2"/>
+                                        <SolidColorBrush Color="{StaticResource IconBgRedColor}"/>
                                     </Border.Background>
                                     <TextBlock Text="&#x2193;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                Foreground="{StaticResource ExpenseBrush}"/>

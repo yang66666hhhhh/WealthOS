@@ -43,9 +43,9 @@
                             Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                <Border Width="36" Height="36" CornerRadius="{StaticResource IconCornerRadius}" Margin="0,0,12,0">
                                     <Border.Background>
-                                        <SolidColorBrush Color="#EFF6FF"/>
+                                        <SolidColorBrush Color="{StaticResource IconBgBlueColor}"/>
                                     </Border.Background>
                                     <TextBlock Text="&#x1F4B0;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
@@ -64,9 +64,9 @@
                             Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                <Border Width="36" Height="36" CornerRadius="{StaticResource IconCornerRadius}" Margin="0,0,12,0">
                                     <Border.Background>
-                                        <SolidColorBrush Color="#ECFDF5"/>
+                                        <SolidColorBrush Color="{StaticResource IconBgGreenColor}"/>
                                     </Border.Background>
                                     <TextBlock Text="&#x1F4CA;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
@@ -85,9 +85,9 @@
                             Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                <Border Width="36" Height="36" CornerRadius="{StaticResource IconCornerRadius}" Margin="0,0,12,0">
                                     <Border.Background>
-                                        <SolidColorBrush Color="#FEF2F2"/>
+                                        <SolidColorBrush Color="{StaticResource IconBgRedColor}"/>
                                     </Border.Background>
                                     <TextBlock Text="&#x1F4C9;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
@@ -139,9 +139,9 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                            <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,10,0">
+                                            <Border Width="36" Height="36" CornerRadius="{StaticResource IconCornerRadius}" Margin="0,0,10,0">
                                                 <Border.Background>
-                                                    <SolidColorBrush Color="#FEF3C7"/>
+                                                    <SolidColorBrush Color="{StaticResource IconBgYellowColor}"/>
                                                 </Border.Background>
                                                 <TextBlock Text="&#x1F3E2;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             </Border>

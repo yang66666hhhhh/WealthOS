@@ -129,7 +129,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border CornerRadius="16" Padding="20" Margin="0,0,16,16" Width="260"
+                            <Border CornerRadius="{StaticResource CardCornerRadius}" Padding="20" Margin="0,0,16,16" Width="260"
                                     BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
                                     Background="{StaticResource CardBackgroundBrush}">
                                 <StackPanel>
@@ -180,7 +180,7 @@
 
                 <!-- Add Dialog -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource DialogCornerRadius}" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Assets.AddTitle}"/></TextBlock.Text>
@@ -234,7 +234,7 @@
 
                 <!-- Delete Confirmation -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource DialogCornerRadius}" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Assets.DeleteTitle}"/></TextBlock.Text>
@@ -256,7 +256,7 @@
 
                 <!-- Edit Dialog -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsEditDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource DialogCornerRadius}" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Assets.EditTitle}"/></TextBlock.Text>

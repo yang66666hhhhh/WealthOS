@@ -57,9 +57,9 @@
                             Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                <Border Width="36" Height="36" CornerRadius="{StaticResource IconCornerRadius}" Margin="0,0,12,0">
                                     <Border.Background>
-                                        <SolidColorBrush Color="#EEF2FF"/>
+                                        <SolidColorBrush Color="{StaticResource IconBgPurpleColor}"/>
                                     </Border.Background>
                                     <TextBlock Text="&#x1F4CA;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
@@ -78,9 +78,9 @@
                             Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                <Border Width="36" Height="36" CornerRadius="{StaticResource IconCornerRadius}" Margin="0,0,12,0">
                                     <Border.Background>
-                                        <SolidColorBrush Color="#FEF2F2"/>
+                                        <SolidColorBrush Color="{StaticResource IconBgRedColor}"/>
                                     </Border.Background>
                                     <TextBlock Text="&#x1F4B0;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
@@ -99,9 +99,9 @@
                             Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,12,0">
+                                <Border Width="36" Height="36" CornerRadius="{StaticResource IconCornerRadius}" Margin="0,0,12,0">
                                     <Border.Background>
-                                        <SolidColorBrush Color="#ECFDF5"/>
+                                        <SolidColorBrush Color="{StaticResource IconBgGreenColor}"/>
                                     </Border.Background>
                                     <TextBlock Text="&#x1F4C8;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
@@ -194,7 +194,7 @@
                                                 <StackPanel Orientation="Horizontal">
                                                     <Border CornerRadius="6" Padding="8,4" Margin="0,0,8,0">
                                                         <Border.Background>
-                                                            <SolidColorBrush Color="#EEF2FF"/>
+                                                            <SolidColorBrush Color="{StaticResource IconBgPurpleColor}"/>
                                                         </Border.Background>
                                                         <TextBlock Text="{Binding Symbol}" FontSize="13" FontWeight="Bold" 
                                                                    Foreground="{StaticResource PrimaryBrush}"/>
@@ -225,14 +225,14 @@
                                                         <Style TargetType="Border">
                                                             <Setter Property="Background">
                                                                 <Setter.Value>
-                                                                    <SolidColorBrush Color="#ECFDF5"/>
+                                                                    <SolidColorBrush Color="{StaticResource IconBgGreenColor}"/>
                                                                 </Setter.Value>
                                                             </Setter>
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding ProfitLoss}" Value="0">
                                                                     <Setter Property="Background">
                                                                         <Setter.Value>
-                                                                            <SolidColorBrush Color="#F3F4F6"/>
+                                                                            <SolidColorBrush Color="{StaticResource SurfaceColor}"/>
                                                                         </Setter.Value>
                                                                     </Setter>
                                                                 </DataTrigger>
@@ -280,7 +280,7 @@
 
                 <!-- Add Dialog -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="16" Padding="28" Width="460" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource CardCornerRadius}" Padding="28" Width="460" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Investments.AddTitle}"/></TextBlock.Text>
@@ -349,7 +349,7 @@
 
                 <!-- Edit Dialog -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsEditDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="16" Padding="28" Width="460" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource CardCornerRadius}" Padding="28" Width="460" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Investments.EditTitle}"/></TextBlock.Text>
@@ -418,7 +418,7 @@
 
                 <!-- Delete Confirmation -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="16" Padding="28" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource CardCornerRadius}" Padding="28" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Investments.DeleteTitle}"/></TextBlock.Text>

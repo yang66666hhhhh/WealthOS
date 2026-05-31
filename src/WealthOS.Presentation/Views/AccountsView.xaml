@@ -56,7 +56,7 @@
                         </StackPanel>
                         <Border Width="48" Height="48" CornerRadius="12" HorizontalAlignment="Right" VerticalAlignment="Top">
                             <Border.Background>
-                                <SolidColorBrush Color="#EFF6FF"/>
+                                <SolidColorBrush Color="{StaticResource IconBgBlueColor}"/>
                             </Border.Background>
                             <TextBlock Text="&#x1F3E6;" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
@@ -127,7 +127,7 @@
                                     <!-- 类型标签 -->
                                     <Border CornerRadius="6" Padding="8,4" Margin="0,12,0,0" HorizontalAlignment="Left">
                                         <Border.Background>
-                                            <SolidColorBrush Color="#EEF2FF"/>
+                                            <SolidColorBrush Color="{StaticResource IconBgPurpleColor}"/>
                                         </Border.Background>
                                         <TextBlock Text="{Binding Type}" FontSize="11" 
                                                    Foreground="{StaticResource PrimaryBrush}" FontWeight="Medium"/>
@@ -140,7 +140,7 @@
 
                 <!-- Add Dialog -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="16" Padding="28" Width="440" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource CardCornerRadius}" Padding="28" Width="440" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Accounts.AddTitle}"/></TextBlock.Text>
@@ -179,7 +179,7 @@
 
                 <!-- Edit Dialog -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsEditDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="16" Padding="28" Width="440" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource CardCornerRadius}" Padding="28" Width="440" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Accounts.EditTitle}"/></TextBlock.Text>
@@ -218,7 +218,7 @@
 
                 <!-- Delete Confirmation -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="16" Padding="28" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource CardCornerRadius}" Padding="28" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Accounts.DeleteTitle}"/></TextBlock.Text>

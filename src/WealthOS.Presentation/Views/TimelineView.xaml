@@ -60,9 +60,9 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                            <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,10,0">
+                                            <Border Width="36" Height="36" CornerRadius="{StaticResource IconCornerRadius}" Margin="0,0,10,0">
                                                 <Border.Background>
-                                                    <SolidColorBrush Color="#EEF2FF"/>
+                                                    <SolidColorBrush Color="{StaticResource IconBgPurpleColor}"/>
                                                 </Border.Background>
                                                 <TextBlock Text="&#x1F4C5;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             </Border>
@@ -73,7 +73,7 @@
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                                             <Border CornerRadius="6" Padding="8,4" Margin="0,0,8,0">
                                                 <Border.Background>
-                                                    <SolidColorBrush Color="#ECFDF5"/>
+                                                    <SolidColorBrush Color="{StaticResource IconBgGreenColor}"/>
                                                 </Border.Background>
                                                 <TextBlock FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource IncomeBrush}">
                                                     <Run Text="+"/><Run Text="{Binding TotalIncome, StringFormat='￥{0:N0}'}"/>
@@ -81,7 +81,7 @@
                                             </Border>
                                             <Border CornerRadius="6" Padding="8,4">
                                                 <Border.Background>
-                                                    <SolidColorBrush Color="#FEF2F2"/>
+                                                    <SolidColorBrush Color="{StaticResource IconBgRedColor}"/>
                                                 </Border.Background>
                                                 <TextBlock FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource ExpenseBrush}">
                                                     <Run Text="-"/><Run Text="{Binding TotalExpense, StringFormat='￥{0:N0}'}"/>

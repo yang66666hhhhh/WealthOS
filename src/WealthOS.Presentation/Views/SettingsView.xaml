@@ -34,7 +34,7 @@
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0" Width="44" Height="44" CornerRadius="12" Margin="0,0,16,0">
                             <Border.Background>
-                                <SolidColorBrush Color="#EFF6FF"/>
+                                <SolidColorBrush Color="{StaticResource IconBgBlueColor}"/>
                             </Border.Background>
                             <TextBlock Text="&#x1F310;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
@@ -63,7 +63,7 @@
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0" Width="44" Height="44" CornerRadius="12" Margin="0,0,16,0">
                             <Border.Background>
-                                <SolidColorBrush Color="#FEF3C7"/>
+                                <SolidColorBrush Color="{StaticResource IconBgYellowColor}"/>
                             </Border.Background>
                             <TextBlock Text="&#x2600;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
@@ -92,7 +92,7 @@
                             </Grid.ColumnDefinitions>
                             <Border Grid.Column="0" Width="44" Height="44" CornerRadius="12" Margin="0,0,16,0">
                                 <Border.Background>
-                                    <SolidColorBrush Color="#ECFDF5"/>
+                                    <SolidColorBrush Color="{StaticResource IconBgGreenColor}"/>
                                 </Border.Background>
                                 <TextBlock Text="&#x1F4BE;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
@@ -101,7 +101,7 @@
                                            Foreground="{StaticResource TextPrimaryBrush}"/>
                             </StackPanel>
                         </Grid>
-                        <Border CornerRadius="10" Padding="16" Background="{StaticResource SurfaceBrush}">
+                        <Border CornerRadius="{StaticResource IconCornerRadius}" Padding="16" Background="{StaticResource SurfaceBrush}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100"/>
@@ -143,7 +143,7 @@
                             </Grid.ColumnDefinitions>
                             <Border Grid.Column="0" Width="44" Height="44" CornerRadius="12" Margin="0,0,16,0">
                                 <Border.Background>
-                                    <SolidColorBrush Color="#FEE2E2"/>
+                                    <SolidColorBrush Color="{StaticResource IconBgRedColor}"/>
                                 </Border.Background>
                                 <TextBlock Text="&#x1F4E6;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
@@ -171,7 +171,7 @@
                         <Border CornerRadius="8" Padding="12" Margin="0,16,0,0"
                                 Visibility="{Binding StatusMessage, Converter={StaticResource BoolToVis}}">
                             <Border.Background>
-                                <SolidColorBrush Color="#ECFDF5"/>
+                                <SolidColorBrush Color="{StaticResource IconBgGreenColor}"/>
                             </Border.Background>
                             <TextBlock Text="{Binding StatusMessage}" FontSize="13" Foreground="{StaticResource AccentBrush}"/>
                         </Border>

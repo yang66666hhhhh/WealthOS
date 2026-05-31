@@ -61,9 +61,9 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                            <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,10,0">
+                                            <Border Width="36" Height="36" CornerRadius="{StaticResource IconCornerRadius}" Margin="0,0,10,0">
                                                 <Border.Background>
-                                                    <SolidColorBrush Color="#EEF2FF"/>
+                                                    <SolidColorBrush Color="{StaticResource IconBgPurpleColor}"/>
                                                 </Border.Background>
                                                 <TextBlock Text="&#x1F3AF;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             </Border>
@@ -154,7 +154,7 @@
 
                 <!-- Add Dialog -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource DialogCornerRadius}" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Goals.AddTitle}"/></TextBlock.Text>
@@ -204,7 +204,7 @@
 
                 <!-- Delete Confirmation -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource DialogCornerRadius}" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Goals.DeleteTitle}"/></TextBlock.Text>
@@ -226,7 +226,7 @@
 
                 <!-- Edit Dialog -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsEditDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource DialogCornerRadius}" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Goals.EditTitle}"/></TextBlock.Text>
@@ -276,7 +276,7 @@
 
                 <!-- Progress Dialog -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsProgressDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource DialogCornerRadius}" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8">
                                 <TextBlock.Text><Binding Source="{StaticResource Goals.ProgressTitle}"/></TextBlock.Text>
