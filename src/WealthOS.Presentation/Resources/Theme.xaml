@@ -105,7 +105,7 @@
     <SolidColorBrush x:Key="InfoBrush" Color="{StaticResource InfoColor}"/>
 
     <!-- ============================================ -->
-    <!--  引入公共样式 -->
+    <!--  引入公共样式（必须在画刷之后） -->
     <!-- ============================================ -->
     
     <ResourceDictionary.MergedDictionaries>
