@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using System.Data;
 using System.Reflection;
 using Dapper;
 using WealthOS.Application.Interfaces;
@@ -69,6 +70,33 @@ public abstract class BaseRepository<T> : IRepository<T> where T : BaseEntity
         using var connection = Context.CreateConnection();
         var affected = await connection.ExecuteAsync(
             $"DELETE FROM {TableName} WHERE Id = @Id", new { Id = id.ToString() });
+        return affected > 0;
+    }
+
+    public virtual async Task<Guid> AddAsync(T entity, IDbTransaction transaction)
+    {
+        entity.Id = Guid.NewGuid();
+        entity.CreatedAt = DateTime.UtcNow;
+        entity.UpdatedAt = DateTime.UtcNow;
+
+        await transaction.Connection!.ExecuteAsync(
+            $"INSERT INTO {TableName} (Id, {AddColumns}) VALUES (@Id, {AddParameters})", entity, transaction);
+        return entity.Id;
+    }
+
+    public virtual async Task<bool> UpdateAsync(T entity, IDbTransaction transaction)
+    {
+        entity.UpdatedAt = DateTime.UtcNow;
+
+        var affected = await transaction.Connection!.ExecuteAsync(
+            $"UPDATE {TableName} SET {UpdateSetClauses} WHERE Id = @Id", entity, transaction);
+        return affected > 0;
+    }
+
+    public virtual async Task<bool> DeleteAsync(Guid id, IDbTransaction transaction)
+    {
+        var affected = await transaction.Connection!.ExecuteAsync(
+            $"DELETE FROM {TableName} WHERE Id = @Id", new { Id = id.ToString() }, transaction);
         return affected > 0;
     }
 }

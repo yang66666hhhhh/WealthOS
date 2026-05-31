@@ -19,4 +19,11 @@ public class SqliteDbContext : IDbContext
         connection.Open();
         return connection;
     }
+
+    public IDbTransaction BeginTransaction()
+    {
+        var connection = new SqliteConnection(_connectionString);
+        connection.Open();
+        return connection.BeginTransaction();
+    }
 }

@@ -5,4 +5,5 @@ namespace WealthOS.Application.Interfaces;
 public interface IDbContext
 {
     IDbConnection CreateConnection();
+    IDbTransaction BeginTransaction();
 }
