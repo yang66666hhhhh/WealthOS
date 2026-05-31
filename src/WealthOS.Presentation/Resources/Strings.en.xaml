@@ -134,6 +134,7 @@
     <!-- Accounts -->
     <sys:String x:Key="Nav.Accounts">Accounts</sys:String>
     <sys:String x:Key="Accounts.Title">Accounts</sys:String>
+    <sys:String x:Key="Accounts.Subtitle">Manage your bank accounts and wallets</sys:String>
     <sys:String x:Key="Accounts.Add">+ Add Account</sys:String>
     <sys:String x:Key="Accounts.AddTitle">Add Account</sys:String>
     <sys:String x:Key="Accounts.EditTitle">Edit Account</sys:String>

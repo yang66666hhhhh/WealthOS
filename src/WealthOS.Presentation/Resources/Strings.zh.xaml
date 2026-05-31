@@ -133,7 +133,8 @@
 
     <!-- Accounts -->
     <sys:String x:Key="Nav.Accounts">账户</sys:String>
-    <sys:String x:Key="Accounts.Title">账户</sys:String>
+    <sys:String x:Key="Accounts.Title">账户管理</sys:String>
+    <sys:String x:Key="Accounts.Subtitle">管理您的银行账户和电子钱包</sys:String>
     <sys:String x:Key="Accounts.Add">+ 添加账户</sys:String>
     <sys:String x:Key="Accounts.AddTitle">添加账户</sys:String>
     <sys:String x:Key="Accounts.EditTitle">编辑账户</sys:String>
