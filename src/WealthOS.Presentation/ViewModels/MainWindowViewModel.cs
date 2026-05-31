@@ -16,6 +16,7 @@ public partial class MainWindowViewModel : ObservableObject
     private readonly FixedAssetsViewModel _fixedAssetsVm;
     private readonly AnalyticsViewModel _analyticsVm;
     private readonly TimelineViewModel _timelineVm;
+    private readonly ReportsViewModel _reportsVm;
 
     public NavigationService Navigation { get; }
     public LocalizationService Localization { get; }
@@ -53,6 +54,9 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private bool _isTimelineSelected;
 
+    [ObservableProperty]
+    private bool _isReportsSelected;
+
     public MainWindowViewModel(
         NavigationService navigation,
         LocalizationService localization,
@@ -65,7 +69,8 @@ public partial class MainWindowViewModel : ObservableObject
         InvestmentsViewModel investmentsVm,
         FixedAssetsViewModel fixedAssetsVm,
         AnalyticsViewModel analyticsVm,
-        TimelineViewModel timelineVm)
+        TimelineViewModel timelineVm,
+        ReportsViewModel reportsVm)
     {
         Navigation = navigation;
         Localization = localization;
@@ -79,6 +84,7 @@ public partial class MainWindowViewModel : ObservableObject
         _fixedAssetsVm = fixedAssetsVm;
         _analyticsVm = analyticsVm;
         _timelineVm = timelineVm;
+        _reportsVm = reportsVm;
 
         Navigation.NavigateTo(_dashboardVm);
     }
@@ -96,6 +102,7 @@ public partial class MainWindowViewModel : ObservableObject
         IsFixedAssetsSelected = page == "FixedAssets";
         IsAnalyticsSelected = page == "Analytics";
         IsTimelineSelected = page == "Timeline";
+        IsReportsSelected = page == "Reports";
 
         CurrentPage = page;
 
@@ -111,6 +118,7 @@ public partial class MainWindowViewModel : ObservableObject
             "FixedAssets" => _fixedAssetsVm,
             "Analytics" => _analyticsVm,
             "Timeline" => _timelineVm,
+            "Reports" => _reportsVm,
             _ => (ObservableObject)_dashboardVm
         };
 
@@ -137,5 +145,6 @@ public partial class MainWindowViewModel : ObservableObject
         else if (vm is FixedAssetsViewModel fixedAssets) _ = fixedAssets.LoadDataCommand.ExecuteAsync(null);
         else if (vm is AnalyticsViewModel analytics) _ = analytics.LoadDataCommand.ExecuteAsync(null);
         else if (vm is TimelineViewModel timeline) _ = timeline.LoadDataCommand.ExecuteAsync(null);
+        else if (vm is ReportsViewModel reports) _ = reports.LoadReportCommand.ExecuteAsync(null);
     }
 }

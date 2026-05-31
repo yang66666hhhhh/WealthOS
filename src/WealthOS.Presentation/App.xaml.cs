@@ -53,6 +53,7 @@ public partial class App : System.Windows.Application
         services.AddSingleton<CategoryService>();
         services.AddSingleton<NetWorthService>();
         services.AddSingleton<InvestmentService>();
+        services.AddSingleton<ReportService>();
 
         services.AddSingleton<NavigationService>();
         services.AddSingleton<LocalizationService>();
@@ -67,6 +68,7 @@ public partial class App : System.Windows.Application
         services.AddSingleton<FixedAssetsViewModel>();
         services.AddSingleton<AnalyticsViewModel>();
         services.AddSingleton<TimelineViewModel>();
+        services.AddSingleton<ReportsViewModel>();
         services.AddSingleton<MainWindowViewModel>();
         services.AddTransient<MainWindow>();
     }

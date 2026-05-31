@@ -181,6 +181,18 @@
     <sys:String x:Key="Timeline.Title">Timeline</sys:String>
     <sys:String x:Key="Timeline.NoData">No transaction history yet</sys:String>
 
+    <!-- Reports -->
+    <sys:String x:Key="Nav.Reports">Reports</sys:String>
+    <sys:String x:Key="Reports.Title">Annual Report</sys:String>
+    <sys:String x:Key="Reports.ExportCsv">Export CSV</sys:String>
+    <sys:String x:Key="Reports.TotalIncome">Total Income</sys:String>
+    <sys:String x:Key="Reports.TotalExpense">Total Expense</sys:String>
+    <sys:String x:Key="Reports.SavingsRate">Savings Rate</sys:String>
+    <sys:String x:Key="Reports.NetWorthGrowth">Net Worth Growth</sys:String>
+    <sys:String x:Key="Reports.MonthlyBreakdown">Monthly Breakdown</sys:String>
+    <sys:String x:Key="Reports.TopExpense">Top Expense Categories</sys:String>
+    <sys:String x:Key="Reports.TopIncome">Top Income Categories</sys:String>
+
     <!-- Language -->
     <sys:String x:Key="Lang.Switch">中文</sys:String>
     <sys:String x:Key="Lang.Current">EN</sys:String>

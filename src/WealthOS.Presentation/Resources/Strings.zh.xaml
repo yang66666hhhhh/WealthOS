@@ -181,6 +181,18 @@
     <sys:String x:Key="Timeline.Title">时间轴</sys:String>
     <sys:String x:Key="Timeline.NoData">暂无交易记录</sys:String>
 
+    <!-- Reports -->
+    <sys:String x:Key="Nav.Reports">报告</sys:String>
+    <sys:String x:Key="Reports.Title">年度报告</sys:String>
+    <sys:String x:Key="Reports.ExportCsv">导出 CSV</sys:String>
+    <sys:String x:Key="Reports.TotalIncome">总收入</sys:String>
+    <sys:String x:Key="Reports.TotalExpense">总支出</sys:String>
+    <sys:String x:Key="Reports.SavingsRate">储蓄率</sys:String>
+    <sys:String x:Key="Reports.NetWorthGrowth">净资产增长</sys:String>
+    <sys:String x:Key="Reports.MonthlyBreakdown">月度明细</sys:String>
+    <sys:String x:Key="Reports.TopExpense">支出排行</sys:String>
+    <sys:String x:Key="Reports.TopIncome">收入排行</sys:String>
+
     <!-- Language -->
     <sys:String x:Key="Lang.Switch">EN</sys:String>
     <sys:String x:Key="Lang.Current">中</sys:String>
