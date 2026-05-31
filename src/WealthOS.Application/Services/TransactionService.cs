@@ -1,3 +1,4 @@
+using System.Data;
 using WealthOS.Application.DTOs;
 using WealthOS.Application.Interfaces;
 using WealthOS.Domain.Common;
@@ -12,17 +13,20 @@ public class TransactionService
     private readonly IAccountRepository _accountRepo;
     private readonly ICategoryRepository _categoryRepo;
     private readonly NetWorthService _netWorthService;
+    private readonly IDbContext _dbContext;
 
     public TransactionService(
         ITransactionRepository transactionRepo,
         IAccountRepository accountRepo,
         ICategoryRepository categoryRepo,
-        NetWorthService netWorthService)
+        NetWorthService netWorthService,
+        IDbContext dbContext)
     {
         _transactionRepo = transactionRepo;
         _accountRepo = accountRepo;
         _categoryRepo = categoryRepo;
         _netWorthService = netWorthService;
+        _dbContext = dbContext;
     }
 
     public async Task<IEnumerable<TransactionDto>> GetTransactionsAsync(DateTime start, DateTime end)
@@ -47,94 +51,130 @@ public class TransactionService
 
     public async Task<Guid> AddTransactionAsync(Transaction transaction)
     {
-        var account = await _accountRepo.GetByIdAsync(transaction.AccountId)
-            ?? throw new InvalidOperationException($"Account {transaction.AccountId} not found.");
+        using var transaction_scope = _dbContext.BeginTransaction();
 
-        var id = await _transactionRepo.AddAsync(transaction);
-
-        account.Balance += transaction.GetBalanceImpact();
-        account.UpdatedAt = DateTime.UtcNow;
-        await _accountRepo.UpdateAsync(account);
-
-        if (transaction.Type == TransactionType.Transfer && transaction.ToAccountId.HasValue)
+        try
         {
-            var toAccount = await _accountRepo.GetByIdAsync(transaction.ToAccountId.Value);
-            if (toAccount != null)
+            var account = await _accountRepo.GetByIdAsync(transaction.AccountId, transaction_scope)
+                ?? throw new InvalidOperationException($"Account {transaction.AccountId} not found.");
+
+            var id = await _transactionRepo.AddAsync(transaction, transaction_scope);
+
+            account.Balance += transaction.GetBalanceImpact();
+            account.UpdatedAt = DateTime.UtcNow;
+            await _accountRepo.UpdateAsync(account, transaction_scope);
+
+            if (transaction.Type == TransactionType.Transfer && transaction.ToAccountId.HasValue)
             {
-                toAccount.Balance += transaction.Amount;
-                toAccount.UpdatedAt = DateTime.UtcNow;
-                await _accountRepo.UpdateAsync(toAccount);
+                var toAccount = await _accountRepo.GetByIdAsync(transaction.ToAccountId.Value, transaction_scope);
+                if (toAccount != null)
+                {
+                    toAccount.Balance += transaction.Amount;
+                    toAccount.UpdatedAt = DateTime.UtcNow;
+                    await _accountRepo.UpdateAsync(toAccount, transaction_scope);
+                }
             }
+
+            transaction_scope.Commit();
+
+            await _netWorthService.SaveSnapshotIfNotExistsTodayAsync();
+
+            return id;
         }
-
-        await _netWorthService.SaveSnapshotIfNotExistsTodayAsync();
-
-        return id;
+        catch
+        {
+            transaction_scope.Rollback();
+            throw;
+        }
     }
 
     public async Task<bool> DeleteTransactionAsync(Guid id)
     {
-        var transaction = await _transactionRepo.GetByIdAsync(id);
-        if (transaction == null) return false;
+        using var transaction_scope = _dbContext.BeginTransaction();
 
-        var account = await _accountRepo.GetByIdAsync(transaction.AccountId);
-        if (account != null)
+        try
         {
-            account.Balance -= transaction.GetBalanceImpact();
-            account.UpdatedAt = DateTime.UtcNow;
-            await _accountRepo.UpdateAsync(account);
-        }
+            var transaction = await _transactionRepo.GetByIdAsync(id, transaction_scope);
+            if (transaction == null) return false;
 
-        if (transaction.Type == TransactionType.Transfer && transaction.ToAccountId.HasValue)
-        {
-            var toAccount = await _accountRepo.GetByIdAsync(transaction.ToAccountId.Value);
-            if (toAccount != null)
+            var account = await _accountRepo.GetByIdAsync(transaction.AccountId, transaction_scope);
+            if (account != null)
             {
-                toAccount.Balance -= transaction.Amount;
-                toAccount.UpdatedAt = DateTime.UtcNow;
-                await _accountRepo.UpdateAsync(toAccount);
+                account.Balance -= transaction.GetBalanceImpact();
+                account.UpdatedAt = DateTime.UtcNow;
+                await _accountRepo.UpdateAsync(account, transaction_scope);
             }
+
+            if (transaction.Type == TransactionType.Transfer && transaction.ToAccountId.HasValue)
+            {
+                var toAccount = await _accountRepo.GetByIdAsync(transaction.ToAccountId.Value, transaction_scope);
+                if (toAccount != null)
+                {
+                    toAccount.Balance -= transaction.Amount;
+                    toAccount.UpdatedAt = DateTime.UtcNow;
+                    await _accountRepo.UpdateAsync(toAccount, transaction_scope);
+                }
+            }
+
+            var result = await _transactionRepo.DeleteAsync(id, transaction_scope);
+
+            transaction_scope.Commit();
+
+            await _netWorthService.SaveSnapshotIfNotExistsTodayAsync();
+
+            return result;
         }
-
-        var result = await _transactionRepo.DeleteAsync(id);
-
-        await _netWorthService.SaveSnapshotIfNotExistsTodayAsync();
-
-        return result;
+        catch
+        {
+            transaction_scope.Rollback();
+            throw;
+        }
     }
 
     public async Task<bool> UpdateTransactionAsync(Guid id, Transaction updatedTransaction)
     {
-        var originalTransaction = await _transactionRepo.GetByIdAsync(id);
-        if (originalTransaction == null) return false;
+        using var transaction_scope = _dbContext.BeginTransaction();
 
-        var account = await _accountRepo.GetByIdAsync(originalTransaction.AccountId)
-            ?? throw new InvalidOperationException($"Account {originalTransaction.AccountId} not found.");
-
-        account.Balance -= originalTransaction.GetBalanceImpact();
-        account.Balance += updatedTransaction.GetBalanceImpact();
-
-        account.UpdatedAt = DateTime.UtcNow;
-        await _accountRepo.UpdateAsync(account);
-
-        if (originalTransaction.Type == TransactionType.Transfer && originalTransaction.ToAccountId.HasValue)
+        try
         {
-            var toAccount = await _accountRepo.GetByIdAsync(originalTransaction.ToAccountId.Value);
-            if (toAccount != null)
+            var originalTransaction = await _transactionRepo.GetByIdAsync(id, transaction_scope);
+            if (originalTransaction == null) return false;
+
+            var account = await _accountRepo.GetByIdAsync(originalTransaction.AccountId, transaction_scope)
+                ?? throw new InvalidOperationException($"Account {originalTransaction.AccountId} not found.");
+
+            account.Balance -= originalTransaction.GetBalanceImpact();
+            account.Balance += updatedTransaction.GetBalanceImpact();
+
+            account.UpdatedAt = DateTime.UtcNow;
+            await _accountRepo.UpdateAsync(account, transaction_scope);
+
+            if (originalTransaction.Type == TransactionType.Transfer && originalTransaction.ToAccountId.HasValue)
             {
-                toAccount.Balance -= originalTransaction.Amount;
-                toAccount.UpdatedAt = DateTime.UtcNow;
-                await _accountRepo.UpdateAsync(toAccount);
+                var toAccount = await _accountRepo.GetByIdAsync(originalTransaction.ToAccountId.Value, transaction_scope);
+                if (toAccount != null)
+                {
+                    toAccount.Balance -= originalTransaction.Amount;
+                    toAccount.UpdatedAt = DateTime.UtcNow;
+                    await _accountRepo.UpdateAsync(toAccount, transaction_scope);
+                }
             }
+
+            updatedTransaction.Id = id;
+            updatedTransaction.CreatedAt = originalTransaction.CreatedAt;
+            updatedTransaction.UpdatedAt = DateTime.UtcNow;
+            await _transactionRepo.UpdateAsync(updatedTransaction, transaction_scope);
+
+            transaction_scope.Commit();
+
+            await _netWorthService.SaveSnapshotIfNotExistsTodayAsync();
+
+            return true;
         }
-
-        updatedTransaction.Id = id;
-        updatedTransaction.CreatedAt = originalTransaction.CreatedAt;
-        updatedTransaction.UpdatedAt = DateTime.UtcNow;
-        await _transactionRepo.UpdateAsync(updatedTransaction);
-
-        await _netWorthService.SaveSnapshotIfNotExistsTodayAsync();
-
-        return true;
+        catch
+        {
+            transaction_scope.Rollback();
+            throw;
+        }
     }
 }

@@ -84,6 +84,12 @@ public abstract class BaseRepository<T> : IRepository<T> where T : BaseEntity
         return entity.Id;
     }
 
+    public virtual async Task<T?> GetByIdAsync(Guid id, IDbTransaction transaction)
+    {
+        return await transaction.Connection!.QuerySingleOrDefaultAsync<T>(
+            $"SELECT * FROM {TableName} WHERE Id = @Id", new { Id = id.ToString() }, transaction);
+    }
+
     public virtual async Task<bool> UpdateAsync(T entity, IDbTransaction transaction)
     {
         entity.UpdatedAt = DateTime.UtcNow;
