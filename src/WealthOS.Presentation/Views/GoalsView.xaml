@@ -140,7 +140,7 @@
                                                 </TextBlock>
                                                 <TextBlock FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}" Margin="8,0,0,0">
                                                     <TextBlock.Text>
-                                                        <Binding Path="EstimatedMonthsRemaining" StringFormat="{DynamicResource Goals.MonthsFormat}"/>
+                                                        <Binding Path="EstimatedMonthsRemaining" StringFormat="{StaticResource Goals.MonthsFormat}"/>
                                                     </TextBlock.Text>
                                                 </TextBlock>
                                             </StackPanel>
