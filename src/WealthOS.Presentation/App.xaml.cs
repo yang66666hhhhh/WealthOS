@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Windows;
+using Dapper;
 using Microsoft.Extensions.DependencyInjection;
 using WealthOS.Application.Interfaces;
 using WealthOS.Application.Services;
@@ -16,6 +17,8 @@ public partial class App : System.Windows.Application
 
     public App()
     {
+        SqlMapper.AddTypeHandler(new GuidTypeHandler());
+        
         var services = new ServiceCollection();
         ConfigureServices(services);
         _services = services.BuildServiceProvider();
