@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
@@ -7,7 +7,7 @@ using WealthOS.Presentation.Services;
 
 namespace WealthOS.Presentation.ViewModels;
 
-public partial class SettingsViewModel : ObservableObject
+public partial class SettingsViewModel : ViewModelBase
 {
     private readonly IDbContext _dbContext;
     private readonly LocalizationService _localization;

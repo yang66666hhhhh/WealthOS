@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WealthOS.Application.DTOs;
@@ -7,7 +7,7 @@ using WealthOS.Domain.Enums;
 
 namespace WealthOS.Presentation.ViewModels;
 
-public partial class FixedAssetsViewModel : ObservableObject
+public partial class FixedAssetsViewModel : ViewModelBase
 {
     private readonly AssetService _assetService;
 
@@ -36,6 +36,7 @@ public partial class FixedAssetsViewModel : ObservableObject
     private async Task LoadDataAsync()
     {
         IsLoading = true;
+        ClearError();
         try
         {
             var allAssets = await _assetService.GetAllAssetsAsync();
@@ -47,6 +48,10 @@ public partial class FixedAssetsViewModel : ObservableObject
             TotalInitialValue = FixedAssets.Sum(a => a.InitialValue);
             TotalCurrentValue = FixedAssets.Sum(a => a.CurrentValue);
             TotalDepreciation = TotalInitialValue - TotalCurrentValue;
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
         }
         finally
         {
