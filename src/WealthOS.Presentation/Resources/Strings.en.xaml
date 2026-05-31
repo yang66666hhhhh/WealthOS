@@ -193,6 +193,11 @@
     <sys:String x:Key="Analytics.Subtitle">Deep dive into your finances</sys:String>
     <sys:String x:Key="Analytics.IncomeExpenseTrend">Income vs Expense (6 months)</sys:String>
     <sys:String x:Key="Analytics.AssetDistribution">Asset Distribution</sys:String>
+    <sys:String x:Key="Analytics.Income">Income</sys:String>
+    <sys:String x:Key="Analytics.Expense">Expense</sys:String>
+    <sys:String x:Key="Analytics.Cash">Cash</sys:String>
+    <sys:String x:Key="Analytics.Investment">Investment</sys:String>
+    <sys:String x:Key="Analytics.Liabilities">Liabilities</sys:String>
 
     <!-- Timeline -->
     <sys:String x:Key="Nav.Timeline">Timeline</sys:String>

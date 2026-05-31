@@ -193,6 +193,11 @@
     <sys:String x:Key="Analytics.Subtitle">深入了解您的财务状况</sys:String>
     <sys:String x:Key="Analytics.IncomeExpenseTrend">收支趋势（近 6 个月）</sys:String>
     <sys:String x:Key="Analytics.AssetDistribution">资产分布</sys:String>
+    <sys:String x:Key="Analytics.Income">收入</sys:String>
+    <sys:String x:Key="Analytics.Expense">支出</sys:String>
+    <sys:String x:Key="Analytics.Cash">现金</sys:String>
+    <sys:String x:Key="Analytics.Investment">投资</sys:String>
+    <sys:String x:Key="Analytics.Liabilities">负债</sys:String>
 
     <!-- Timeline -->
     <sys:String x:Key="Nav.Timeline">时间轴</sys:String>

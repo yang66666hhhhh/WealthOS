@@ -8,6 +8,7 @@ using SkiaSharp;
 using WealthOS.Application.DTOs;
 using WealthOS.Application.Services;
 using WealthOS.Domain.Enums;
+using System.Windows;
 
 namespace WealthOS.Presentation.ViewModels;
 
@@ -28,6 +29,14 @@ public partial class AnalyticsViewModel : ViewModelBase
         _dashboardService = dashboardService;
         _transactionService = transactionService;
         _ = LoadDataAsync();
+    }
+
+    private static string GetResourceString(string key)
+    {
+        var app = System.Windows.Application.Current;
+        if (app?.TryFindResource(key) is string value)
+            return value;
+        return key;
     }
 
     [RelayCommand]
@@ -60,14 +69,14 @@ public partial class AnalyticsViewModel : ViewModelBase
                 new ColumnSeries<decimal>
                 {
                     Values = incomeData,
-                    Name = "收入",
+                    Name = GetResourceString("Analytics.Income"),
                     Fill = new SolidColorPaint(SKColors.Teal),
                     Rx = 4, Ry = 4
                 },
                 new ColumnSeries<decimal>
                 {
                     Values = expenseData,
-                    Name = "支出",
+                    Name = GetResourceString("Analytics.Expense"),
                     Fill = new SolidColorPaint(SKColors.Coral),
                     Rx = 4, Ry = 4
                 }
@@ -86,9 +95,9 @@ public partial class AnalyticsViewModel : ViewModelBase
 
             AssetTrendSeries =
             [
-                new PieSeries<decimal> { Values = [dashboard.CashTotal], Name = "现金", Fill = new SolidColorPaint(SKColors.Teal) },
-                new PieSeries<decimal> { Values = [dashboard.InvestmentTotal], Name = "投资", Fill = new SolidColorPaint(SKColors.MediumPurple) },
-                new PieSeries<decimal> { Values = [dashboard.TotalLiabilities], Name = "负债", Fill = new SolidColorPaint(SKColors.Coral) }
+                new PieSeries<decimal> { Values = [dashboard.CashTotal], Name = GetResourceString("Analytics.Cash"), Fill = new SolidColorPaint(SKColors.Teal) },
+                new PieSeries<decimal> { Values = [dashboard.InvestmentTotal], Name = GetResourceString("Analytics.Investment"), Fill = new SolidColorPaint(SKColors.MediumPurple) },
+                new PieSeries<decimal> { Values = [dashboard.TotalLiabilities], Name = GetResourceString("Analytics.Liabilities"), Fill = new SolidColorPaint(SKColors.Coral) }
             ];
 
             OnPropertyChanged(nameof(IncomeExpenseSeries));
