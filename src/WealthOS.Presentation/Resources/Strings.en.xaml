@@ -194,6 +194,7 @@
     <!-- Timeline -->
     <sys:String x:Key="Nav.Timeline">Timeline</sys:String>
     <sys:String x:Key="Timeline.Title">Timeline</sys:String>
+    <sys:String x:Key="Timeline.Subtitle">View your transaction history</sys:String>
     <sys:String x:Key="Timeline.NoData">No transaction history yet</sys:String>
 
     <!-- Reports -->

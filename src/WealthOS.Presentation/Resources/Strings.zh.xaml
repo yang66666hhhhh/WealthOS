@@ -194,6 +194,7 @@
     <!-- Timeline -->
     <sys:String x:Key="Nav.Timeline">时间轴</sys:String>
     <sys:String x:Key="Timeline.Title">时间轴</sys:String>
+    <sys:String x:Key="Timeline.Subtitle">查看您的交易历史</sys:String>
     <sys:String x:Key="Timeline.NoData">暂无交易记录</sys:String>
 
     <!-- Reports -->

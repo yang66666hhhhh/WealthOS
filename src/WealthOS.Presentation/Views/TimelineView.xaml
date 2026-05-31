@@ -10,17 +10,25 @@
     </UserControl.Resources>
 
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="32,24">
+        <Border Background="{StaticResource PrimaryBrush}" 
+                Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
+                Panel.ZIndex="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="3"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="28,24">
             <StackPanel MaxWidth="1200">
-                <TextBlock Style="{StaticResource PageTitleStyle}">
-                    <TextBlock.Text><Binding Source="{StaticResource Timeline.Title}"/></TextBlock.Text>
-                </TextBlock>
+                <!-- 页面标题 -->
+                <Grid Margin="0,0,0,24">
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource Timeline.Title}" FontSize="24" FontWeight="Bold" 
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBlock FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" Margin="0,4,0,0">
+                            <Run Text="&#x1F4C5; "/>
+                            <Run Text="{DynamicResource Timeline.Subtitle}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
 
-                <ProgressBar IsIndeterminate="True" Height="3" Margin="0,0,0,16"
-                             Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
-                             Background="Transparent" Foreground="{StaticResource PrimaryBrush}"/>
-
-                <!-- Empty State -->
+                <!-- 空状态 -->
                 <Border Padding="60" Visibility="{Binding Days.Count, Converter={StaticResource BoolToVis}}">
                     <Border.Style>
                         <Style TargetType="Border">
@@ -30,70 +38,116 @@
                         </Style>
                     </Border.Style>
                     <StackPanel HorizontalAlignment="Center">
-                        <TextBlock FontSize="20" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center">
+                        <TextBlock Style="{StaticResource EmptyStateIconStyle}" Text="&#x1F4C5;"/>
+                        <TextBlock Style="{StaticResource EmptyStateTitleStyle}">
                             <TextBlock.Text><Binding Source="{StaticResource Timeline.NoData}"/></TextBlock.Text>
                         </TextBlock>
                     </StackPanel>
                 </Border>
 
+                <!-- 时间轴列表 -->
                 <ItemsControl ItemsSource="{Binding Days}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,16">
+                            <Border CornerRadius="14" Padding="20" Margin="0,0,0,16"
+                                    BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                                    Background="{StaticResource CardBackgroundBrush}">
                                 <StackPanel>
-                                    <!-- Day Header -->
-                                    <Grid Margin="0,0,0,12">
+                                    <!-- 日期标题 -->
+                                    <Grid Margin="0,0,0,16">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding Date, StringFormat='yyyy-MM-dd dddd'}"
-                                                   FontSize="16" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"/>
-                                        <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                            <TextBlock FontSize="14" Foreground="{StaticResource IncomeBrush}" Margin="0,0,12,0">
-                                                <Run Text="+"/><Run Text="{Binding TotalIncome, StringFormat='￥{0:N0}'}"/>
-                                            </TextBlock>
-                                            <TextBlock FontSize="14" Foreground="{StaticResource ExpenseBrush}">
-                                                <Run Text="-"/><Run Text="{Binding TotalExpense, StringFormat='￥{0:N0}'}"/>
-                                            </TextBlock>
+                                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                            <Border Width="36" Height="36" CornerRadius="10" Margin="0,0,10,0">
+                                                <Border.Background>
+                                                    <SolidColorBrush Color="#EEF2FF"/>
+                                                </Border.Background>
+                                                <TextBlock Text="&#x1F4C5;" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <TextBlock Text="{Binding Date, StringFormat='yyyy-MM-dd dddd'}"
+                                                       FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Border CornerRadius="6" Padding="8,4" Margin="0,0,8,0">
+                                                <Border.Background>
+                                                    <SolidColorBrush Color="#ECFDF5"/>
+                                                </Border.Background>
+                                                <TextBlock FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource IncomeBrush}">
+                                                    <Run Text="+"/><Run Text="{Binding TotalIncome, StringFormat='￥{0:N0}'}"/>
+                                                </TextBlock>
+                                            </Border>
+                                            <Border CornerRadius="6" Padding="8,4">
+                                                <Border.Background>
+                                                    <SolidColorBrush Color="#FEF2F2"/>
+                                                </Border.Background>
+                                                <TextBlock FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource ExpenseBrush}">
+                                                    <Run Text="-"/><Run Text="{Binding TotalExpense, StringFormat='￥{0:N0}'}"/>
+                                                </TextBlock>
+                                            </Border>
                                         </StackPanel>
                                     </Grid>
 
-                                    <!-- Transactions -->
+                                    <!-- 交易列表 -->
                                     <ItemsControl ItemsSource="{Binding Transactions}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Border Padding="6,0" Margin="0,4,0,0">
+                                                <Border Padding="8,6" BorderThickness="0,0,0,1" BorderBrush="{StaticResource BorderLightBrush}">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="Auto"/>
                                                             <ColumnDefinition Width="*"/>
                                                             <ColumnDefinition Width="Auto"/>
                                                         </Grid.ColumnDefinitions>
-                                                        <Ellipse Grid.Column="0" Width="8" Height="8" Margin="0,0,12,0">
-                                                            <Ellipse.Style>
-                                                                <Style TargetType="Ellipse">
+                                                        <!-- 类型指示器 -->
+                                                        <Border Grid.Column="0" Width="32" Height="32" CornerRadius="8" Margin="0,0,12,0">
+                                                            <Border.Style>
+                                                                <Style TargetType="Border">
                                                                     <Style.Triggers>
                                                                         <DataTrigger Binding="{Binding Type}" Value="Income">
-                                                                            <Setter Property="Fill" Value="{StaticResource IncomeBrush}"/>
+                                                                            <Setter Property="Background" Value="{StaticResource IncomeLightBrush}"/>
                                                                         </DataTrigger>
                                                                         <DataTrigger Binding="{Binding Type}" Value="Expense">
-                                                                            <Setter Property="Fill" Value="{StaticResource ExpenseBrush}"/>
+                                                                            <Setter Property="Background" Value="{StaticResource ExpenseLightBrush}"/>
                                                                         </DataTrigger>
                                                                         <DataTrigger Binding="{Binding Type}" Value="Transfer">
-                                                                            <Setter Property="Fill" Value="{StaticResource TransferBrush}"/>
+                                                                            <Setter Property="Background" Value="{StaticResource TransferLightBrush}"/>
                                                                         </DataTrigger>
                                                                     </Style.Triggers>
                                                                 </Style>
-                                                            </Ellipse.Style>
-                                                        </Ellipse>
+                                                            </Border.Style>
+                                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="TextBlock">
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding Type}" Value="Income">
+                                                                                <Setter Property="Text" Value="&#x2191;"/>
+                                                                                <Setter Property="Foreground" Value="{StaticResource IncomeBrush}"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding Type}" Value="Expense">
+                                                                                <Setter Property="Text" Value="&#x2193;"/>
+                                                                                <Setter Property="Foreground" Value="{StaticResource ExpenseBrush}"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding Type}" Value="Transfer">
+                                                                                <Setter Property="Text" Value="&#x2194;"/>
+                                                                                <Setter Property="Foreground" Value="{StaticResource TransferBrush}"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                            </TextBlock>
+                                                        </Border>
+                                                        <!-- 交易信息 -->
                                                         <StackPanel Grid.Column="1">
                                                             <TextBlock Text="{Binding Note, FallbackValue='Transaction'}"
-                                                                       FontSize="14" Foreground="{StaticResource TextPrimaryBrush}"/>
-                                                            <TextBlock Text="{Binding AccountName}" FontSize="12"
-                                                                       Foreground="{StaticResource TextSecondaryBrush}"/>
+                                                                       FontSize="13" FontWeight="Medium" Foreground="{StaticResource TextPrimaryBrush}"/>
+                                                            <TextBlock Text="{Binding AccountName}" FontSize="11"
+                                                                       Foreground="{StaticResource TextTertiaryBrush}"/>
                                                         </StackPanel>
-                                                        <TextBlock Grid.Column="2" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center">
+                                                        <!-- 金额 -->
+                                                        <TextBlock Grid.Column="2" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center">
                                                             <TextBlock.Style>
                                                                 <Style TargetType="TextBlock">
                                                                     <Style.Triggers>
@@ -126,6 +180,8 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+
+                <Border Height="20"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>
