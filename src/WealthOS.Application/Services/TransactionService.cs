@@ -113,4 +113,52 @@ public class TransactionService
 
         return result;
     }
+
+    public async Task<bool> UpdateTransactionAsync(Guid id, Transaction updatedTransaction)
+    {
+        var originalTransaction = await _transactionRepo.GetByIdAsync(id);
+        if (originalTransaction == null) return false;
+
+        var account = await _accountRepo.GetByIdAsync(originalTransaction.AccountId)
+            ?? throw new InvalidOperationException($"Account {originalTransaction.AccountId} not found.");
+
+        account.Balance -= originalTransaction.Type switch
+        {
+            TransactionType.Income => originalTransaction.Amount,
+            TransactionType.Expense => -originalTransaction.Amount,
+            TransactionType.Transfer => -originalTransaction.Amount,
+            _ => 0
+        };
+
+        account.Balance += updatedTransaction.Type switch
+        {
+            TransactionType.Income => updatedTransaction.Amount,
+            TransactionType.Expense => -updatedTransaction.Amount,
+            TransactionType.Transfer => -updatedTransaction.Amount,
+            _ => 0
+        };
+
+        account.UpdatedAt = DateTime.UtcNow;
+        await _accountRepo.UpdateAsync(account);
+
+        if (originalTransaction.Type == TransactionType.Transfer && originalTransaction.ToAccountId.HasValue)
+        {
+            var toAccount = await _accountRepo.GetByIdAsync(originalTransaction.ToAccountId.Value);
+            if (toAccount != null)
+            {
+                toAccount.Balance -= originalTransaction.Amount;
+                toAccount.UpdatedAt = DateTime.UtcNow;
+                await _accountRepo.UpdateAsync(toAccount);
+            }
+        }
+
+        updatedTransaction.Id = id;
+        updatedTransaction.CreatedAt = originalTransaction.CreatedAt;
+        updatedTransaction.UpdatedAt = DateTime.UtcNow;
+        await _transactionRepo.UpdateAsync(updatedTransaction);
+
+        await _netWorthService.SaveSnapshotIfNotExistsTodayAsync();
+
+        return true;
+    }
 }

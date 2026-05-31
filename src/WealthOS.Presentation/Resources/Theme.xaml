@@ -18,6 +18,11 @@
     <Color x:Key="SidebarActiveColor">#2D2D42</Color>
     <Color x:Key="SidebarTextColor">#A2A3B7</Color>
     <Color x:Key="SidebarActiveTextColor">#FFFFFF</Color>
+    <Color x:Key="DialogOverlayColor">#80000000</Color>
+    <Color x:Key="DialogBackgroundColor">#FFFFFF</Color>
+    <Color x:Key="SuccessColor">#4CAF50</Color>
+    <Color x:Key="WarningColor">#FF9800</Color>
+    <Color x:Key="ErrorColor">#F44336</Color>
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
     <SolidColorBrush x:Key="PrimaryLightBrush" Color="{StaticResource PrimaryLightColor}"/>
@@ -36,6 +41,11 @@
     <SolidColorBrush x:Key="SidebarActiveBrush" Color="{StaticResource SidebarActiveColor}"/>
     <SolidColorBrush x:Key="SidebarTextBrush" Color="{StaticResource SidebarTextColor}"/>
     <SolidColorBrush x:Key="SidebarActiveTextBrush" Color="{StaticResource SidebarActiveTextColor}"/>
+    <SolidColorBrush x:Key="DialogOverlayBrush" Color="{StaticResource DialogOverlayColor}"/>
+    <SolidColorBrush x:Key="DialogBackgroundBrush" Color="{StaticResource DialogBackgroundColor}"/>
+    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}"/>
+    <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}"/>
+    <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}"/>
 
     <CornerRadius x:Key="CardCornerRadius">16</CornerRadius>
     <CornerRadius x:Key="ButtonCornerRadius">12</CornerRadius>

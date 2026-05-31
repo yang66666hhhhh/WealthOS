@@ -169,8 +169,8 @@
                 </ItemsControl>
 
                 <!-- Add Dialog -->
-                <Border Background="#80000000" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="White" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,24">
                                 <TextBlock.Text><Binding Source="{StaticResource Budgets.AddTitle}"/></TextBlock.Text>
@@ -215,8 +215,8 @@
                 </Border>
 
                 <!-- Edit Dialog -->
-                <Border Background="#80000000" Visibility="{Binding IsEditDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="White" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsEditDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,24">
                                 <TextBlock.Text><Binding Source="{StaticResource Budgets.EditTitle}"/></TextBlock.Text>
@@ -261,8 +261,8 @@
                 </Border>
 
                 <!-- Delete Confirmation -->
-                <Border Background="#80000000" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
-                    <Border Background="White" CornerRadius="20" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
+                    <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="20" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12">
                                 <TextBlock.Text><Binding Source="{StaticResource Budgets.DeleteTitle}"/></TextBlock.Text>

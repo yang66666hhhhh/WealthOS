@@ -168,20 +168,25 @@ public partial class TransactionsViewModel : ObservableObject
     {
         if (NewAmount <= 0 || SelectedAccount == null) return;
 
-        await _service.DeleteTransactionAsync(EditingId);
-
-        var transaction = new Transaction
+        try
         {
-            Type = NewType,
-            Amount = NewAmount,
-            Note = NewNote,
-            OccurredAt = NewDate,
-            AccountId = SelectedAccount.Id
-        };
+            var transaction = new Transaction
+            {
+                Type = NewType,
+                Amount = NewAmount,
+                Note = NewNote,
+                OccurredAt = NewDate,
+                AccountId = SelectedAccount.Id
+            };
 
-        await _service.AddTransactionAsync(transaction);
-        IsEditDialogOpen = false;
-        await LoadDataAsync();
+            await _service.UpdateTransactionAsync(EditingId, transaction);
+            IsEditDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"更新交易失败: {ex.Message}");
+        }
     }
 
     [RelayCommand]

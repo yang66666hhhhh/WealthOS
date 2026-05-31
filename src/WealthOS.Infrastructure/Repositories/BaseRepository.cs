@@ -1,3 +1,5 @@
+using System.Collections.Concurrent;
+using System.Reflection;
 using Dapper;
 using WealthOS.Application.Interfaces;
 using WealthOS.Domain.Common;
@@ -8,6 +10,18 @@ public abstract class BaseRepository<T> : IRepository<T> where T : BaseEntity
 {
     protected readonly IDbContext Context;
     protected abstract string TableName { get; }
+
+    private static readonly PropertyInfo[] AddProperties = typeof(T).GetProperties()
+        .Where(p => p.Name != "Id")
+        .ToArray();
+
+    private static readonly PropertyInfo[] UpdateProperties = typeof(T).GetProperties()
+        .Where(p => p.Name != "Id" && p.Name != "CreatedAt")
+        .ToArray();
+
+    private static readonly string AddColumns = string.Join(", ", AddProperties.Select(p => p.Name));
+    private static readonly string AddParameters = string.Join(", ", AddProperties.Select(p => $"@{p.Name}"));
+    private static readonly string UpdateSetClauses = string.Join(", ", UpdateProperties.Select(p => $"{p.Name} = @{p.Name}"));
 
     protected BaseRepository(IDbContext context)
     {
@@ -30,18 +44,13 @@ public abstract class BaseRepository<T> : IRepository<T> where T : BaseEntity
     public virtual async Task<Guid> AddAsync(T entity)
     {
         using var connection = Context.CreateConnection();
-        var properties = typeof(T).GetProperties()
-            .Where(p => p.Name != "Id")
-            .Select(p => p.Name);
-        var columns = string.Join(", ", properties);
-        var parameters = string.Join(", ", properties.Select(p => $"@{p}"));
 
         entity.Id = Guid.NewGuid();
         entity.CreatedAt = DateTime.UtcNow;
         entity.UpdatedAt = DateTime.UtcNow;
 
         await connection.ExecuteAsync(
-            $"INSERT INTO {TableName} (Id, {columns}) VALUES (@Id, {parameters})", entity);
+            $"INSERT INTO {TableName} (Id, {AddColumns}) VALUES (@Id, {AddParameters})", entity);
         return entity.Id;
     }
 
@@ -49,13 +58,9 @@ public abstract class BaseRepository<T> : IRepository<T> where T : BaseEntity
     {
         using var connection = Context.CreateConnection();
         entity.UpdatedAt = DateTime.UtcNow;
-        var properties = typeof(T).GetProperties()
-            .Where(p => p.Name != "Id" && p.Name != "CreatedAt")
-            .Select(p => p.Name);
-        var setClauses = string.Join(", ", properties.Select(p => $"{p} = @{p}"));
 
         var affected = await connection.ExecuteAsync(
-            $"UPDATE {TableName} SET {setClauses} WHERE Id = @Id", entity);
+            $"UPDATE {TableName} SET {UpdateSetClauses} WHERE Id = @Id", entity);
         return affected > 0;
     }
 
