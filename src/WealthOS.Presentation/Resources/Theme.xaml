@@ -43,9 +43,9 @@
     <!-- 侧边栏 - 浅灰白 -->
     <Color x:Key="SidebarColor">#F8FAFC</Color>
     <Color x:Key="SidebarHoverColor">#EFF6FF</Color>
-    <Color x:Key="SidebarActiveColor">#3B82F6</Color>
+    <Color x:Key="SidebarActiveColor">#DBEAFE</Color>
     <Color x:Key="SidebarTextColor">#64748B</Color>
-    <Color x:Key="SidebarActiveTextColor">#FFFFFF</Color>
+    <Color x:Key="SidebarActiveTextColor">#1E40AF</Color>
     
     <!-- 对话框 -->
     <Color x:Key="DialogOverlayColor">#40000000</Color>
