@@ -6,12 +6,16 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using WealthOS.Application.DTOs;
 using WealthOS.Application.Services;
+using WealthOS.Presentation.Services;
 
 namespace WealthOS.Presentation.ViewModels;
 
 public partial class DashboardViewModel : ViewModelBase
 {
     private readonly DashboardService _service;
+    private readonly NavigationService _navigation;
+    private readonly TransactionsViewModel _transactionsVm;
+    private readonly ReportsViewModel _reportsVm;
 
     [ObservableProperty]
     private DashboardDto _dashboard = new();
@@ -22,14 +26,23 @@ public partial class DashboardViewModel : ViewModelBase
     [ObservableProperty]
     private int _selectedTimeRange;
 
+    public string CurrentDate => DateTime.Now.ToString("yyyy年M月d日 dddd");
+
     public ISeries[] AssetSeries { get; set; } = [];
     public ISeries[] NetWorthSeries { get; set; } = [];
     public Axis[] NetWorthXAxes { get; set; } = [];
     public Axis[] NetWorthYAxes { get; set; } = [];
 
-    public DashboardViewModel(DashboardService service)
+    public DashboardViewModel(
+        DashboardService service,
+        NavigationService navigation,
+        TransactionsViewModel transactionsVm,
+        ReportsViewModel reportsVm)
     {
         _service = service;
+        _navigation = navigation;
+        _transactionsVm = transactionsVm;
+        _reportsVm = reportsVm;
         _ = LoadDataAsync();
     }
 
@@ -73,6 +86,18 @@ public partial class DashboardViewModel : ViewModelBase
             _ => 1
         };
         await LoadDataAsync();
+    }
+
+    [RelayCommand]
+    private void NavigateToTransactions()
+    {
+        _navigation.NavigateTo(_transactionsVm);
+    }
+
+    [RelayCommand]
+    private void NavigateToReports()
+    {
+        _navigation.NavigateTo(_reportsVm);
     }
 
     private void UpdateCharts()
