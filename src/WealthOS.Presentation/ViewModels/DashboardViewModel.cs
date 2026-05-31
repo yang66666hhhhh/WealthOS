@@ -1,3 +1,5 @@
+using System.Windows;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LiveChartsCore;
@@ -44,6 +46,17 @@ public partial class DashboardViewModel : ViewModelBase
         _transactionsVm = transactionsVm;
         _reportsVm = reportsVm;
         _ = LoadDataAsync();
+    }
+
+    private static SKColor GetResourceColor(string key)
+    {
+        var app = System.Windows.Application.Current;
+        if (app?.TryFindResource(key) is SolidColorBrush brush)
+        {
+            var color = brush.Color;
+            return new SKColor(color.R, color.G, color.B, color.A);
+        }
+        return SKColors.Gray;
     }
 
     [RelayCommand]
@@ -102,14 +115,21 @@ public partial class DashboardViewModel : ViewModelBase
 
     private void UpdateCharts()
     {
+        var primaryColor = GetResourceColor("PrimaryColor");
+        var accentColor = GetResourceColor("AccentColor");
+        var incomeColor = GetResourceColor("IncomeColor");
+        var expenseColor = GetResourceColor("ExpenseColor");
+        var transferColor = GetResourceColor("TransferColor");
+        var warningColor = GetResourceColor("WarningColor");
+
         var colors = new SKColor[]
         {
-            SKColors.Teal,
-            SKColors.Coral,
-            SKColors.Gold,
-            SKColors.MediumPurple,
-            SKColors.SteelBlue,
-            SKColors.Salmon
+            incomeColor,
+            primaryColor,
+            warningColor,
+            accentColor,
+            transferColor,
+            expenseColor
         };
 
         AssetSeries = Dashboard.AssetAllocations.Select((a, i) =>
@@ -131,13 +151,16 @@ public partial class DashboardViewModel : ViewModelBase
                 new LineSeries<decimal>
                 {
                     Values = Dashboard.NetWorthHistory.Select(p => p.Value).ToArray(),
-                    Fill = new SolidColorPaint(SKColors.Teal.WithAlpha(50)),
-                    Stroke = new SolidColorPaint(SKColors.Teal) { StrokeThickness = 2 },
+                    Fill = new SolidColorPaint(primaryColor.WithAlpha(50)),
+                    Stroke = new SolidColorPaint(primaryColor) { StrokeThickness = 2 },
                     GeometryFill = null,
                     GeometryStroke = null,
                     LineSmoothness = 0.5
                 }
             ];
+
+            var borderColor = GetResourceColor("BorderColor");
+            var textSecondaryColor = GetResourceColor("TextSecondaryColor");
 
             NetWorthXAxes =
             [
@@ -145,8 +168,8 @@ public partial class DashboardViewModel : ViewModelBase
                 {
                     Labels = Dashboard.NetWorthHistory.Select(p => p.Date.ToString("MM/dd")).ToArray(),
                     LabelsRotation = 0,
-                    SeparatorsPaint = new SolidColorPaint(SKColors.LightGray) { StrokeThickness = 1 },
-                    LabelsPaint = new SolidColorPaint(SKColors.Gray)
+                    SeparatorsPaint = new SolidColorPaint(borderColor) { StrokeThickness = 1 },
+                    LabelsPaint = new SolidColorPaint(textSecondaryColor)
                 }
             ];
 
@@ -160,8 +183,8 @@ public partial class DashboardViewModel : ViewModelBase
                         >= 10_000 => $"{value / 10_000:N1}万",
                         _ => $"{value:N0}"
                     },
-                    SeparatorsPaint = new SolidColorPaint(SKColors.LightGray) { StrokeThickness = 1 },
-                    LabelsPaint = new SolidColorPaint(SKColors.Gray)
+                    SeparatorsPaint = new SolidColorPaint(borderColor) { StrokeThickness = 1 },
+                    LabelsPaint = new SolidColorPaint(textSecondaryColor)
                 }
             ];
         }

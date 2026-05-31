@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LiveChartsCore;
@@ -8,7 +10,6 @@ using SkiaSharp;
 using WealthOS.Application.DTOs;
 using WealthOS.Application.Services;
 using WealthOS.Domain.Enums;
-using System.Windows;
 
 namespace WealthOS.Presentation.ViewModels;
 
@@ -37,6 +38,17 @@ public partial class AnalyticsViewModel : ViewModelBase
         if (app?.TryFindResource(key) is string value)
             return value;
         return key;
+    }
+
+    private static SKColor GetResourceColor(string key)
+    {
+        var app = System.Windows.Application.Current;
+        if (app?.TryFindResource(key) is SolidColorBrush brush)
+        {
+            var color = brush.Color;
+            return new SKColor(color.R, color.G, color.B, color.A);
+        }
+        return SKColors.Gray;
     }
 
     [RelayCommand]
@@ -70,14 +82,14 @@ public partial class AnalyticsViewModel : ViewModelBase
                 {
                     Values = incomeData,
                     Name = GetResourceString("Analytics.Income"),
-                    Fill = new SolidColorPaint(SKColors.Teal),
+                    Fill = new SolidColorPaint(GetResourceColor("IncomeColor")),
                     Rx = 4, Ry = 4
                 },
                 new ColumnSeries<decimal>
                 {
                     Values = expenseData,
                     Name = GetResourceString("Analytics.Expense"),
-                    Fill = new SolidColorPaint(SKColors.Coral),
+                    Fill = new SolidColorPaint(GetResourceColor("ExpenseColor")),
                     Rx = 4, Ry = 4
                 }
             ];
@@ -88,16 +100,16 @@ public partial class AnalyticsViewModel : ViewModelBase
                 {
                     Labels = labels,
                     LabelsRotation = 0,
-                    SeparatorsPaint = new SolidColorPaint(SKColors.LightGray) { StrokeThickness = 1 },
-                    LabelsPaint = new SolidColorPaint(SKColors.Gray)
+                    SeparatorsPaint = new SolidColorPaint(GetResourceColor("BorderColor")) { StrokeThickness = 1 },
+                    LabelsPaint = new SolidColorPaint(GetResourceColor("TextSecondaryColor"))
                 }
             ];
 
             AssetTrendSeries =
             [
-                new PieSeries<decimal> { Values = [dashboard.CashTotal], Name = GetResourceString("Analytics.Cash"), Fill = new SolidColorPaint(SKColors.Teal) },
-                new PieSeries<decimal> { Values = [dashboard.InvestmentTotal], Name = GetResourceString("Analytics.Investment"), Fill = new SolidColorPaint(SKColors.MediumPurple) },
-                new PieSeries<decimal> { Values = [dashboard.TotalLiabilities], Name = GetResourceString("Analytics.Liabilities"), Fill = new SolidColorPaint(SKColors.Coral) }
+                new PieSeries<decimal> { Values = [dashboard.CashTotal], Name = GetResourceString("Analytics.Cash"), Fill = new SolidColorPaint(GetResourceColor("IncomeColor")) },
+                new PieSeries<decimal> { Values = [dashboard.InvestmentTotal], Name = GetResourceString("Analytics.Investment"), Fill = new SolidColorPaint(GetResourceColor("PrimaryColor")) },
+                new PieSeries<decimal> { Values = [dashboard.TotalLiabilities], Name = GetResourceString("Analytics.Liabilities"), Fill = new SolidColorPaint(GetResourceColor("ExpenseColor")) }
             ];
 
             OnPropertyChanged(nameof(IncomeExpenseSeries));
