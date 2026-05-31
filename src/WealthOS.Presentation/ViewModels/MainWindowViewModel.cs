@@ -13,6 +13,7 @@ public partial class MainWindowViewModel : ObservableObject
     private readonly GoalsViewModel _goalsVm;
 
     public NavigationService Navigation { get; }
+    public LocalizationService Localization { get; }
 
     [ObservableProperty]
     private string _currentPage = "Dashboard";
@@ -34,6 +35,7 @@ public partial class MainWindowViewModel : ObservableObject
 
     public MainWindowViewModel(
         NavigationService navigation,
+        LocalizationService localization,
         DashboardViewModel dashboardVm,
         AssetsViewModel assetsVm,
         LiabilitiesViewModel liabilitiesVm,
@@ -41,6 +43,7 @@ public partial class MainWindowViewModel : ObservableObject
         GoalsViewModel goalsVm)
     {
         Navigation = navigation;
+        Localization = localization;
         _dashboardVm = dashboardVm;
         _assetsVm = assetsVm;
         _liabilitiesVm = liabilitiesVm;
@@ -72,8 +75,14 @@ public partial class MainWindowViewModel : ObservableObject
         };
 
         Navigation.NavigateTo(target);
-
         RefreshPageData(target);
+    }
+
+    [RelayCommand]
+    private void ToggleLanguage()
+    {
+        Localization.ToggleLanguage();
+        OnPropertyChanged(nameof(Localization));
     }
 
     private static void RefreshPageData(ObservableObject vm)

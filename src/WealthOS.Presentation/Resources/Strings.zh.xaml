@@ -1,0 +1,119 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- App -->
+    <sys:String x:Key="App.Title">WealthOS - 个人财富操作系统</sys:String>
+    <sys:String x:Key="App.Version">v1.1.0</sys:String>
+
+    <!-- Sidebar -->
+    <sys:String x:Key="Nav.Dashboard">首页</sys:String>
+    <sys:String x:Key="Nav.Assets">资产</sys:String>
+    <sys:String x:Key="Nav.Liabilities">负债</sys:String>
+    <sys:String x:Key="Nav.Transactions">收支</sys:String>
+    <sys:String x:Key="Nav.Goals">目标</sys:String>
+
+    <!-- Dashboard -->
+    <sys:String x:Key="Dashboard.Title">首页</sys:String>
+    <sys:String x:Key="Dashboard.NetWorth">净资产</sys:String>
+    <sys:String x:Key="Dashboard.ThisMonth">本月</sys:String>
+    <sys:String x:Key="Dashboard.Cash">现金</sys:String>
+    <sys:String x:Key="Dashboard.Investment">投资</sys:String>
+    <sys:String x:Key="Dashboard.Liabilities">负债</sys:String>
+    <sys:String x:Key="Dashboard.SavingsRate">储蓄率</sys:String>
+    <sys:String x:Key="Dashboard.AssetAllocation">资产配置</sys:String>
+    <sys:String x:Key="Dashboard.NetWorthTrend">净资产趋势</sys:String>
+    <sys:String x:Key="Dashboard.RecentTransactions">最近交易</sys:String>
+    <sys:String x:Key="Dashboard.NoTransactions">暂无交易记录</sys:String>
+    <sys:String x:Key="Dashboard.NoTransactionsHint">添加第一笔交易开始记录</sys:String>
+
+    <!-- Assets -->
+    <sys:String x:Key="Assets.Title">资产</sys:String>
+    <sys:String x:Key="Assets.Add">+ 添加资产</sys:String>
+    <sys:String x:Key="Assets.AddTitle">添加资产</sys:String>
+    <sys:String x:Key="Assets.Name">名称</sys:String>
+    <sys:String x:Key="Assets.Type">类型</sys:String>
+    <sys:String x:Key="Assets.Institution">机构</sys:String>
+    <sys:String x:Key="Assets.CurrentValue">当前价值</sys:String>
+    <sys:String x:Key="Assets.InitialValue">初始价值</sys:String>
+    <sys:String x:Key="Assets.Note">备注</sys:String>
+    <sys:String x:Key="Assets.NoAssets">暂无资产</sys:String>
+    <sys:String x:Key="Assets.NoAssetsHint">点击「添加资产」开始追踪您的第一笔资产</sys:String>
+    <sys:String x:Key="Assets.DeleteTitle">删除资产</sys:String>
+    <sys:String x:Key="Assets.DeleteMessage">确定要删除此资产吗？此操作不可撤销。</sys:String>
+    <sys:String x:Key="Assets.Filter.All">全部</sys:String>
+    <sys:String x:Key="Assets.Filter.Cash">现金</sys:String>
+    <sys:String x:Key="Assets.Filter.Bank">银行</sys:String>
+    <sys:String x:Key="Assets.Filter.Investment">投资</sys:String>
+
+    <!-- Liabilities -->
+    <sys:String x:Key="Liabilities.Title">负债</sys:String>
+    <sys:String x:Key="Liabilities.Add">+ 添加负债</sys:String>
+    <sys:String x:Key="Liabilities.AddTitle">添加负债</sys:String>
+    <sys:String x:Key="Liabilities.Name">名称</sys:String>
+    <sys:String x:Key="Liabilities.Type">类型</sys:String>
+    <sys:String x:Key="Liabilities.Institution">机构</sys:String>
+    <sys:String x:Key="Liabilities.Balance">余额</sys:String>
+    <sys:String x:Key="Liabilities.InterestRate">利率 %</sys:String>
+    <sys:String x:Key="Liabilities.MonthlyPayment">月供</sys:String>
+    <sys:String x:Key="Liabilities.StartDate">开始日期</sys:String>
+    <sys:String x:Key="Liabilities.TotalLiabilities">负债总额</sys:String>
+    <sys:String x:Key="Liabilities.NoLiabilities">暂无负债</sys:String>
+    <sys:String x:Key="Liabilities.NoLiabilitiesHint">点击「添加负债」开始追踪您的第一笔负债</sys:String>
+    <sys:String x:Key="Liabilities.DeleteTitle">删除负债</sys:String>
+    <sys:String x:Key="Liabilities.DeleteMessage">确定要删除此负债吗？此操作不可撤销。</sys:String>
+    <sys:String x:Key="Liabilities.InterestRateLabel">利率</sys:String>
+    <sys:String x:Key="Liabilities.MonthlyPaymentLabel">月供</sys:String>
+
+    <!-- Transactions -->
+    <sys:String x:Key="Transactions.Title">收支</sys:String>
+    <sys:String x:Key="Transactions.Add">+ 添加交易</sys:String>
+    <sys:String x:Key="Transactions.AddTitle">添加交易</sys:String>
+    <sys:String x:Key="Transactions.Type">类型</sys:String>
+    <sys:String x:Key="Transactions.Account">账户</sys:String>
+    <sys:String x:Key="Transactions.Amount">金额</sys:String>
+    <sys:String x:Key="Transactions.Date">日期</sys:String>
+    <sys:String x:Key="Transactions.Note">备注</sys:String>
+    <sys:String x:Key="Transactions.NoTransactions">暂无交易记录</sys:String>
+    <sys:String x:Key="Transactions.NoTransactionsHint">添加第一笔交易开始记录</sys:String>
+    <sys:String x:Key="Transactions.DeleteTitle">删除交易</sys:String>
+    <sys:String x:Key="Transactions.DeleteMessage">确定要删除此交易吗？账户余额将被回滚。</sys:String>
+    <sys:String x:Key="Transactions.Filter.All">全部</sys:String>
+    <sys:String x:Key="Transactions.Filter.Income">收入</sys:String>
+    <sys:String x:Key="Transactions.Filter.Expense">支出</sys:String>
+
+    <!-- Goals -->
+    <sys:String x:Key="Goals.Title">目标</sys:String>
+    <sys:String x:Key="Goals.Add">+ 添加目标</sys:String>
+    <sys:String x:Key="Goals.AddTitle">添加目标</sys:String>
+    <sys:String x:Key="Goals.Name">名称</sys:String>
+    <sys:String x:Key="Goals.TargetAmount">目标金额</sys:String>
+    <sys:String x:Key="Goals.CurrentAmount">当前金额</sys:String>
+    <sys:String x:Key="Goals.TargetDate">目标日期</sys:String>
+    <sys:String x:Key="Goals.Note">备注</sys:String>
+    <sys:String x:Key="Goals.NoGoals">暂无目标</sys:String>
+    <sys:String x:Key="Goals.NoGoalsHint">点击「添加目标」设定您的第一个财务目标</sys:String>
+    <sys:String x:Key="Goals.DeleteTitle">删除目标</sys:String>
+    <sys:String x:Key="Goals.DeleteMessage">确定要删除此目标吗？此操作不可撤销。</sys:String>
+    <sys:String x:Key="Goals.TargetDateLabel">目标日期：</sys:String>
+    <sys:String x:Key="Goals.RemainingLabel">剩余：</sys:String>
+    <sys:String x:Key="Goals.MonthsFormat">{0} 个月</sys:String>
+    <sys:String x:Key="Goals.ProgressTitle">更新进度</sys:String>
+    <sys:String x:Key="Goals.ProgressLabel">向目标存入：</sys:String>
+    <sys:String x:Key="Goals.ProgressAmount">存入金额</sys:String>
+    <sys:String x:Key="Goals.AddMoney">向此目标存入资金</sys:String>
+
+    <!-- Common -->
+    <sys:String x:Key="Common.Cancel">取消</sys:String>
+    <sys:String x:Key="Common.Add">添加</sys:String>
+    <sys:String x:Key="Common.Delete">删除</sys:String>
+    <sys:String x:Key="Common.Save">保存</sys:String>
+    <sys:String x:Key="Common.Confirm">确认</sys:String>
+    <sys:String x:Key="Common.Loading">加载中...</sys:String>
+    <sys:String x:Key="Common.Transaction">交易</sys:String>
+
+    <!-- Language -->
+    <sys:String x:Key="Lang.Switch">EN</sys:String>
+    <sys:String x:Key="Lang.Current">中</sys:String>
+
+</ResourceDictionary>

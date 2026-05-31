@@ -51,6 +51,7 @@ public partial class App : System.Windows.Application
         services.AddSingleton<AccountService>();
 
         services.AddSingleton<NavigationService>();
+        services.AddSingleton<LocalizationService>();
 
         services.AddSingleton<DashboardViewModel>();
         services.AddSingleton<AssetsViewModel>();

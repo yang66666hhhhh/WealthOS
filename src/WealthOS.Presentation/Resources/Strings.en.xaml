@@ -1,0 +1,119 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- App -->
+    <sys:String x:Key="App.Title">WealthOS - Personal Wealth Operating System</sys:String>
+    <sys:String x:Key="App.Version">v1.1.0</sys:String>
+
+    <!-- Sidebar -->
+    <sys:String x:Key="Nav.Dashboard">Dashboard</sys:String>
+    <sys:String x:Key="Nav.Assets">Assets</sys:String>
+    <sys:String x:Key="Nav.Liabilities">Liabilities</sys:String>
+    <sys:String x:Key="Nav.Transactions">Transactions</sys:String>
+    <sys:String x:Key="Nav.Goals">Goals</sys:String>
+
+    <!-- Dashboard -->
+    <sys:String x:Key="Dashboard.Title">Dashboard</sys:String>
+    <sys:String x:Key="Dashboard.NetWorth">Net Worth</sys:String>
+    <sys:String x:Key="Dashboard.ThisMonth">This month</sys:String>
+    <sys:String x:Key="Dashboard.Cash">Cash</sys:String>
+    <sys:String x:Key="Dashboard.Investment">Investment</sys:String>
+    <sys:String x:Key="Dashboard.Liabilities">Liabilities</sys:String>
+    <sys:String x:Key="Dashboard.SavingsRate">Savings Rate</sys:String>
+    <sys:String x:Key="Dashboard.AssetAllocation">Asset Allocation</sys:String>
+    <sys:String x:Key="Dashboard.NetWorthTrend">Net Worth Trend</sys:String>
+    <sys:String x:Key="Dashboard.RecentTransactions">Recent Transactions</sys:String>
+    <sys:String x:Key="Dashboard.NoTransactions">No transactions yet</sys:String>
+    <sys:String x:Key="Dashboard.NoTransactionsHint">Add your first transaction to get started</sys:String>
+
+    <!-- Assets -->
+    <sys:String x:Key="Assets.Title">Assets</sys:String>
+    <sys:String x:Key="Assets.Add">+ Add Asset</sys:String>
+    <sys:String x:Key="Assets.AddTitle">Add Asset</sys:String>
+    <sys:String x:Key="Assets.Name">Name</sys:String>
+    <sys:String x:Key="Assets.Type">Type</sys:String>
+    <sys:String x:Key="Assets.Institution">Institution</sys:String>
+    <sys:String x:Key="Assets.CurrentValue">Current Value</sys:String>
+    <sys:String x:Key="Assets.InitialValue">Initial Value</sys:String>
+    <sys:String x:Key="Assets.Note">Note</sys:String>
+    <sys:String x:Key="Assets.NoAssets">No assets yet</sys:String>
+    <sys:String x:Key="Assets.NoAssetsHint">Click '+ Add Asset' to track your first asset</sys:String>
+    <sys:String x:Key="Assets.DeleteTitle">Delete Asset</sys:String>
+    <sys:String x:Key="Assets.DeleteMessage">Are you sure you want to delete this asset? This action cannot be undone.</sys:String>
+    <sys:String x:Key="Assets.Filter.All">All</sys:String>
+    <sys:String x:Key="Assets.Filter.Cash">Cash</sys:String>
+    <sys:String x:Key="Assets.Filter.Bank">Bank</sys:String>
+    <sys:String x:Key="Assets.Filter.Investment">Investment</sys:String>
+
+    <!-- Liabilities -->
+    <sys:String x:Key="Liabilities.Title">Liabilities</sys:String>
+    <sys:String x:Key="Liabilities.Add">+ Add Liability</sys:String>
+    <sys:String x:Key="Liabilities.AddTitle">Add Liability</sys:String>
+    <sys:String x:Key="Liabilities.Name">Name</sys:String>
+    <sys:String x:Key="Liabilities.Type">Type</sys:String>
+    <sys:String x:Key="Liabilities.Institution">Institution</sys:String>
+    <sys:String x:Key="Liabilities.Balance">Balance</sys:String>
+    <sys:String x:Key="Liabilities.InterestRate">Interest Rate %</sys:String>
+    <sys:String x:Key="Liabilities.MonthlyPayment">Monthly Payment</sys:String>
+    <sys:String x:Key="Liabilities.StartDate">Start Date</sys:String>
+    <sys:String x:Key="Liabilities.TotalLiabilities">Total Liabilities</sys:String>
+    <sys:String x:Key="Liabilities.NoLiabilities">No liabilities yet</sys:String>
+    <sys:String x:Key="Liabilities.NoLiabilitiesHint">Click '+ Add Liability' to track your first liability</sys:String>
+    <sys:String x:Key="Liabilities.DeleteTitle">Delete Liability</sys:String>
+    <sys:String x:Key="Liabilities.DeleteMessage">Are you sure you want to delete this liability? This action cannot be undone.</sys:String>
+    <sys:String x:Key="Liabilities.InterestRateLabel">Interest Rate</sys:String>
+    <sys:String x:Key="Liabilities.MonthlyPaymentLabel">Monthly Payment</sys:String>
+
+    <!-- Transactions -->
+    <sys:String x:Key="Transactions.Title">Transactions</sys:String>
+    <sys:String x:Key="Transactions.Add">+ Add Transaction</sys:String>
+    <sys:String x:Key="Transactions.AddTitle">Add Transaction</sys:String>
+    <sys:String x:Key="Transactions.Type">Type</sys:String>
+    <sys:String x:Key="Transactions.Account">Account</sys:String>
+    <sys:String x:Key="Transactions.Amount">Amount</sys:String>
+    <sys:String x:Key="Transactions.Date">Date</sys:String>
+    <sys:String x:Key="Transactions.Note">Note</sys:String>
+    <sys:String x:Key="Transactions.NoTransactions">No transactions yet</sys:String>
+    <sys:String x:Key="Transactions.NoTransactionsHint">Add your first transaction to get started</sys:String>
+    <sys:String x:Key="Transactions.DeleteTitle">Delete Transaction</sys:String>
+    <sys:String x:Key="Transactions.DeleteMessage">Are you sure you want to delete this transaction? The account balance will be reversed.</sys:String>
+    <sys:String x:Key="Transactions.Filter.All">All</sys:String>
+    <sys:String x:Key="Transactions.Filter.Income">Income</sys:String>
+    <sys:String x:Key="Transactions.Filter.Expense">Expense</sys:String>
+
+    <!-- Goals -->
+    <sys:String x:Key="Goals.Title">Goals</sys:String>
+    <sys:String x:Key="Goals.Add">+ Add Goal</sys:String>
+    <sys:String x:Key="Goals.AddTitle">Add Goal</sys:String>
+    <sys:String x:Key="Goals.Name">Name</sys:String>
+    <sys:String x:Key="Goals.TargetAmount">Target Amount</sys:String>
+    <sys:String x:Key="Goals.CurrentAmount">Current Amount</sys:String>
+    <sys:String x:Key="Goals.TargetDate">Target Date</sys:String>
+    <sys:String x:Key="Goals.Note">Note</sys:String>
+    <sys:String x:Key="Goals.NoGoals">No goals yet</sys:String>
+    <sys:String x:Key="Goals.NoGoalsHint">Click '+ Add Goal' to set your first financial goal</sys:String>
+    <sys:String x:Key="Goals.DeleteTitle">Delete Goal</sys:String>
+    <sys:String x:Key="Goals.DeleteMessage">Are you sure you want to delete this goal? This action cannot be undone.</sys:String>
+    <sys:String x:Key="Goals.TargetDateLabel">Target date:</sys:String>
+    <sys:String x:Key="Goals.RemainingLabel">Remaining:</sys:String>
+    <sys:String x:Key="Goals.MonthsFormat">{0} months</sys:String>
+    <sys:String x:Key="Goals.ProgressTitle">Add Progress</sys:String>
+    <sys:String x:Key="Goals.ProgressLabel">Add money to:</sys:String>
+    <sys:String x:Key="Goals.ProgressAmount">Amount to Add</sys:String>
+    <sys:String x:Key="Goals.AddMoney">Add money to this goal</sys:String>
+
+    <!-- Common -->
+    <sys:String x:Key="Common.Cancel">Cancel</sys:String>
+    <sys:String x:Key="Common.Add">Add</sys:String>
+    <sys:String x:Key="Common.Delete">Delete</sys:String>
+    <sys:String x:Key="Common.Save">Save</sys:String>
+    <sys:String x:Key="Common.Confirm">Confirm</sys:String>
+    <sys:String x:Key="Common.Loading">Loading...</sys:String>
+    <sys:String x:Key="Common.Transaction">Transaction</sys:String>
+
+    <!-- Language -->
+    <sys:String x:Key="Lang.Switch">中文</sys:String>
+    <sys:String x:Key="Lang.Current">EN</sys:String>
+
+</ResourceDictionary>

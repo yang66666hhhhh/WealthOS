@@ -7,72 +7,63 @@
     <UserControl.Resources>
         <conv:CurrencyConverter x:Key="CurrencyConv"/>
         <conv:BoolToVisibilityConverter x:Key="BoolToVis"/>
-        <ObjectDataProvider x:Key="LiabilityTypes" MethodName="GetValues"
-                            ObjectType="{x:Type enums:LiabilityType}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="enums:LiabilityType"/>
-            </ObjectDataProvider.MethodParameters>
+        <ObjectDataProvider x:Key="LiabilityTypes" MethodName="GetValues" ObjectType="{x:Type enums:LiabilityType}">
+            <ObjectDataProvider.MethodParameters><x:Type TypeName="enums:LiabilityType"/></ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </UserControl.Resources>
 
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="32,24">
             <StackPanel MaxWidth="1200">
-                <!-- Header -->
                 <Grid Margin="0,0,0,24">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Liabilities" Style="{StaticResource PageTitleStyle}"/>
-                    <Button Grid.Column="1" Content="+ Add Liability" Style="{StaticResource PrimaryButton}"
-                            Command="{Binding ShowAddCommand}" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Style="{StaticResource PageTitleStyle}">
+                        <TextBlock.Text><Binding Source="{DynamicResource Liabilities.Title}"/></TextBlock.Text>
+                    </TextBlock>
+                    <Button Grid.Column="1" Style="{StaticResource PrimaryButton}" Command="{Binding ShowAddCommand}" VerticalAlignment="Center">
+                        <Button.Content><Binding Source="{DynamicResource Liabilities.Add}"/></Button.Content>
+                    </Button>
                 </Grid>
 
-                <!-- Loading -->
                 <ProgressBar IsIndeterminate="True" Height="3" Margin="0,0,0,16"
                              Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
                              Background="Transparent" Foreground="{StaticResource PrimaryBrush}"/>
 
-                <!-- Total -->
                 <Border Style="{StaticResource CardStyle}" Margin="0,0,0,20">
                     <StackPanel>
-                        <TextBlock Text="Total Liabilities" FontSize="14"
-                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,8"/>
+                        <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,8">
+                            <TextBlock.Text><Binding Source="{DynamicResource Liabilities.TotalLiabilities}"/></TextBlock.Text>
+                        </TextBlock>
                         <TextBlock FontSize="36" FontWeight="Bold" Foreground="{StaticResource ExpenseBrush}">
-                            <TextBlock.Text>
-                                <Binding Path="TotalBalance" Converter="{StaticResource CurrencyConv}"/>
-                            </TextBlock.Text>
+                            <TextBlock.Text><Binding Path="TotalBalance" Converter="{StaticResource CurrencyConv}"/></TextBlock.Text>
                         </TextBlock>
                     </StackPanel>
                 </Border>
 
-                <!-- Empty State -->
                 <Border Padding="60" Visibility="{Binding Liabilities.Count, Converter={StaticResource BoolToVis}}">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Liabilities.Count}" Value="0">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Liabilities.Count}" Value="0"><Setter Property="Visibility" Value="Visible"/></DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
                     <StackPanel HorizontalAlignment="Center">
-                        <TextBlock Text="No liabilities yet" FontSize="20" FontWeight="SemiBold"
-                                   Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Click '+ Add Liability' to track your first liability"
-                                   FontSize="14" Foreground="{StaticResource TextHintBrush}"
-                                   HorizontalAlignment="Center" Margin="0,12,0,0"/>
+                        <TextBlock FontSize="20" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center">
+                            <TextBlock.Text><Binding Source="{DynamicResource Liabilities.NoLiabilities}"/></TextBlock.Text>
+                        </TextBlock>
+                        <TextBlock FontSize="14" Foreground="{StaticResource TextHintBrush}" HorizontalAlignment="Center" Margin="0,12,0,0">
+                            <TextBlock.Text><Binding Source="{DynamicResource Liabilities.NoLiabilitiesHint}"/></TextBlock.Text>
+                        </TextBlock>
                     </StackPanel>
                 </Border>
 
-                <!-- Liability Cards -->
                 <ItemsControl ItemsSource="{Binding Liabilities}">
                     <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel/>
-                        </ItemsPanelTemplate>
+                        <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -83,22 +74,15 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding Institution}"
-                                                   FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
-                                        <Button Grid.Column="1" Content="x" FontSize="14"
-                                                Background="Transparent" BorderThickness="0"
-                                                Foreground="{StaticResource TextHintBrush}" Cursor="Hand"
-                                                Padding="4,0"
+                                        <TextBlock Grid.Column="0" Text="{Binding Institution}" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                        <Button Grid.Column="1" Content="x" FontSize="14" Background="Transparent" BorderThickness="0"
+                                                Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="4,0"
                                                 Command="{Binding DataContext.ConfirmDeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                 CommandParameter="{Binding Id}"/>
                                     </Grid>
-                                    <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="SemiBold"
-                                               Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
-                                    <TextBlock FontSize="26" FontWeight="Bold"
-                                               Foreground="{StaticResource ExpenseBrush}">
-                                        <TextBlock.Text>
-                                            <Binding Path="Balance" Converter="{StaticResource CurrencyConv}"/>
-                                        </TextBlock.Text>
+                                    <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                                    <TextBlock FontSize="26" FontWeight="Bold" Foreground="{StaticResource ExpenseBrush}">
+                                        <TextBlock.Text><Binding Path="Balance" Converter="{StaticResource CurrencyConv}"/></TextBlock.Text>
                                     </TextBlock>
                                     <Grid Margin="0,12,0,0">
                                         <Grid.ColumnDefinitions>
@@ -106,18 +90,17 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0">
-                                            <TextBlock Text="Interest Rate" FontSize="11"
-                                                       Foreground="{StaticResource TextSecondaryBrush}"/>
-                                            <TextBlock Text="{Binding InterestRate, StringFormat='{}{0:F2}%'}"
-                                                       FontSize="14" FontWeight="SemiBold"/>
+                                            <TextBlock FontSize="11" Foreground="{StaticResource TextSecondaryBrush}">
+                                                <TextBlock.Text><Binding Source="{DynamicResource Liabilities.InterestRateLabel}"/></TextBlock.Text>
+                                            </TextBlock>
+                                            <TextBlock Text="{Binding InterestRate, StringFormat='{}{0:F2}%'}" FontSize="14" FontWeight="SemiBold"/>
                                         </StackPanel>
                                         <StackPanel Grid.Column="1">
-                                            <TextBlock Text="Monthly Payment" FontSize="11"
-                                                       Foreground="{StaticResource TextSecondaryBrush}"/>
+                                            <TextBlock FontSize="11" Foreground="{StaticResource TextSecondaryBrush}">
+                                                <TextBlock.Text><Binding Source="{DynamicResource Liabilities.MonthlyPaymentLabel}"/></TextBlock.Text>
+                                            </TextBlock>
                                             <TextBlock FontSize="14" FontWeight="SemiBold">
-                                                <TextBlock.Text>
-                                                    <Binding Path="MonthlyPayment" Converter="{StaticResource CurrencyConv}"/>
-                                                </TextBlock.Text>
+                                                <TextBlock.Text><Binding Path="MonthlyPayment" Converter="{StaticResource CurrencyConv}"/></TextBlock.Text>
                                             </TextBlock>
                                         </StackPanel>
                                     </Grid>
@@ -128,26 +111,24 @@
                 </ItemsControl>
 
                 <!-- Add Dialog -->
-                <Border Background="#80000000" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}"
-                        Panel.ZIndex="100">
-                    <Border Background="White" CornerRadius="20" Padding="32" Width="480"
-                            VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Border Background="#80000000" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
+                    <Border Background="White" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
-                            <TextBlock Text="Add Liability" FontSize="22" FontWeight="Bold"
-                                       Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,24"/>
-
-                            <TextBlock Text="Name" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
-                            <TextBox Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}"
-                                     Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
-
-                            <TextBlock Text="Type" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
-                            <ComboBox ItemsSource="{Binding Source={StaticResource LiabilityTypes}}"
-                                      SelectedItem="{Binding NewType}" Margin="0,0,0,16"/>
-
-                            <TextBlock Text="Institution" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
-                            <TextBox Text="{Binding NewInstitution, UpdateSourceTrigger=PropertyChanged}"
-                                     Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
-
+                            <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,24">
+                                <TextBlock.Text><Binding Source="{DynamicResource Liabilities.AddTitle}"/></TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                <TextBlock.Text><Binding Source="{DynamicResource Liabilities.Name}"/></TextBlock.Text>
+                            </TextBlock>
+                            <TextBox Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
+                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                <TextBlock.Text><Binding Source="{DynamicResource Liabilities.Type}"/></TextBlock.Text>
+                            </TextBlock>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource LiabilityTypes}}" SelectedItem="{Binding NewType}" Margin="0,0,0,16"/>
+                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                <TextBlock.Text><Binding Source="{DynamicResource Liabilities.Institution}"/></TextBlock.Text>
+                            </TextBlock>
+                            <TextBox Text="{Binding NewInstitution, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
                             <Grid Margin="0,0,0,16">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -155,51 +136,55 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Text="Balance" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
-                                    <TextBox Text="{Binding NewBalance, UpdateSourceTrigger=PropertyChanged}"
-                                             Style="{StaticResource InputStyle}"/>
+                                    <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                        <TextBlock.Text><Binding Source="{DynamicResource Liabilities.Balance}"/></TextBlock.Text>
+                                    </TextBlock>
+                                    <TextBox Text="{Binding NewBalance, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2">
-                                    <TextBlock Text="Interest Rate %" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
-                                    <TextBox Text="{Binding NewInterestRate, UpdateSourceTrigger=PropertyChanged}"
-                                             Style="{StaticResource InputStyle}"/>
+                                    <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                        <TextBlock.Text><Binding Source="{DynamicResource Liabilities.InterestRate}"/></TextBlock.Text>
+                                    </TextBlock>
+                                    <TextBox Text="{Binding NewInterestRate, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}"/>
                                 </StackPanel>
                             </Grid>
-
-                            <TextBlock Text="Monthly Payment" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
-                            <TextBox Text="{Binding NewMonthlyPayment, UpdateSourceTrigger=PropertyChanged}"
-                                     Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
-
-                            <TextBlock Text="Start Date" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                <TextBlock.Text><Binding Source="{DynamicResource Liabilities.MonthlyPayment}"/></TextBlock.Text>
+                            </TextBlock>
+                            <TextBox Text="{Binding NewMonthlyPayment, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
+                            <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
+                                <TextBlock.Text><Binding Source="{DynamicResource Liabilities.StartDate}"/></TextBlock.Text>
+                            </TextBlock>
                             <DatePicker SelectedDate="{Binding NewStartDate}" Margin="0,0,0,24"/>
-
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Content="Cancel" Style="{StaticResource SecondaryButton}"
-                                        Command="{Binding CancelAddCommand}" Margin="0,0,12,0"/>
-                                <Button Content="Add" Style="{StaticResource PrimaryButton}"
-                                        Command="{Binding ConfirmAddCommand}"/>
+                                <Button Style="{StaticResource SecondaryButton}" Command="{Binding CancelAddCommand}" Margin="0,0,12,0">
+                                    <Button.Content><Binding Source="{DynamicResource Common.Cancel}"/></Button.Content>
+                                </Button>
+                                <Button Style="{StaticResource PrimaryButton}" Command="{Binding ConfirmAddCommand}">
+                                    <Button.Content><Binding Source="{DynamicResource Common.Add}"/></Button.Content>
+                                </Button>
                             </StackPanel>
                         </StackPanel>
                     </Border>
                 </Border>
 
-                <!-- Delete Confirmation Dialog -->
-                <Border Background="#80000000" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}"
-                        Panel.ZIndex="100">
-                    <Border Background="White" CornerRadius="20" Padding="32" Width="400"
-                            VerticalAlignment="Center" HorizontalAlignment="Center">
+                <!-- Delete Confirmation -->
+                <Border Background="#80000000" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
+                    <Border Background="White" CornerRadius="20" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
-                            <TextBlock Text="Delete Liability" FontSize="22" FontWeight="Bold"
-                                       Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12"/>
-                            <TextBlock Text="Are you sure you want to delete this liability? This action cannot be undone."
-                                       FontSize="14" Foreground="{StaticResource TextSecondaryBrush}"
-                                       TextWrapping="Wrap" Margin="0,0,0,24"/>
+                            <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12">
+                                <TextBlock.Text><Binding Source="{DynamicResource Liabilities.DeleteTitle}"/></TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" TextWrapping="Wrap" Margin="0,0,0,24">
+                                <TextBlock.Text><Binding Source="{DynamicResource Liabilities.DeleteMessage}"/></TextBlock.Text>
+                            </TextBlock>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Content="Cancel" Style="{StaticResource SecondaryButton}"
-                                        Command="{Binding CancelDeleteCommand}" Margin="0,0,12,0"/>
-                                <Button Content="Delete" Style="{StaticResource PrimaryButton}"
-                                        Command="{Binding ExecuteDeleteCommand}"
-                                        Background="{StaticResource ExpenseBrush}"/>
+                                <Button Style="{StaticResource SecondaryButton}" Command="{Binding CancelDeleteCommand}" Margin="0,0,12,0">
+                                    <Button.Content><Binding Source="{DynamicResource Common.Cancel}"/></Button.Content>
+                                </Button>
+                                <Button Style="{StaticResource PrimaryButton}" Command="{Binding ExecuteDeleteCommand}" Background="{StaticResource ExpenseBrush}">
+                                    <Button.Content><Binding Source="{DynamicResource Common.Delete}"/></Button.Content>
+                                </Button>
                             </StackPanel>
                         </StackPanel>
                     </Border>

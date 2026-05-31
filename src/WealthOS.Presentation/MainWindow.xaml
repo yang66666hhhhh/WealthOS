@@ -6,7 +6,7 @@
         xmlns:vm="clr-namespace:WealthOS.Presentation.ViewModels"
         xmlns:views="clr-namespace:WealthOS.Presentation.Views"
         mc:Ignorable="d"
-        Title="WealthOS - Personal Wealth Operating System"
+        Title="{DynamicResource App.Title}"
         Height="900" Width="1400"
         MinHeight="700" MinWidth="1100"
         WindowStartupLocation="CenterScreen"
@@ -26,7 +26,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Sidebar -->
         <Border Grid.Column="0" Background="{StaticResource SidebarBrush}">
             <Grid>
                 <Grid.RowDefinitions>
@@ -35,7 +34,6 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Logo -->
                 <StackPanel Grid.Row="0" Margin="24,28,24,32">
                     <TextBlock Text="WealthOS" FontSize="22" FontWeight="Bold"
                                Foreground="White" Margin="0,0,0,4"/>
@@ -43,7 +41,6 @@
                                FontSize="11" Foreground="{StaticResource SidebarTextBrush}"/>
                 </StackPanel>
 
-                <!-- Navigation -->
                 <StackPanel Grid.Row="1">
                     <Button Command="{Binding NavigateToCommand}" CommandParameter="Dashboard"
                             Background="Transparent" BorderThickness="0" Cursor="Hand"
@@ -59,7 +56,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <TextBlock Text="&#x1F3E0;  Dashboard" FontSize="14">
+                            <TextBlock FontSize="14">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -71,6 +68,11 @@
                                         </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}&#x1F3E0;  {0}">
+                                        <Binding Source="{DynamicResource Nav.Dashboard}"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
                             </TextBlock>
                         </Border>
                     </Button>
@@ -88,7 +90,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <TextBlock Text="&#x1F4B0;  Assets" FontSize="14">
+                            <TextBlock FontSize="14">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -100,6 +102,11 @@
                                         </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}&#x1F4B0;  {0}">
+                                        <Binding Source="{DynamicResource Nav.Assets}"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
                             </TextBlock>
                         </Border>
                     </Button>
@@ -117,7 +124,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <TextBlock Text="&#x1F4C9;  Liabilities" FontSize="14">
+                            <TextBlock FontSize="14">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -129,6 +136,11 @@
                                         </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}&#x1F4C9;  {0}">
+                                        <Binding Source="{DynamicResource Nav.Liabilities}"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
                             </TextBlock>
                         </Border>
                     </Button>
@@ -146,7 +158,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <TextBlock Text="&#x1F4CA;  Transactions" FontSize="14">
+                            <TextBlock FontSize="14">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -158,6 +170,11 @@
                                         </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}&#x1F4CA;  {0}">
+                                        <Binding Source="{DynamicResource Nav.Transactions}"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
                             </TextBlock>
                         </Border>
                     </Button>
@@ -175,7 +192,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <TextBlock Text="&#x1F3AF;  Goals" FontSize="14">
+                            <TextBlock FontSize="14">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
@@ -187,22 +204,41 @@
                                         </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}&#x1F3AF;  {0}">
+                                        <Binding Source="{DynamicResource Nav.Goals}"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
                             </TextBlock>
                         </Border>
                     </Button>
                 </StackPanel>
 
-                <!-- Footer -->
                 <StackPanel Grid.Row="2" Margin="24,0,24,24">
+                    <Button Command="{Binding ToggleLanguageCommand}"
+                            Background="Transparent" BorderThickness="0" Cursor="Hand"
+                            HorizontalContentAlignment="Stretch" Padding="0" Margin="0,0,0,8">
+                        <Border Background="{StaticResource SidebarActiveBrush}" CornerRadius="12" Padding="16,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{DynamicResource Lang.Current}" FontSize="13" FontWeight="SemiBold"
+                                           Foreground="{StaticResource SidebarActiveTextBrush}"/>
+                                <TextBlock Grid.Column="1" Text="{DynamicResource Lang.Switch}" FontSize="11"
+                                           Foreground="{StaticResource SidebarTextBrush}"/>
+                            </Grid>
+                        </Border>
+                    </Button>
                     <Border Background="{StaticResource SidebarActiveBrush}" CornerRadius="12" Padding="16,12">
-                        <TextBlock Text="v1.1.0" FontSize="11"
+                        <TextBlock Text="{DynamicResource App.Version}" FontSize="11"
                                    Foreground="{StaticResource SidebarTextBrush}"/>
                     </Border>
                 </StackPanel>
             </Grid>
         </Border>
 
-        <!-- Main Content -->
         <ContentControl Grid.Column="1"
                         Content="{Binding Navigation.CurrentViewModel}">
             <ContentControl.Resources>
