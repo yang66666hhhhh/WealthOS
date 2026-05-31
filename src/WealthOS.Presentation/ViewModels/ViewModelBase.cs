@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace WealthOS.Presentation.ViewModels;
 
@@ -10,6 +11,7 @@ public abstract partial class ViewModelBase : ObservableObject
     [ObservableProperty]
     private bool _hasError;
 
+    [RelayCommand]
     protected void ClearError()
     {
         ErrorMessage = null;
