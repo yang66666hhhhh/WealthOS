@@ -1,3 +1,4 @@
+using Microsoft.Data.Sqlite;
 using WealthOS.Application.Interfaces;
 
 namespace WealthOS.Infrastructure.Data;
@@ -13,11 +14,11 @@ public class DatabaseInitializer
 
     public async Task InitializeAsync()
     {
-        using var connection = _context.CreateConnection();
-        using var command = connection.CreateCommand();
+        using var connection = (SqliteConnection)_context.CreateConnection();
 
-        command.CommandText = @"
-            CREATE TABLE IF NOT EXISTS Accounts (
+        var statements = new[]
+        {
+            @"CREATE TABLE IF NOT EXISTS Accounts (
                 Id TEXT PRIMARY KEY,
                 Name TEXT NOT NULL,
                 Type INTEGER NOT NULL,
@@ -28,9 +29,9 @@ public class DatabaseInitializer
                 IsActive INTEGER NOT NULL DEFAULT 1,
                 CreatedAt TEXT NOT NULL,
                 UpdatedAt TEXT NOT NULL
-            );
+            )",
 
-            CREATE TABLE IF NOT EXISTS Assets (
+            @"CREATE TABLE IF NOT EXISTS Assets (
                 Id TEXT PRIMARY KEY,
                 Name TEXT NOT NULL,
                 Type INTEGER NOT NULL,
@@ -44,9 +45,9 @@ public class DatabaseInitializer
                 IsActive INTEGER NOT NULL DEFAULT 1,
                 CreatedAt TEXT NOT NULL,
                 UpdatedAt TEXT NOT NULL
-            );
+            )",
 
-            CREATE TABLE IF NOT EXISTS Liabilities (
+            @"CREATE TABLE IF NOT EXISTS Liabilities (
                 Id TEXT PRIMARY KEY,
                 Name TEXT NOT NULL,
                 Type INTEGER NOT NULL,
@@ -61,9 +62,9 @@ public class DatabaseInitializer
                 IsActive INTEGER NOT NULL DEFAULT 1,
                 CreatedAt TEXT NOT NULL,
                 UpdatedAt TEXT NOT NULL
-            );
+            )",
 
-            CREATE TABLE IF NOT EXISTS Categories (
+            @"CREATE TABLE IF NOT EXISTS Categories (
                 Id TEXT PRIMARY KEY,
                 Name TEXT NOT NULL,
                 Type INTEGER NOT NULL,
@@ -72,9 +73,9 @@ public class DatabaseInitializer
                 SortOrder INTEGER NOT NULL DEFAULT 0,
                 CreatedAt TEXT NOT NULL,
                 UpdatedAt TEXT NOT NULL
-            );
+            )",
 
-            CREATE TABLE IF NOT EXISTS Transactions (
+            @"CREATE TABLE IF NOT EXISTS Transactions (
                 Id TEXT PRIMARY KEY,
                 Type INTEGER NOT NULL,
                 Amount REAL NOT NULL,
@@ -84,13 +85,10 @@ public class DatabaseInitializer
                 Note TEXT,
                 OccurredAt TEXT NOT NULL,
                 CreatedAt TEXT NOT NULL,
-                UpdatedAt TEXT NOT NULL,
-                FOREIGN KEY (CategoryId) REFERENCES Categories(Id),
-                FOREIGN KEY (AccountId) REFERENCES Accounts(Id),
-                FOREIGN KEY (ToAccountId) REFERENCES Accounts(Id)
-            );
+                UpdatedAt TEXT NOT NULL
+            )",
 
-            CREATE TABLE IF NOT EXISTS Goals (
+            @"CREATE TABLE IF NOT EXISTS Goals (
                 Id TEXT PRIMARY KEY,
                 Name TEXT NOT NULL,
                 TargetAmount REAL NOT NULL,
@@ -101,9 +99,9 @@ public class DatabaseInitializer
                 Note TEXT,
                 CreatedAt TEXT NOT NULL,
                 UpdatedAt TEXT NOT NULL
-            );
+            )",
 
-            CREATE TABLE IF NOT EXISTS InvestmentHoldings (
+            @"CREATE TABLE IF NOT EXISTS InvestmentHoldings (
                 Id TEXT PRIMARY KEY,
                 Symbol TEXT NOT NULL,
                 Name TEXT NOT NULL,
@@ -116,9 +114,9 @@ public class DatabaseInitializer
                 Note TEXT,
                 CreatedAt TEXT NOT NULL,
                 UpdatedAt TEXT NOT NULL
-            );
+            )",
 
-            CREATE TABLE IF NOT EXISTS NetWorthSnapshots (
+            @"CREATE TABLE IF NOT EXISTS NetWorthSnapshots (
                 Id TEXT PRIMARY KEY,
                 TotalAssets REAL NOT NULL,
                 TotalLiabilities REAL NOT NULL,
@@ -126,14 +124,9 @@ public class DatabaseInitializer
                 SnapshotDate TEXT NOT NULL,
                 CreatedAt TEXT NOT NULL,
                 UpdatedAt TEXT NOT NULL
-            );
+            )",
 
-            CREATE INDEX IF NOT EXISTS idx_transactions_occurred ON Transactions(OccurredAt);
-            CREATE INDEX IF NOT EXISTS idx_transactions_account ON Transactions(AccountId);
-            CREATE INDEX IF NOT EXISTS idx_transactions_type ON Transactions(Type);
-            CREATE INDEX IF NOT EXISTS idx_networth_date ON NetWorthSnapshots(SnapshotDate);
-
-            CREATE TABLE IF NOT EXISTS Budgets (
+            @"CREATE TABLE IF NOT EXISTS Budgets (
                 Id TEXT PRIMARY KEY,
                 Name TEXT NOT NULL,
                 Amount REAL NOT NULL,
@@ -144,11 +137,20 @@ public class DatabaseInitializer
                 Note TEXT,
                 CreatedAt TEXT NOT NULL,
                 UpdatedAt TEXT NOT NULL
-            );
+            )",
 
-            CREATE INDEX IF NOT EXISTS idx_budgets_month ON Budgets(Year, Month);
-        ";
+            "CREATE INDEX IF NOT EXISTS idx_transactions_occurred ON Transactions(OccurredAt)",
+            "CREATE INDEX IF NOT EXISTS idx_transactions_account ON Transactions(AccountId)",
+            "CREATE INDEX IF NOT EXISTS idx_transactions_type ON Transactions(Type)",
+            "CREATE INDEX IF NOT EXISTS idx_networth_date ON NetWorthSnapshots(SnapshotDate)",
+            "CREATE INDEX IF NOT EXISTS idx_budgets_month ON Budgets(Year, Month)"
+        };
 
-        await Task.Run(() => command.ExecuteNonQuery());
+        foreach (var sql in statements)
+        {
+            using var command = connection.CreateCommand();
+            command.CommandText = sql;
+            await Task.Run(() => command.ExecuteNonQuery());
+        }
     }
 }

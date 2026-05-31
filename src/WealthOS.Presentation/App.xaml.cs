@@ -85,19 +85,42 @@ public partial class App : System.Windows.Application
         {
             var dbInitializer = _services.GetRequiredService<DatabaseInitializer>();
             await dbInitializer.InitializeAsync();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"数据库初始化失败：{ex.Message}\n\n{ex.StackTrace}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            Shutdown();
+            return;
+        }
 
+        try
+        {
             var categoryService = _services.GetRequiredService<CategoryService>();
             await categoryService.SeedDefaultCategoriesAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"分类种子数据失败: {ex.Message}");
+        }
 
+        try
+        {
             var netWorthService = _services.GetRequiredService<NetWorthService>();
             await netWorthService.SaveSnapshotIfNotExistsTodayAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"净资产快照失败: {ex.Message}");
+        }
 
+        try
+        {
             var mainWindow = _services.GetRequiredService<MainWindow>();
             mainWindow.Show();
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"启动失败：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show($"窗口创建失败：{ex.Message}\n\n{ex.InnerException?.Message}\n\n{ex.StackTrace}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
             Shutdown();
         }
     }
