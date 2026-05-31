@@ -227,7 +227,7 @@
 
     <!-- Budgets -->
     <sys:String x:Key="Nav.Budgets">Budgets</sys:String>
-    <sys:String x:Key="Budgets.Title">Budgets</sys:String>
+    <sys:String x:Key="Budgets.Title">Budget Center</sys:String>
     <sys:String x:Key="Budgets.Add">+ Add Budget</sys:String>
     <sys:String x:Key="Budgets.AddTitle">Add Budget</sys:String>
     <sys:String x:Key="Budgets.EditTitle">Edit Budget</sys:String>
@@ -241,6 +241,8 @@
     <sys:String x:Key="Budgets.NoBudgets">No budgets for this month</sys:String>
     <sys:String x:Key="Budgets.DeleteTitle">Delete Budget</sys:String>
     <sys:String x:Key="Budgets.DeleteMessage">Are you sure you want to delete this budget?</sys:String>
+    <sys:String x:Key="Budgets.ExecutionRate">Execution Rate</sys:String>
+    <sys:String x:Key="Budgets.OverallProgress">Budget Progress</sys:String>
 
     <!-- Language -->
     <sys:String x:Key="Lang.Switch">中文</sys:String>

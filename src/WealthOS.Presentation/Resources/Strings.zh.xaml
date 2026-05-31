@@ -227,7 +227,7 @@
 
     <!-- Budgets -->
     <sys:String x:Key="Nav.Budgets">预算</sys:String>
-    <sys:String x:Key="Budgets.Title">预算</sys:String>
+    <sys:String x:Key="Budgets.Title">预算中心</sys:String>
     <sys:String x:Key="Budgets.Add">+ 添加预算</sys:String>
     <sys:String x:Key="Budgets.AddTitle">添加预算</sys:String>
     <sys:String x:Key="Budgets.EditTitle">编辑预算</sys:String>
@@ -237,10 +237,12 @@
     <sys:String x:Key="Budgets.Remaining">剩余</sys:String>
     <sys:String x:Key="Budgets.Note">备注</sys:String>
     <sys:String x:Key="Budgets.TotalBudget">预算总额</sys:String>
-    <sys:String x:Key="Budgets.TotalSpent">已花费总额</sys:String>
+    <sys:String x:Key="Budgets.TotalSpent">已花费</sys:String>
     <sys:String x:Key="Budgets.NoBudgets">本月暂无预算</sys:String>
     <sys:String x:Key="Budgets.DeleteTitle">删除预算</sys:String>
     <sys:String x:Key="Budgets.DeleteMessage">确定要删除此预算吗？</sys:String>
+    <sys:String x:Key="Budgets.ExecutionRate">执行率</sys:String>
+    <sys:String x:Key="Budgets.OverallProgress">预算执行进度</sys:String>
 
     <!-- Language -->
     <sys:String x:Key="Lang.Switch">EN</sys:String>

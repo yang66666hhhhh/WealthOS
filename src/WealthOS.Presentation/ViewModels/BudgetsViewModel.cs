@@ -21,6 +21,15 @@ public partial class BudgetsViewModel : ViewModelBase
     private decimal _totalSpent;
 
     [ObservableProperty]
+    private decimal _totalRemaining;
+
+    [ObservableProperty]
+    private decimal _executionRate;
+
+    [ObservableProperty]
+    private double _totalProgress;
+
+    [ObservableProperty]
     private bool _isLoading;
 
     [ObservableProperty]
@@ -72,6 +81,9 @@ public partial class BudgetsViewModel : ViewModelBase
             Budgets = new ObservableCollection<BudgetDto>(items);
             TotalBudget = items.Sum(b => b.Amount);
             TotalSpent = items.Sum(b => b.Spent);
+            TotalRemaining = TotalBudget - TotalSpent;
+            ExecutionRate = TotalBudget > 0 ? TotalSpent / TotalBudget * 100 : 0;
+            TotalProgress = TotalBudget > 0 ? (double)(TotalSpent / TotalBudget * 100) : 0;
         }
         catch (Exception ex)
         {
