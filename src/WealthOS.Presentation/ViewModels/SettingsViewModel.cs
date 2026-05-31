@@ -27,6 +27,8 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty]
     private string _statusMessage = string.Empty;
 
+    public bool IsDarkMode => _localization.IsDarkMode;
+
     public SettingsViewModel(IDbContext dbContext, LocalizationService localization)
     {
         _dbContext = dbContext;
@@ -114,5 +116,13 @@ public partial class SettingsViewModel : ObservableObject
     {
         _localization.ToggleLanguage();
         StatusMessage = _localization.IsChinese ? "已切换到中文" : "Switched to English";
+    }
+
+    [RelayCommand]
+    private void ToggleTheme()
+    {
+        _localization.ToggleTheme();
+        OnPropertyChanged(nameof(IsDarkMode));
+        StatusMessage = _localization.IsDarkMode ? "已切换到深色模式" : "Switched to Light Mode";
     }
 }

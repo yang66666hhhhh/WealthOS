@@ -29,6 +29,21 @@
                     </StackPanel>
                 </Border>
 
+                <!-- Theme -->
+                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,20">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource SectionTitleStyle}">
+                            <TextBlock.Text><Binding Source="{DynamicResource Settings.Theme}"/></TextBlock.Text>
+                        </TextBlock>
+                        <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,16">
+                            <TextBlock.Text><Binding Source="{DynamicResource Settings.ThemeDesc}"/></TextBlock.Text>
+                        </TextBlock>
+                        <Button Style="{StaticResource PrimaryButton}" Command="{Binding ToggleThemeCommand}" HorizontalAlignment="Left">
+                            <Button.Content><Binding Source="{DynamicResource Settings.ToggleTheme}"/></Button.Content>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
                 <!-- Database Info -->
                 <Border Style="{StaticResource CardStyle}" Margin="0,0,0,20">
                     <StackPanel>
@@ -75,7 +90,6 @@
                             </Button>
                         </StackPanel>
 
-                        <!-- Status -->
                         <TextBlock Text="{Binding StatusMessage}" FontSize="13" Foreground="{StaticResource AccentBrush}"
                                    Margin="0,16,0,0" Visibility="{Binding StatusMessage, Converter={StaticResource BoolToVis}}"/>
                     </StackPanel>

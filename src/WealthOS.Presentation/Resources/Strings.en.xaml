@@ -199,6 +199,9 @@
     <sys:String x:Key="Settings.Language">Language</sys:String>
     <sys:String x:Key="Settings.LanguageDesc">Switch between Chinese and English</sys:String>
     <sys:String x:Key="Settings.ToggleLang">Switch Language</sys:String>
+    <sys:String x:Key="Settings.Theme">Theme</sys:String>
+    <sys:String x:Key="Settings.ThemeDesc">Switch between light and dark mode</sys:String>
+    <sys:String x:Key="Settings.ToggleTheme">Toggle Dark Mode</sys:String>
     <sys:String x:Key="Settings.Database">Database</sys:String>
     <sys:String x:Key="Settings.DbPath">Path:</sys:String>
     <sys:String x:Key="Settings.DbSize">Size:</sys:String>
@@ -207,6 +210,23 @@
     <sys:String x:Key="Settings.BackupDesc">Backup your data regularly to prevent data loss</sys:String>
     <sys:String x:Key="Settings.BackupBtn">Backup Now</sys:String>
     <sys:String x:Key="Settings.RestoreBtn">Restore from File</sys:String>
+
+    <!-- Budgets -->
+    <sys:String x:Key="Nav.Budgets">Budgets</sys:String>
+    <sys:String x:Key="Budgets.Title">Budgets</sys:String>
+    <sys:String x:Key="Budgets.Add">+ Add Budget</sys:String>
+    <sys:String x:Key="Budgets.AddTitle">Add Budget</sys:String>
+    <sys:String x:Key="Budgets.EditTitle">Edit Budget</sys:String>
+    <sys:String x:Key="Budgets.Name">Name</sys:String>
+    <sys:String x:Key="Budgets.Amount">Budget Amount</sys:String>
+    <sys:String x:Key="Budgets.Spent">Spent</sys:String>
+    <sys:String x:Key="Budgets.Remaining">Remaining</sys:String>
+    <sys:String x:Key="Budgets.Note">Note</sys:String>
+    <sys:String x:Key="Budgets.TotalBudget">Total Budget</sys:String>
+    <sys:String x:Key="Budgets.TotalSpent">Total Spent</sys:String>
+    <sys:String x:Key="Budgets.NoBudgets">No budgets for this month</sys:String>
+    <sys:String x:Key="Budgets.DeleteTitle">Delete Budget</sys:String>
+    <sys:String x:Key="Budgets.DeleteMessage">Are you sure you want to delete this budget?</sys:String>
 
     <!-- Language -->
     <sys:String x:Key="Lang.Switch">中文</sys:String>

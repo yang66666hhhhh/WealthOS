@@ -8,11 +8,16 @@ public partial class LocalizationService : ObservableObject
     [ObservableProperty]
     private bool _isChinese;
 
+    [ObservableProperty]
+    private bool _isDarkMode;
+
     public event Action? LanguageChanged;
+    public event Action? ThemeChanged;
 
     public LocalizationService()
     {
         IsChinese = false;
+        IsDarkMode = false;
     }
 
     public void ToggleLanguage()
@@ -20,6 +25,13 @@ public partial class LocalizationService : ObservableObject
         IsChinese = !IsChinese;
         ApplyLanguage();
         LanguageChanged?.Invoke();
+    }
+
+    public void ToggleTheme()
+    {
+        IsDarkMode = !IsDarkMode;
+        ApplyTheme();
+        ThemeChanged?.Invoke();
     }
 
     public void ApplyLanguage()
@@ -41,5 +53,28 @@ public partial class LocalizationService : ObservableObject
             app.Resources.MergedDictionaries.Remove(existing);
 
         app.Resources.MergedDictionaries.Add(dict);
+    }
+
+    public void ApplyTheme()
+    {
+        var app = System.Windows.Application.Current;
+        if (app == null) return;
+
+        var dict = new ResourceDictionary
+        {
+            Source = new Uri(IsDarkMode
+                ? "Resources/Theme.Dark.xaml"
+                : "Resources/Theme.xaml", UriKind.Relative)
+        };
+
+        var existing = app.Resources.MergedDictionaries
+            .FirstOrDefault(d => d.Source != null &&
+                (d.Source.OriginalString.Contains("Theme.xaml") ||
+                 d.Source.OriginalString.Contains("Theme.Dark.xaml")));
+
+        if (existing != null)
+            app.Resources.MergedDictionaries.Remove(existing);
+
+        app.Resources.MergedDictionaries.Insert(0, dict);
     }
 }

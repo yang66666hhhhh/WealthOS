@@ -1,0 +1,176 @@
+using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using WealthOS.Application.DTOs;
+using WealthOS.Application.Services;
+using WealthOS.Domain.Entities;
+
+namespace WealthOS.Presentation.ViewModels;
+
+public partial class BudgetsViewModel : ObservableObject
+{
+    private readonly BudgetService _service;
+
+    [ObservableProperty]
+    private ObservableCollection<BudgetDto> _budgets = [];
+
+    [ObservableProperty]
+    private decimal _totalBudget;
+
+    [ObservableProperty]
+    private decimal _totalSpent;
+
+    [ObservableProperty]
+    private bool _isLoading;
+
+    [ObservableProperty]
+    private bool _isAddDialogOpen;
+
+    [ObservableProperty]
+    private bool _isEditDialogOpen;
+
+    [ObservableProperty]
+    private bool _isConfirmDeleteOpen;
+
+    [ObservableProperty]
+    private Guid _pendingDeleteId;
+
+    [ObservableProperty]
+    private Guid _editingId;
+
+    [ObservableProperty]
+    private string _newName = string.Empty;
+
+    [ObservableProperty]
+    private decimal _newAmount;
+
+    [ObservableProperty]
+    private decimal _newSpent;
+
+    [ObservableProperty]
+    private string? _newNote;
+
+    [ObservableProperty]
+    private int _selectedYear = DateTime.UtcNow.Year;
+
+    [ObservableProperty]
+    private int _selectedMonth = DateTime.UtcNow.Month;
+
+    public BudgetsViewModel(BudgetService service)
+    {
+        _service = service;
+        _ = LoadDataAsync();
+    }
+
+    [RelayCommand]
+    private async Task LoadDataAsync()
+    {
+        IsLoading = true;
+        try
+        {
+            var items = await _service.GetBudgetsAsync(SelectedYear, SelectedMonth);
+            Budgets = new ObservableCollection<BudgetDto>(items);
+            TotalBudget = items.Sum(b => b.Amount);
+            TotalSpent = items.Sum(b => b.Spent);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    [RelayCommand]
+    private void ShowAddDialog()
+    {
+        NewName = string.Empty;
+        NewAmount = 0;
+        NewSpent = 0;
+        NewNote = null;
+        IsAddDialogOpen = true;
+    }
+
+    [RelayCommand]
+    private void CancelAdd() => IsAddDialogOpen = false;
+
+    [RelayCommand]
+    private async Task ConfirmAddAsync()
+    {
+        if (string.IsNullOrWhiteSpace(NewName) || NewAmount <= 0) return;
+
+        var budget = new Budget
+        {
+            Name = NewName,
+            Amount = NewAmount,
+            Spent = NewSpent,
+            Month = SelectedMonth,
+            Year = SelectedYear,
+            Note = NewNote
+        };
+
+        await _service.AddBudgetAsync(budget);
+        IsAddDialogOpen = false;
+        await LoadDataAsync();
+    }
+
+    [RelayCommand]
+    private async Task ShowEditDialog(Guid id)
+    {
+        var item = await _service.GetBudgetAsync(id);
+        if (item == null) return;
+
+        EditingId = id;
+        NewName = item.Name;
+        NewAmount = item.Amount;
+        NewSpent = item.Spent;
+        NewNote = item.Note;
+        IsEditDialogOpen = true;
+    }
+
+    [RelayCommand]
+    private void CancelEdit() => IsEditDialogOpen = false;
+
+    [RelayCommand]
+    private async Task ConfirmEditAsync()
+    {
+        if (string.IsNullOrWhiteSpace(NewName)) return;
+
+        var item = await _service.GetBudgetAsync(EditingId);
+        if (item == null) return;
+
+        item.Name = NewName;
+        item.Amount = NewAmount;
+        item.Spent = NewSpent;
+        item.Note = NewNote;
+
+        await _service.UpdateBudgetAsync(item);
+        IsEditDialogOpen = false;
+        await LoadDataAsync();
+    }
+
+    [RelayCommand]
+    private void ConfirmDelete(Guid id)
+    {
+        PendingDeleteId = id;
+        IsConfirmDeleteOpen = true;
+    }
+
+    [RelayCommand]
+    private void CancelDelete() => IsConfirmDeleteOpen = false;
+
+    [RelayCommand]
+    private async Task ExecuteDeleteAsync()
+    {
+        await _service.DeleteBudgetAsync(PendingDeleteId);
+        IsConfirmDeleteOpen = false;
+        await LoadDataAsync();
+    }
+
+    [RelayCommand]
+    private async Task ChangeMonthAsync(int delta)
+    {
+        SelectedMonth += delta;
+        if (SelectedMonth > 12) { SelectedMonth = 1; SelectedYear++; }
+        if (SelectedMonth < 1) { SelectedMonth = 12; SelectedYear--; }
+        await LoadDataAsync();
+    }
+}

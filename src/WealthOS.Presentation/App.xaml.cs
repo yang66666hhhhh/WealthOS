@@ -42,6 +42,7 @@ public partial class App : System.Windows.Application
         services.AddSingleton<IGoalRepository, GoalRepository>();
         services.AddSingleton<ICategoryRepository, CategoryRepository>();
         services.AddSingleton<INetWorthRepository, NetWorthRepository>();
+        services.AddSingleton<IBudgetRepository, BudgetRepository>();
         services.AddSingleton<IInvestmentHoldingRepository, InvestmentHoldingRepository>();
 
         services.AddSingleton<DashboardService>();
@@ -54,6 +55,7 @@ public partial class App : System.Windows.Application
         services.AddSingleton<NetWorthService>();
         services.AddSingleton<InvestmentService>();
         services.AddSingleton<ReportService>();
+        services.AddSingleton<BudgetService>();
 
         services.AddSingleton<NavigationService>();
         services.AddSingleton<LocalizationService>();
@@ -70,6 +72,7 @@ public partial class App : System.Windows.Application
         services.AddSingleton<TimelineViewModel>();
         services.AddSingleton<ReportsViewModel>();
         services.AddSingleton<SettingsViewModel>();
+        services.AddSingleton<BudgetsViewModel>();
         services.AddSingleton<MainWindowViewModel>();
         services.AddTransient<MainWindow>();
     }

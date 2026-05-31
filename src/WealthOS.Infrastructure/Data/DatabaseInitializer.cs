@@ -132,6 +132,21 @@ public class DatabaseInitializer
             CREATE INDEX IF NOT EXISTS idx_transactions_account ON Transactions(AccountId);
             CREATE INDEX IF NOT EXISTS idx_transactions_type ON Transactions(Type);
             CREATE INDEX IF NOT EXISTS idx_networth_date ON NetWorthSnapshots(SnapshotDate);
+
+            CREATE TABLE IF NOT EXISTS Budgets (
+                Id TEXT PRIMARY KEY,
+                Name TEXT NOT NULL,
+                Amount REAL NOT NULL,
+                Spent REAL NOT NULL DEFAULT 0,
+                Month INTEGER NOT NULL,
+                Year INTEGER NOT NULL,
+                CategoryId TEXT,
+                Note TEXT,
+                CreatedAt TEXT NOT NULL,
+                UpdatedAt TEXT NOT NULL
+            );
+
+            CREATE INDEX IF NOT EXISTS idx_budgets_month ON Budgets(Year, Month);
         ";
 
         await Task.Run(() => command.ExecuteNonQuery());

@@ -199,6 +199,9 @@
     <sys:String x:Key="Settings.Language">语言</sys:String>
     <sys:String x:Key="Settings.LanguageDesc">切换中文和英文界面</sys:String>
     <sys:String x:Key="Settings.ToggleLang">切换语言</sys:String>
+    <sys:String x:Key="Settings.Theme">主题</sys:String>
+    <sys:String x:Key="Settings.ThemeDesc">切换浅色和深色模式</sys:String>
+    <sys:String x:Key="Settings.ToggleTheme">切换深色模式</sys:String>
     <sys:String x:Key="Settings.Database">数据库</sys:String>
     <sys:String x:Key="Settings.DbPath">路径：</sys:String>
     <sys:String x:Key="Settings.DbSize">大小：</sys:String>
@@ -207,6 +210,23 @@
     <sys:String x:Key="Settings.BackupDesc">定期备份数据以防丢失</sys:String>
     <sys:String x:Key="Settings.BackupBtn">立即备份</sys:String>
     <sys:String x:Key="Settings.RestoreBtn">从文件恢复</sys:String>
+
+    <!-- Budgets -->
+    <sys:String x:Key="Nav.Budgets">预算</sys:String>
+    <sys:String x:Key="Budgets.Title">预算</sys:String>
+    <sys:String x:Key="Budgets.Add">+ 添加预算</sys:String>
+    <sys:String x:Key="Budgets.AddTitle">添加预算</sys:String>
+    <sys:String x:Key="Budgets.EditTitle">编辑预算</sys:String>
+    <sys:String x:Key="Budgets.Name">名称</sys:String>
+    <sys:String x:Key="Budgets.Amount">预算金额</sys:String>
+    <sys:String x:Key="Budgets.Spent">已花费</sys:String>
+    <sys:String x:Key="Budgets.Remaining">剩余</sys:String>
+    <sys:String x:Key="Budgets.Note">备注</sys:String>
+    <sys:String x:Key="Budgets.TotalBudget">预算总额</sys:String>
+    <sys:String x:Key="Budgets.TotalSpent">已花费总额</sys:String>
+    <sys:String x:Key="Budgets.NoBudgets">本月暂无预算</sys:String>
+    <sys:String x:Key="Budgets.DeleteTitle">删除预算</sys:String>
+    <sys:String x:Key="Budgets.DeleteMessage">确定要删除此预算吗？</sys:String>
 
     <!-- Language -->
     <sys:String x:Key="Lang.Switch">EN</sys:String>

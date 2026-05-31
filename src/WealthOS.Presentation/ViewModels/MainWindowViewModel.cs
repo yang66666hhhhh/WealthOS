@@ -18,6 +18,7 @@ public partial class MainWindowViewModel : ObservableObject
     private readonly TimelineViewModel _timelineVm;
     private readonly ReportsViewModel _reportsVm;
     private readonly SettingsViewModel _settingsVm;
+    private readonly BudgetsViewModel _budgetsVm;
 
     public NavigationService Navigation { get; }
     public LocalizationService Localization { get; }
@@ -61,6 +62,9 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private bool _isSettingsSelected;
 
+    [ObservableProperty]
+    private bool _isBudgetsSelected;
+
     public MainWindowViewModel(
         NavigationService navigation,
         LocalizationService localization,
@@ -75,7 +79,8 @@ public partial class MainWindowViewModel : ObservableObject
         AnalyticsViewModel analyticsVm,
         TimelineViewModel timelineVm,
         ReportsViewModel reportsVm,
-        SettingsViewModel settingsVm)
+        SettingsViewModel settingsVm,
+        BudgetsViewModel budgetsVm)
     {
         Navigation = navigation;
         Localization = localization;
@@ -91,6 +96,7 @@ public partial class MainWindowViewModel : ObservableObject
         _timelineVm = timelineVm;
         _reportsVm = reportsVm;
         _settingsVm = settingsVm;
+        _budgetsVm = budgetsVm;
 
         Navigation.NavigateTo(_dashboardVm);
     }
@@ -110,6 +116,7 @@ public partial class MainWindowViewModel : ObservableObject
         IsTimelineSelected = page == "Timeline";
         IsReportsSelected = page == "Reports";
         IsSettingsSelected = page == "Settings";
+        IsBudgetsSelected = page == "Budgets";
 
         CurrentPage = page;
 
@@ -127,6 +134,7 @@ public partial class MainWindowViewModel : ObservableObject
             "Timeline" => _timelineVm,
             "Reports" => _reportsVm,
             "Settings" => _settingsVm,
+            "Budgets" => _budgetsVm,
             _ => (ObservableObject)_dashboardVm
         };
 
@@ -154,5 +162,6 @@ public partial class MainWindowViewModel : ObservableObject
         else if (vm is AnalyticsViewModel analytics) _ = analytics.LoadDataCommand.ExecuteAsync(null);
         else if (vm is TimelineViewModel timeline) _ = timeline.LoadDataCommand.ExecuteAsync(null);
         else if (vm is ReportsViewModel reports) _ = reports.LoadReportCommand.ExecuteAsync(null);
+        else if (vm is BudgetsViewModel budgets) _ = budgets.LoadDataCommand.ExecuteAsync(null);
     }
 }
