@@ -33,24 +33,72 @@
                              Background="Transparent" Foreground="{StaticResource PrimaryBrush}"/>
 
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
-                    <Button Margin="0,0,8,0" Padding="12,6" FontSize="12" Background="Transparent" BorderThickness="1"
-                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"
+                    <Button Margin="0,0,8,0" Padding="12,6" FontSize="12" Cursor="Hand"
                             Command="{Binding FilterByTypeCommand}" CommandParameter="{x:Null}">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
+                                <Setter Property="Padding" Value="12,6"/>
+                                <Setter Property="FontSize" Value="12"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedFilter}" Value="All">
+                                        <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
                         <Button.Content><Binding Source="{StaticResource Assets.Filter.All}"/></Button.Content>
                     </Button>
-                    <Button Margin="0,0,8,0" Padding="12,6" FontSize="12" Background="Transparent" BorderThickness="1"
-                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"
+                    <Button Margin="0,0,8,0" Padding="12,6" FontSize="12" Cursor="Hand"
                             Command="{Binding FilterByTypeCommand}" CommandParameter="Cash">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
+                                <Setter Property="Padding" Value="12,6"/>
+                                <Setter Property="FontSize" Value="12"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedFilter}" Value="Cash">
+                                        <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
                         <Button.Content><Binding Source="{StaticResource Assets.Filter.Cash}"/></Button.Content>
                     </Button>
-                    <Button Margin="0,0,8,0" Padding="12,6" FontSize="12" Background="Transparent" BorderThickness="1"
-                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"
+                    <Button Margin="0,0,8,0" Padding="12,6" FontSize="12" Cursor="Hand"
                             Command="{Binding FilterByTypeCommand}" CommandParameter="Bank">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
+                                <Setter Property="Padding" Value="12,6"/>
+                                <Setter Property="FontSize" Value="12"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedFilter}" Value="Bank">
+                                        <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
                         <Button.Content><Binding Source="{StaticResource Assets.Filter.Bank}"/></Button.Content>
                     </Button>
-                    <Button Margin="0,0,8,0" Padding="12,6" FontSize="12" Background="Transparent" BorderThickness="1"
-                            BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"
+                    <Button Margin="0,0,8,0" Padding="12,6" FontSize="12" Cursor="Hand"
                             Command="{Binding FilterByTypeCommand}" CommandParameter="Fund">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
+                                <Setter Property="Padding" Value="12,6"/>
+                                <Setter Property="FontSize" Value="12"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedFilter}" Value="Fund">
+                                        <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
                         <Button.Content><Binding Source="{StaticResource Assets.Filter.Investment}"/></Button.Content>
                     </Button>
                 </StackPanel>

@@ -54,6 +54,9 @@ public partial class AssetsViewModel : ViewModelBase
     [ObservableProperty]
     private AssetType? _filterType;
 
+    [ObservableProperty]
+    private string _selectedFilter = "All";
+
     public AssetType[] AssetTypes { get; } = Enum.GetValues<AssetType>();
 
     public AssetsViewModel(AssetService service)
@@ -184,6 +187,7 @@ public partial class AssetsViewModel : ViewModelBase
             _ => null
         };
         FilterType = type;
+        SelectedFilter = type?.ToString() ?? "All";
         await LoadDataAsync();
     }
 }
