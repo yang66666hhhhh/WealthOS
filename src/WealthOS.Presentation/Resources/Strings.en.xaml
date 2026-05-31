@@ -187,6 +187,7 @@
     <!-- Analytics -->
     <sys:String x:Key="Nav.Analytics">Analytics</sys:String>
     <sys:String x:Key="Analytics.Title">Analytics</sys:String>
+    <sys:String x:Key="Analytics.Subtitle">Deep dive into your finances</sys:String>
     <sys:String x:Key="Analytics.IncomeExpenseTrend">Income vs Expense (6 months)</sys:String>
     <sys:String x:Key="Analytics.AssetDistribution">Asset Distribution</sys:String>
 

@@ -186,7 +186,8 @@
 
     <!-- Analytics -->
     <sys:String x:Key="Nav.Analytics">分析</sys:String>
-    <sys:String x:Key="Analytics.Title">分析</sys:String>
+    <sys:String x:Key="Analytics.Title">数据分析</sys:String>
+    <sys:String x:Key="Analytics.Subtitle">深入了解您的财务状况</sys:String>
     <sys:String x:Key="Analytics.IncomeExpenseTrend">收支趋势（近 6 个月）</sys:String>
     <sys:String x:Key="Analytics.AssetDistribution">资产分布</sys:String>
 

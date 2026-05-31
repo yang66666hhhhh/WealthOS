@@ -9,44 +9,63 @@
     </UserControl.Resources>
 
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="32,24">
+        <Border Background="{StaticResource PrimaryBrush}" 
+                Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
+                Panel.ZIndex="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="3"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="28,24">
             <StackPanel MaxWidth="1200">
-                <TextBlock Style="{StaticResource PageTitleStyle}">
-                    <TextBlock.Text><Binding Source="{StaticResource Analytics.Title}"/></TextBlock.Text>
-                </TextBlock>
+                <!-- 页面标题 -->
+                <Grid Margin="0,0,0,24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="{DynamicResource Analytics.Title}" FontSize="24" FontWeight="Bold" 
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBlock FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" Margin="0,4,0,0">
+                            <Run Text="&#x1F4CA; "/>
+                            <Run Text="{DynamicResource Analytics.Subtitle}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
 
-                <ProgressBar IsIndeterminate="True" Height="3" Margin="0,0,0,16"
-                             Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
-                             Background="Transparent" Foreground="{StaticResource PrimaryBrush}"/>
-
+                <!-- 图表区域 -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="16"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <!-- 收支趋势图 -->
+                    <Border Grid.Column="0" CornerRadius="14" Padding="20"
+                            BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                            Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
-                            <TextBlock Style="{StaticResource SectionTitleStyle}">
-                                <TextBlock.Text><Binding Source="{StaticResource Analytics.IncomeExpenseTrend}"/></TextBlock.Text>
-                            </TextBlock>
+                            <TextBlock Text="{DynamicResource Analytics.IncomeExpenseTrend}" 
+                                       FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,16"/>
                             <lvc:CartesianChart Series="{Binding IncomeExpenseSeries}"
                                                 XAxes="{Binding IncomeExpenseXAxes}"
                                                 Height="300"/>
                         </StackPanel>
                     </Border>
 
-                    <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                    <!-- 资产分布饼图 -->
+                    <Border Grid.Column="2" CornerRadius="14" Padding="20"
+                            BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                            Background="{StaticResource CardBackgroundBrush}">
                         <StackPanel>
-                            <TextBlock Style="{StaticResource SectionTitleStyle}">
-                                <TextBlock.Text><Binding Source="{StaticResource Analytics.AssetDistribution}"/></TextBlock.Text>
-                            </TextBlock>
+                            <TextBlock Text="{DynamicResource Analytics.AssetDistribution}" 
+                                       FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,16"/>
                             <lvc:PieChart Series="{Binding AssetTrendSeries}"
-                                          Height="300" LegendPosition="Right"/>
+                                          Height="300" LegendPosition="Bottom"/>
                         </StackPanel>
                     </Border>
                 </Grid>
+
+                <Border Height="20"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>
