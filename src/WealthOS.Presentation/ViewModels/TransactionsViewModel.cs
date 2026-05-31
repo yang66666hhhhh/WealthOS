@@ -12,6 +12,7 @@ public partial class TransactionsViewModel : ViewModelBase
 {
     private readonly TransactionService _service;
     private readonly AccountService _accountService;
+    private readonly CategoryService _categoryService;
     private List<TransactionDto> _allTransactions = [];
 
     [ObservableProperty]
@@ -21,7 +22,13 @@ public partial class TransactionsViewModel : ViewModelBase
     private ObservableCollection<AccountDto> _accounts = [];
 
     [ObservableProperty]
+    private ObservableCollection<Category> _categories = [];
+
+    [ObservableProperty]
     private AccountDto? _selectedAccount;
+
+    [ObservableProperty]
+    private Category? _selectedCategory;
 
     [ObservableProperty]
     private string _searchText = string.Empty;
@@ -61,10 +68,11 @@ public partial class TransactionsViewModel : ViewModelBase
 
     public TransactionType[] TransactionTypes { get; } = Enum.GetValues<TransactionType>();
 
-    public TransactionsViewModel(TransactionService service, AccountService accountService)
+    public TransactionsViewModel(TransactionService service, AccountService accountService, CategoryService categoryService)
     {
         _service = service;
         _accountService = accountService;
+        _categoryService = categoryService;
         _ = LoadDataAsync();
     }
 
@@ -82,6 +90,9 @@ public partial class TransactionsViewModel : ViewModelBase
 
             var accountList = await _accountService.GetAllAccountsAsync();
             Accounts = new ObservableCollection<AccountDto>(accountList);
+
+            var categoryList = await _categoryService.GetAllAsync();
+            Categories = new ObservableCollection<Category>(categoryList);
 
             ApplyFilters();
         }
@@ -126,7 +137,16 @@ public partial class TransactionsViewModel : ViewModelBase
         NewNote = null;
         NewDate = DateTime.Today;
         SelectedAccount = Accounts.FirstOrDefault();
+        SelectedCategory = Categories.FirstOrDefault(c => c.Type == NewType);
         IsAddDialogOpen = true;
+    }
+
+    partial void OnNewTypeChanged(TransactionType value)
+    {
+        if (IsAddDialogOpen || IsEditDialogOpen)
+        {
+            SelectedCategory = Categories.FirstOrDefault(c => c.Type == value);
+        }
     }
 
     [RelayCommand]
@@ -137,18 +157,26 @@ public partial class TransactionsViewModel : ViewModelBase
     {
         if (NewAmount <= 0 || SelectedAccount == null) return;
 
-        var transaction = new Transaction
+        try
         {
-            Type = NewType,
-            Amount = NewAmount,
-            Note = NewNote,
-            OccurredAt = NewDate,
-            AccountId = SelectedAccount.Id
-        };
+            var transaction = new Transaction
+            {
+                Type = NewType,
+                Amount = NewAmount,
+                Note = NewNote,
+                OccurredAt = NewDate,
+                AccountId = SelectedAccount.Id,
+                CategoryId = SelectedCategory?.Id
+            };
 
-        await _service.AddTransactionAsync(transaction);
-        IsAddDialogOpen = false;
-        await LoadDataAsync();
+            await _service.AddTransactionAsync(transaction);
+            IsAddDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
@@ -160,6 +188,7 @@ public partial class TransactionsViewModel : ViewModelBase
         NewNote = dto.Note;
         NewDate = dto.OccurredAt;
         SelectedAccount = Accounts.FirstOrDefault(a => a.Name == dto.AccountName);
+        SelectedCategory = Categories.FirstOrDefault(c => c.Name == dto.CategoryName && c.Type == dto.Type);
         IsEditDialogOpen = true;
     }
 
@@ -179,7 +208,8 @@ public partial class TransactionsViewModel : ViewModelBase
                 Amount = NewAmount,
                 Note = NewNote,
                 OccurredAt = NewDate,
-                AccountId = SelectedAccount.Id
+                AccountId = SelectedAccount.Id,
+                CategoryId = SelectedCategory?.Id
             };
 
             await _service.UpdateTransactionAsync(EditingId, transaction);
@@ -188,7 +218,7 @@ public partial class TransactionsViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"更新交易失败: {ex.Message}");
+            SetError(ex);
         }
     }
 

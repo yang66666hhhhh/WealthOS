@@ -157,6 +157,10 @@
                             </TextBlock>
                             <ComboBox ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount}" DisplayMemberPath="Name" Margin="0,0,0,16"/>
                             <TextBlock Style="{StaticResource LabelStyle}">
+                                <TextBlock.Text><Binding Source="{StaticResource Transactions.Category}"/></TextBlock.Text>
+                            </TextBlock>
+                            <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" DisplayMemberPath="Name" Margin="0,0,0,16"/>
+                            <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Transactions.Amount}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBox Text="{Binding NewAmount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
@@ -217,6 +221,10 @@
                                 <TextBlock.Text><Binding Source="{StaticResource Transactions.Account}"/></TextBlock.Text>
                             </TextBlock>
                             <ComboBox ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount}" DisplayMemberPath="Name" Margin="0,0,0,16"/>
+                            <TextBlock Style="{StaticResource LabelStyle}">
+                                <TextBlock.Text><Binding Source="{StaticResource Transactions.Category}"/></TextBlock.Text>
+                            </TextBlock>
+                            <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" DisplayMemberPath="Name" Margin="0,0,0,16"/>
                             <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Transactions.Amount}"/></TextBlock.Text>
                             </TextBlock>
