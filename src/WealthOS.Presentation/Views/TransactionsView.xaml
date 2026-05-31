@@ -34,9 +34,21 @@
                              Background="Transparent" Foreground="{StaticResource PrimaryBrush}"/>
 
                 <!-- Search -->
-                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource InputStyle}" Margin="0,0,0,16"
-                         Tag="{DynamicResource Transactions.Search}"/>
+                <Border Style="{StaticResource CardStyle}" Padding="0" Margin="0,0,0,16">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="{StaticResource SurfaceBrush}" CornerRadius="16,0,0,16" 
+                                Padding="16,12" VerticalAlignment="Stretch">
+                            <TextBlock Text="&#x1F50D;" FontSize="14" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBox Grid.Column="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource InputStyle}" BorderThickness="0"
+                                 Tag="{DynamicResource Transactions.Search}"/>
+                    </Grid>
+                </Border>
 
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                     <Button Margin="0,0,8,0" Padding="12,6" FontSize="12" Background="Transparent" BorderThickness="1"
