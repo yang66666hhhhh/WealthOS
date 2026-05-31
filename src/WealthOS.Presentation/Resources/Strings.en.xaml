@@ -235,6 +235,15 @@
     <sys:String x:Key="Settings.BackupDesc">Backup your data regularly to prevent data loss</sys:String>
     <sys:String x:Key="Settings.BackupBtn">Backup Now</sys:String>
     <sys:String x:Key="Settings.RestoreBtn">Restore from File</sys:String>
+    <sys:String x:Key="Settings.NeverBackup">Never backed up</sys:String>
+    <sys:String x:Key="Settings.BackupSuccess">Backup successful</sys:String>
+    <sys:String x:Key="Settings.BackupFailed">Backup failed</sys:String>
+    <sys:String x:Key="Settings.RestoreSuccess">Restore successful, restart to apply</sys:String>
+    <sys:String x:Key="Settings.RestoreFailed">Restore failed</sys:String>
+    <sys:String x:Key="Settings.SwitchedToChinese">Switched to Chinese</sys:String>
+    <sys:String x:Key="Settings.SwitchedToEnglish">Switched to English</sys:String>
+    <sys:String x:Key="Settings.SwitchedToDark">Switched to Dark Mode</sys:String>
+    <sys:String x:Key="Settings.SwitchedToLight">Switched to Light Mode</sys:String>
 
     <!-- Budgets -->
     <sys:String x:Key="Nav.Budgets">Budgets</sys:String>

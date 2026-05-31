@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
@@ -19,7 +20,7 @@ public partial class SettingsViewModel : ViewModelBase
     private string _dbSize = string.Empty;
 
     [ObservableProperty]
-    private string _lastBackupTime = "从未备份";
+    private string _lastBackupTime = string.Empty;
 
     [ObservableProperty]
     private bool _isBusy;
@@ -36,11 +37,21 @@ public partial class SettingsViewModel : ViewModelBase
         LoadInfo();
     }
 
+    private static string GetResourceString(string key)
+    {
+        var app = System.Windows.Application.Current;
+        if (app?.TryFindResource(key) is string value)
+            return value;
+        return key;
+    }
+
     private void LoadInfo()
     {
         DbPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "WealthOS", "wealthos.db");
+
+        LastBackupTime = GetResourceString("Settings.NeverBackup");
 
         if (File.Exists(DbPath))
         {
@@ -58,6 +69,7 @@ public partial class SettingsViewModel : ViewModelBase
     private async Task BackupAsync()
     {
         IsBusy = true;
+        ClearError();
         try
         {
             var dialog = new SaveFileDialog
@@ -71,12 +83,12 @@ public partial class SettingsViewModel : ViewModelBase
             {
                 File.Copy(DbPath, dialog.FileName, true);
                 LastBackupTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                StatusMessage = "备份成功";
+                StatusMessage = GetResourceString("Settings.BackupSuccess");
             }
         }
         catch (Exception ex)
         {
-            StatusMessage = $"备份失败：{ex.Message}";
+            StatusMessage = $"{GetResourceString("Settings.BackupFailed")}：{ex.Message}";
         }
         finally
         {
@@ -95,14 +107,15 @@ public partial class SettingsViewModel : ViewModelBase
         if (dialog.ShowDialog() == true)
         {
             IsBusy = true;
+            ClearError();
             try
             {
                 File.Copy(dialog.FileName, DbPath, true);
-                StatusMessage = "恢复成功，重启应用后生效";
+                StatusMessage = GetResourceString("Settings.RestoreSuccess");
             }
             catch (Exception ex)
             {
-                StatusMessage = $"恢复失败：{ex.Message}";
+                StatusMessage = $"{GetResourceString("Settings.RestoreFailed")}：{ex.Message}";
             }
             finally
             {
@@ -115,7 +128,9 @@ public partial class SettingsViewModel : ViewModelBase
     private void ToggleLanguage()
     {
         _localization.ToggleLanguage();
-        StatusMessage = _localization.IsChinese ? "已切换到中文" : "Switched to English";
+        StatusMessage = _localization.IsChinese
+            ? GetResourceString("Settings.SwitchedToChinese")
+            : GetResourceString("Settings.SwitchedToEnglish");
     }
 
     [RelayCommand]
@@ -123,6 +138,8 @@ public partial class SettingsViewModel : ViewModelBase
     {
         _localization.ToggleTheme();
         OnPropertyChanged(nameof(IsDarkMode));
-        StatusMessage = _localization.IsDarkMode ? "已切换到深色模式" : "Switched to Light Mode";
+        StatusMessage = _localization.IsDarkMode
+            ? GetResourceString("Settings.SwitchedToDark")
+            : GetResourceString("Settings.SwitchedToLight");
     }
 }

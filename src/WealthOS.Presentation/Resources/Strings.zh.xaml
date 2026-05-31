@@ -235,6 +235,15 @@
     <sys:String x:Key="Settings.BackupDesc">定期备份数据以防丢失</sys:String>
     <sys:String x:Key="Settings.BackupBtn">立即备份</sys:String>
     <sys:String x:Key="Settings.RestoreBtn">从文件恢复</sys:String>
+    <sys:String x:Key="Settings.NeverBackup">从未备份</sys:String>
+    <sys:String x:Key="Settings.BackupSuccess">备份成功</sys:String>
+    <sys:String x:Key="Settings.BackupFailed">备份失败</sys:String>
+    <sys:String x:Key="Settings.RestoreSuccess">恢复成功，重启应用后生效</sys:String>
+    <sys:String x:Key="Settings.RestoreFailed">恢复失败</sys:String>
+    <sys:String x:Key="Settings.SwitchedToChinese">已切换到中文</sys:String>
+    <sys:String x:Key="Settings.SwitchedToEnglish">已切换到英文</sys:String>
+    <sys:String x:Key="Settings.SwitchedToDark">已切换到深色模式</sys:String>
+    <sys:String x:Key="Settings.SwitchedToLight">已切换到浅色模式</sys:String>
 
     <!-- Budgets -->
     <sys:String x:Key="Nav.Budgets">预算</sys:String>
