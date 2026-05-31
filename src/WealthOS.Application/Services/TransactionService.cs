@@ -10,15 +10,18 @@ public class TransactionService
     private readonly ITransactionRepository _transactionRepo;
     private readonly IAccountRepository _accountRepo;
     private readonly ICategoryRepository _categoryRepo;
+    private readonly NetWorthService _netWorthService;
 
     public TransactionService(
         ITransactionRepository transactionRepo,
         IAccountRepository accountRepo,
-        ICategoryRepository categoryRepo)
+        ICategoryRepository categoryRepo,
+        NetWorthService netWorthService)
     {
         _transactionRepo = transactionRepo;
         _accountRepo = accountRepo;
         _categoryRepo = categoryRepo;
+        _netWorthService = netWorthService;
     }
 
     public async Task<IEnumerable<TransactionDto>> GetTransactionsAsync(DateTime start, DateTime end)
@@ -69,6 +72,8 @@ public class TransactionService
             }
         }
 
+        await _netWorthService.SaveSnapshotIfNotExistsTodayAsync();
+
         return id;
     }
 
@@ -102,6 +107,10 @@ public class TransactionService
             }
         }
 
-        return await _transactionRepo.DeleteAsync(id);
+        var result = await _transactionRepo.DeleteAsync(id);
+
+        await _netWorthService.SaveSnapshotIfNotExistsTodayAsync();
+
+        return result;
     }
 }

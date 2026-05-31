@@ -193,6 +193,8 @@ WealthOS.Presentation.Resources
 [optional body]
 ```
 
+**提交信息必须使用中文描述**，type 和 scope 保持英文。
+
 类型：
 - `feat`: 新功能
 - `fix`: 修复
@@ -203,9 +205,10 @@ WealthOS.Presentation.Resources
 
 示例：
 ```
-feat(assets): add asset card CRUD
-fix(dashboard): correct net worth calculation
-refactor(infrastructure): extract base repository
+feat(assets): 添加资产卡片 CRUD
+fix(dashboard): 修正净资产计算逻辑
+refactor(infrastructure): 提取通用仓储基类
+feat(i18n): 添加中英文语言切换
 ```
 
 ### 禁止提交

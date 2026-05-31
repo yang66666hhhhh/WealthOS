@@ -49,6 +49,8 @@ public partial class App : System.Windows.Application
         services.AddSingleton<TransactionService>();
         services.AddSingleton<GoalService>();
         services.AddSingleton<AccountService>();
+        services.AddSingleton<CategoryService>();
+        services.AddSingleton<NetWorthService>();
 
         services.AddSingleton<NavigationService>();
         services.AddSingleton<LocalizationService>();
@@ -67,10 +69,24 @@ public partial class App : System.Windows.Application
     {
         base.OnStartup(e);
 
-        var dbInitializer = _services.GetRequiredService<DatabaseInitializer>();
-        await dbInitializer.InitializeAsync();
+        try
+        {
+            var dbInitializer = _services.GetRequiredService<DatabaseInitializer>();
+            await dbInitializer.InitializeAsync();
 
-        var mainWindow = _services.GetRequiredService<MainWindow>();
-        mainWindow.Show();
+            var categoryService = _services.GetRequiredService<CategoryService>();
+            await categoryService.SeedDefaultCategoriesAsync();
+
+            var netWorthService = _services.GetRequiredService<NetWorthService>();
+            await netWorthService.SaveSnapshotIfNotExistsTodayAsync();
+
+            var mainWindow = _services.GetRequiredService<MainWindow>();
+            mainWindow.Show();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"启动失败：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            Shutdown();
+        }
     }
 }
