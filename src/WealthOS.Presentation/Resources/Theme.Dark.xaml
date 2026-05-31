@@ -1,88 +1,154 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Colors -->
-    <Color x:Key="PrimaryColor">#4A90D9</Color>
-    <Color x:Key="PrimaryLightColor">#2A3A4A</Color>
-    <Color x:Key="PrimaryDarkColor">#6BA3E8</Color>
-    <Color x:Key="AccentColor">#26A69A</Color>
-    <Color x:Key="BackgroundColor">#1A1A2E</Color>
-    <Color x:Key="CardBackgroundColor">#16213E</Color>
-    <Color x:Key="SurfaceColor">#0F3460</Color>
-    <Color x:Key="TextPrimaryColor">#E0E0E0</Color>
-    <Color x:Key="TextSecondaryColor">#A0A0A0</Color>
-    <Color x:Key="TextHintColor">#606060</Color>
-    <Color x:Key="BorderColor">#2A2A4A</Color>
-    <Color x:Key="FocusBorderColor">#4A90D9</Color>
-    <Color x:Key="IncomeColor">#66BB6A</Color>
-    <Color x:Key="ExpenseColor">#EF5350</Color>
-    <Color x:Key="TransferColor">#42A5F5</Color>
-    <Color x:Key="SidebarColor">#0F0F23</Color>
-    <Color x:Key="SidebarActiveColor">#1A1A3E</Color>
-    <Color x:Key="SidebarTextColor">#808090</Color>
+    <!-- ============================================ -->
+    <!--  深色主题色彩系统 -->
+    <!-- ============================================ -->
+    
+    <!-- 主色调 - 柔和蓝 -->
+    <Color x:Key="PrimaryColor">#3B82F6</Color>
+    <Color x:Key="PrimaryLightColor">#1E3A5F</Color>
+    <Color x:Key="PrimaryDarkColor">#60A5FA</Color>
+    <Color x:Key="PrimaryMutedColor">#1E40AF</Color>
+    
+    <!-- 强调色 -->
+    <Color x:Key="AccentColor">#34D399</Color>
+    <Color x:Key="AccentLightColor">#064E3B</Color>
+    
+    <!-- 中性色 - 深邃 -->
+    <Color x:Key="BackgroundColor">#0F172A</Color>
+    <Color x:Key="CardBackgroundColor">#1E293B</Color>
+    <Color x:Key="SurfaceColor">#334155</Color>
+    <Color x:Key="SurfaceHoverColor">#475569</Color>
+    
+    <!-- 文字色 - 清晰可读 -->
+    <Color x:Key="TextPrimaryColor">#F1F5F9</Color>
+    <Color x:Key="TextSecondaryColor">#94A3B8</Color>
+    <Color x:Key="TextTertiaryColor">#64748B</Color>
+    <Color x:Key="TextHintColor">#475569</Color>
+    
+    <!-- 边框色 -->
+    <Color x:Key="BorderColor">#334155</Color>
+    <Color x:Key="BorderLightColor">#1E293B</Color>
+    <Color x:Key="FocusBorderColor">#3B82F6</Color>
+    
+    <!-- 功能色 - 深色适配 -->
+    <Color x:Key="IncomeColor">#34D399</Color>
+    <Color x:Key="IncomeLightColor">#064E3B</Color>
+    <Color x:Key="ExpenseColor">#F87171</Color>
+    <Color x:Key="ExpenseLightColor">#7F1D1D</Color>
+    <Color x:Key="TransferColor">#60A5FA</Color>
+    <Color x:Key="TransferLightColor">#1E3A5F</Color>
+    
+    <!-- 侧边栏 - 深色优雅 -->
+    <Color x:Key="SidebarColor">#020617</Color>
+    <Color x:Key="SidebarHoverColor">#0F172A</Color>
+    <Color x:Key="SidebarActiveColor">#1E40AF</Color>
+    <Color x:Key="SidebarTextColor">#64748B</Color>
     <Color x:Key="SidebarActiveTextColor">#FFFFFF</Color>
-    <Color x:Key="DialogOverlayColor">#B0000000</Color>
-    <Color x:Key="DialogBackgroundColor">#1E2A3A</Color>
-    <Color x:Key="SuccessColor">#66BB6A</Color>
-    <Color x:Key="WarningColor">#FFA726</Color>
-    <Color x:Key="ErrorColor">#EF5350</Color>
+    
+    <!-- 对话框 -->
+    <Color x:Key="DialogOverlayColor">#80000000</Color>
+    <Color x:Key="DialogBackgroundColor">#1E293B</Color>
+    
+    <!-- 状态色 -->
+    <Color x:Key="SuccessColor">#34D399</Color>
+    <Color x:Key="WarningColor">#FBBF24</Color>
+    <Color x:Key="ErrorColor">#F87171</Color>
+    <Color x:Key="InfoColor">#60A5FA</Color>
 
-    <!-- Brushes -->
+    <!-- ============================================ -->
+    <!--  画刷资源 -->
+    <!-- ============================================ -->
+    
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
     <SolidColorBrush x:Key="PrimaryLightBrush" Color="{StaticResource PrimaryLightColor}"/>
     <SolidColorBrush x:Key="PrimaryDarkBrush" Color="{StaticResource PrimaryDarkColor}"/>
+    <SolidColorBrush x:Key="PrimaryMutedBrush" Color="{StaticResource PrimaryMutedColor}"/>
+    
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
+    <SolidColorBrush x:Key="AccentLightBrush" Color="{StaticResource AccentLightColor}"/>
+    
     <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}"/>
     <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource CardBackgroundColor}"/>
     <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}"/>
+    <SolidColorBrush x:Key="SurfaceHoverBrush" Color="{StaticResource SurfaceHoverColor}"/>
+    
     <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}"/>
     <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}"/>
+    <SolidColorBrush x:Key="TextTertiaryBrush" Color="{StaticResource TextTertiaryColor}"/>
     <SolidColorBrush x:Key="TextHintBrush" Color="{StaticResource TextHintColor}"/>
+    
     <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}"/>
+    <SolidColorBrush x:Key="BorderLightBrush" Color="{StaticResource BorderLightColor}"/>
     <SolidColorBrush x:Key="FocusBorderBrush" Color="{StaticResource FocusBorderColor}"/>
+    
     <SolidColorBrush x:Key="IncomeBrush" Color="{StaticResource IncomeColor}"/>
+    <SolidColorBrush x:Key="IncomeLightBrush" Color="{StaticResource IncomeLightColor}"/>
     <SolidColorBrush x:Key="ExpenseBrush" Color="{StaticResource ExpenseColor}"/>
+    <SolidColorBrush x:Key="ExpenseLightBrush" Color="{StaticResource ExpenseLightColor}"/>
     <SolidColorBrush x:Key="TransferBrush" Color="{StaticResource TransferColor}"/>
+    <SolidColorBrush x:Key="TransferLightBrush" Color="{StaticResource TransferLightColor}"/>
+    
     <SolidColorBrush x:Key="SidebarBrush" Color="{StaticResource SidebarColor}"/>
+    <SolidColorBrush x:Key="SidebarHoverBrush" Color="{StaticResource SidebarHoverColor}"/>
     <SolidColorBrush x:Key="SidebarActiveBrush" Color="{StaticResource SidebarActiveColor}"/>
     <SolidColorBrush x:Key="SidebarTextBrush" Color="{StaticResource SidebarTextColor}"/>
     <SolidColorBrush x:Key="SidebarActiveTextBrush" Color="{StaticResource SidebarActiveTextColor}"/>
+    
     <SolidColorBrush x:Key="DialogOverlayBrush" Color="{StaticResource DialogOverlayColor}"/>
     <SolidColorBrush x:Key="DialogBackgroundBrush" Color="{StaticResource DialogBackgroundColor}"/>
+    
     <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}"/>
     <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}"/>
     <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}"/>
+    <SolidColorBrush x:Key="InfoBrush" Color="{StaticResource InfoColor}"/>
 
-    <!-- Constants -->
+    <!-- ============================================ -->
+    <!--  常量定义 -->
+    <!-- ============================================ -->
+    
     <CornerRadius x:Key="CardCornerRadius">16</CornerRadius>
     <CornerRadius x:Key="ButtonCornerRadius">12</CornerRadius>
-    <CornerRadius x:Key="InputCornerRadius">10</CornerRadius>
-    <CornerRadius x:Key="DialogCornerRadius">20</CornerRadius>
+    <CornerRadius x:Key="InputCornerRadius">12</CornerRadius>
+    <CornerRadius x:Key="DialogCornerRadius">24</CornerRadius>
+    <CornerRadius x:Key="BadgeCornerRadius">8</CornerRadius>
+    
     <Thickness x:Key="CardPadding">24</Thickness>
     <Thickness x:Key="PagePadding">32</Thickness>
+    <Thickness x:Key="SectionSpacing">0,0,0,24</Thickness>
+    <Thickness x:Key="ItemSpacing">0,0,0,16</Thickness>
 
-    <!-- Card Style -->
+    <!-- ============================================ -->
+    <!--  卡片样式 -->
+    <!-- ============================================ -->
+    
     <Style x:Key="CardStyle" TargetType="Border">
         <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}"/>
         <Setter Property="CornerRadius" Value="{StaticResource CardCornerRadius}"/>
         <Setter Property="Padding" Value="{StaticResource CardPadding}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
         <Setter Property="Effect">
             <Setter.Value>
-                <DropShadowEffect BlurRadius="20" ShadowDepth="2" Opacity="0.3" Color="#000000"/>
+                <DropShadowEffect BlurRadius="16" ShadowDepth="2" Opacity="0.2" Color="#000000"/>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <!-- Text Styles -->
+    <!-- ============================================ -->
+    <!--  文字样式 -->
+    <!-- ============================================ -->
+    
     <Style x:Key="PageTitleStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="28"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
         <Setter Property="Margin" Value="0,0,0,24"/>
     </Style>
 
     <Style x:Key="SectionTitleStyle" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontSize" Value="16"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
         <Setter Property="Margin" Value="0,0,0,16"/>
@@ -96,17 +162,21 @@
 
     <Style x:Key="MetricLabelStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="13"/>
-        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Foreground" Value="{StaticResource TextTertiaryBrush}"/>
         <Setter Property="Margin" Value="0,4,0,0"/>
     </Style>
 
-    <!-- Primary Button Style -->
+    <!-- ============================================ -->
+    <!--  按钮样式 -->
+    <!-- ============================================ -->
+    
     <Style x:Key="PrimaryButton" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Padding" Value="20,10"/>
+        <Setter Property="Padding" Value="24,12"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
@@ -123,7 +193,6 @@
                             <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryDarkBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryDarkBrush}"/>
                             <Setter TargetName="border" Property="Opacity" Value="0.9"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
@@ -135,13 +204,12 @@
         </Setter>
     </Style>
 
-    <!-- Secondary Button Style -->
     <Style x:Key="SecondaryButton" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Padding" Value="20,10"/>
+        <Setter Property="Padding" Value="24,12"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
         <Setter Property="Cursor" Value="Hand"/>
@@ -159,11 +227,10 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="border" Property="Background" Value="{StaticResource SurfaceBrush}"/>
-                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource PrimaryMutedBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource SurfaceBrush}"/>
-                            <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource SurfaceHoverBrush}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="border" Property="Opacity" Value="0.5"/>
@@ -174,13 +241,12 @@
         </Setter>
     </Style>
 
-    <!-- Danger Button Style -->
     <Style x:Key="DangerButton" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource ErrorBrush}"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Padding" Value="20,10"/>
+        <Setter Property="Padding" Value="24,12"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
@@ -194,7 +260,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#FF6659"/>
+                            <Setter TargetName="border" Property="Background" Value="#EF4444"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="border" Property="Opacity" Value="0.9"/>
@@ -208,28 +274,61 @@
         </Setter>
     </Style>
 
-    <!-- Nav Item Style -->
+    <Style x:Key="GhostButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Padding" Value="16,8"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="8"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource SurfaceBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ============================================ -->
+    <!--  导航样式 -->
+    <!-- ============================================ -->
+    
     <Style x:Key="NavItemStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="Normal"/>
-        <Setter Property="Padding" Value="20,12"/>
+        <Setter Property="Padding" Value="16,10"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="border" Background="{TemplateBinding Background}"
-                            CornerRadius="10" Padding="{TemplateBinding Padding}"
-                            Margin="8,2">
+                    <Border x:Name="border" 
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="10" 
+                            Padding="{TemplateBinding Padding}"
+                            Margin="8,1">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource SidebarHoverBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -243,13 +342,16 @@
         <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
 
-    <!-- Input Style -->
+    <!-- ============================================ -->
+    <!--  输入框样式 -->
+    <!-- ============================================ -->
+    
     <Style x:Key="InputStyle" TargetType="TextBox">
         <Setter Property="FontSize" Value="14"/>
-        <Setter Property="Padding" Value="14,10"/>
+        <Setter Property="Padding" Value="14,12"/>
         <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
-        <Setter Property="CaretBrush" Value="{StaticResource TextPrimaryBrush}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource PrimaryBrush}"/>
         <Setter Property="SelectionBrush" Value="{StaticResource PrimaryLightBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -268,10 +370,10 @@
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource FocusBorderBrush}"/>
                             <Setter TargetName="border" Property="BorderThickness" Value="2"/>
-                            <Setter TargetName="border" Property="Padding" Value="13,9"/>
+                            <Setter TargetName="border" Property="Padding" Value="13,11"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextHintBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextTertiaryBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -279,51 +381,71 @@
         </Setter>
     </Style>
 
-    <!-- ComboBox Style -->
-    <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="Padding" Value="14,10"/>
-        <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-    </Style>
-
-    <!-- Dialog Title Style -->
+    <!-- ============================================ -->
+    <!--  对话框样式 -->
+    <!-- ============================================ -->
+    
     <Style x:Key="DialogTitleStyle" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="FontSize" Value="20"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
         <Setter Property="Margin" Value="0,0,0,8"/>
     </Style>
 
-    <!-- Dialog Subtitle Style -->
     <Style x:Key="DialogSubtitleStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
-        <Setter Property="Margin" Value="0,0,0,20"/>
+        <Setter Property="Margin" Value="0,0,0,24"/>
     </Style>
 
-    <!-- Label Style -->
     <Style x:Key="LabelStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
-        <Setter Property="Margin" Value="0,0,0,6"/>
+        <Setter Property="Margin" Value="0,0,0,8"/>
     </Style>
 
-    <!-- Divider Style -->
+    <!-- ============================================ -->
+    <!--  辅助样式 -->
+    <!-- ============================================ -->
+    
     <Style x:Key="DividerStyle" TargetType="Border">
         <Setter Property="Background" Value="{StaticResource BorderBrush}"/>
         <Setter Property="Height" Value="1"/>
-        <Setter Property="Margin" Value="0,16"/>
+        <Setter Property="Margin" Value="0,20"/>
     </Style>
 
-    <!-- Badge Style -->
     <Style x:Key="BadgeStyle" TargetType="Border">
-        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="CornerRadius" Value="{StaticResource BadgeCornerRadius}"/>
         <Setter Property="Padding" Value="10,4"/>
         <Setter Property="Background" Value="{StaticResource PrimaryLightBrush}"/>
+    </Style>
+
+    <Style x:Key="ChipStyle" TargetType="Border">
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="12,6"/>
+        <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
+    </Style>
+
+    <Style x:Key="EmptyStateIconStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="48"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0,0,0,16"/>
+        <Setter Property="Opacity" Value="0.3"/>
+    </Style>
+
+    <Style x:Key="EmptyStateTitleStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0,0,0,8"/>
+    </Style>
+
+    <Style x:Key="EmptyStateHintStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="{StaticResource TextTertiaryBrush}"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
 
 </ResourceDictionary>
