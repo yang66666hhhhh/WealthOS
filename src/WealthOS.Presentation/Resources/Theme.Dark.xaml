@@ -105,6 +105,25 @@
     <SolidColorBrush x:Key="InfoBrush" Color="{StaticResource InfoColor}"/>
 
     <!-- ============================================ -->
+    <!--  图标背景色（深色主题） -->
+    <!-- ============================================ -->
+    
+    <Color x:Key="IconBgBlueColor">#1E3A5F</Color>
+    <SolidColorBrush x:Key="IconBgBlueBrush" Color="{StaticResource IconBgBlueColor}"/>
+    
+    <Color x:Key="IconBgGreenColor">#064E3B</Color>
+    <SolidColorBrush x:Key="IconBgGreenBrush" Color="{StaticResource IconBgGreenColor}"/>
+    
+    <Color x:Key="IconBgRedColor">#7F1D1D</Color>
+    <SolidColorBrush x:Key="IconBgRedBrush" Color="{StaticResource IconBgRedColor}"/>
+    
+    <Color x:Key="IconBgYellowColor">#78350F</Color>
+    <SolidColorBrush x:Key="IconBgYellowBrush" Color="{StaticResource IconBgYellowColor}"/>
+    
+    <Color x:Key="IconBgPurpleColor">#312E81</Color>
+    <SolidColorBrush x:Key="IconBgPurpleBrush" Color="{StaticResource IconBgPurpleColor}"/>
+
+    <!-- ============================================ -->
     <!--  引入公共样式（必须在画刷之后） -->
     <!-- ============================================ -->
     

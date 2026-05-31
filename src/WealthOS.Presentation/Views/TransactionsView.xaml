@@ -29,9 +29,9 @@
                     </Button>
                 </Grid>
 
-                <ProgressBar IsIndeterminate="True" Height="3" Margin="0,0,0,16"
-                             Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
-                             Background="Transparent" Foreground="{StaticResource PrimaryBrush}"/>
+                <Border Background="{StaticResource PrimaryBrush}" 
+                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
+                        Height="3" CornerRadius="2" Margin="0,0,0,16" HorizontalAlignment="Left" Width="120"/>
 
                 <!-- 搜索框 -->
                 <Border CornerRadius="12" Padding="0" Margin="0,0,0,16"
