@@ -15,7 +15,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Theme.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WealthOS.Presentation;component/Resources/Theme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -70,7 +70,7 @@
                                 </TextBlock.Style>
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}&#x1F3E0;  {0}">
-                                        <Binding Source="{DynamicResource Nav.Dashboard}"/>
+                                        <Binding Source="{StaticResource Nav.Dashboard}"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -104,7 +104,7 @@
                                 </TextBlock.Style>
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}&#x1F4B0;  {0}">
-                                        <Binding Source="{DynamicResource Nav.Assets}"/>
+                                        <Binding Source="{StaticResource Nav.Assets}"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -138,7 +138,7 @@
                                 </TextBlock.Style>
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}&#x1F4C9;  {0}">
-                                        <Binding Source="{DynamicResource Nav.Liabilities}"/>
+                                        <Binding Source="{StaticResource Nav.Liabilities}"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -172,7 +172,7 @@
                                 </TextBlock.Style>
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}&#x1F4CA;  {0}">
-                                        <Binding Source="{DynamicResource Nav.Transactions}"/>
+                                        <Binding Source="{StaticResource Nav.Transactions}"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -206,7 +206,7 @@
                                 </TextBlock.Style>
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}&#x1F3AF;  {0}">
-                                        <Binding Source="{DynamicResource Nav.Goals}"/>
+                                        <Binding Source="{StaticResource Nav.Goals}"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -240,7 +240,7 @@
                                 </TextBlock.Style>
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}&#x1F4B0;  {0}">
-                                        <Binding Source="{DynamicResource Nav.Budgets}"/>
+                                        <Binding Source="{StaticResource Nav.Budgets}"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -274,7 +274,7 @@
                                 </TextBlock.Style>
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}&#x2699;  {0}">
-                                        <Binding Source="{DynamicResource Nav.Settings}"/>
+                                        <Binding Source="{StaticResource Nav.Settings}"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>

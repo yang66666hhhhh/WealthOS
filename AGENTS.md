@@ -131,6 +131,72 @@ WealthOS.Presentation.Resources
 - 转换器用 `{StaticResource ConverterKey}`
 - 禁止在 XAML 中写 C# 代码
 
+### .NET 10 WPF 兼容性注意事项
+
+1. **XAML 命名空间声明**：禁止使用 `assembly=mscorlib`，应使用 `clr-namespace:System`（不指定程序集）
+   ```xml
+   <!-- 错误 -->
+   xmlns:sys="clr-namespace:System;assembly=mscorlib"
+   <!-- 正确 -->
+   xmlns:sys="clr-namespace:System"
+   ```
+
+2. **资源字典 URI**：必须使用完整的 pack URI 格式
+   ```xml
+   <!-- 错误 -->
+   <ResourceDictionary Source="Resources/Theme.xaml"/>
+   <!-- 正确 -->
+   <ResourceDictionary Source="pack://application:,,,/WealthOS.Presentation;component/Resources/Theme.xaml"/>
+   ```
+
+3. **Binding.Source 禁止使用 DynamicResource**：`Binding.Source` 不是依赖属性，只能用 `StaticResource`
+   ```xml
+   <!-- 错误 -->
+   <Binding Source="{DynamicResource Nav.Dashboard}"/>
+   <!-- 正确 -->
+   <Binding Source="{StaticResource Nav.Dashboard}"/>
+   ```
+
+4. **Run.Text 绑定必须指定 Mode=OneWay**：`Run.Text` 默认双向绑定，但 `Binding.Source` 无 Path
+   ```xml
+   <!-- 错误 -->
+   <Run><Run.Text><Binding Source="{StaticResource Key}"/></Run.Text></Run>
+   <!-- 正确 -->
+   <Run><Run.Text><Binding Source="{StaticResource Key}" Mode="OneWay"/></Run.Text></Run>
+   ```
+
+5. **RelayCommand 参数类型**：XAML `CommandParameter` 传递字符串，命令方法参数必须用 `object?` 并内部转换
+   ```csharp
+   // 错误
+   [RelayCommand]
+   private async Task FilterByTypeAsync(TransactionType? type) { ... }
+   
+   // 正确
+   [RelayCommand]
+   private async Task FilterByTypeAsync(object? parameter)
+   {
+       TransactionType? type = parameter switch
+       {
+           TransactionType t => t,
+           string s when Enum.TryParse<TransactionType>(s, out var parsed) => parsed,
+           _ => null
+       };
+       // ...
+   }
+   ```
+
+6. **BoolToVisibilityConverter 必须处理 int 类型**：用于 `Collection.Count` 绑定时需要支持 int
+   ```csharp
+   // 必须支持 bool 和 int
+   return value switch
+   {
+       true => Visibility.Visible,
+       false => Visibility.Collapsed,
+       int i => i != 0 ? Visibility.Visible : Visibility.Collapsed,
+       _ => Visibility.Collapsed
+   };
+   ```
+
 ---
 
 ## 禁止事项

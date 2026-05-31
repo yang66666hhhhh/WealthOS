@@ -42,8 +42,8 @@ public partial class LocalizationService : ObservableObject
         var dict = new ResourceDictionary
         {
             Source = new Uri(IsChinese
-                ? "Resources/Strings.zh.xaml"
-                : "Resources/Strings.en.xaml", UriKind.Relative)
+                ? "pack://application:,,,/WealthOS.Presentation;component/Resources/Strings.zh.xaml"
+                : "pack://application:,,,/WealthOS.Presentation;component/Resources/Strings.en.xaml")
         };
 
         var existing = app.Resources.MergedDictionaries
@@ -63,8 +63,8 @@ public partial class LocalizationService : ObservableObject
         var dict = new ResourceDictionary
         {
             Source = new Uri(IsDarkMode
-                ? "Resources/Theme.Dark.xaml"
-                : "Resources/Theme.xaml", UriKind.Relative)
+                ? "pack://application:,,,/WealthOS.Presentation;component/Resources/Theme.Dark.xaml"
+                : "pack://application:,,,/WealthOS.Presentation;component/Resources/Theme.xaml")
         };
 
         var existing = app.Resources.MergedDictionaries

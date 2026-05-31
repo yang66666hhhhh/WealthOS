@@ -172,8 +172,14 @@ public partial class AssetsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task FilterByTypeAsync(AssetType? type)
+    private async Task FilterByTypeAsync(object? parameter)
     {
+        AssetType? type = parameter switch
+        {
+            AssetType t => t,
+            string s when Enum.TryParse<AssetType>(s, out var parsed) => parsed,
+            _ => null
+        };
         FilterType = type;
         await LoadDataAsync();
     }

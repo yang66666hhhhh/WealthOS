@@ -60,9 +60,12 @@ public partial class ReportsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task ChangeYearAsync(int year)
+    private async Task ChangeYearAsync(object? parameter)
     {
-        SelectedYear = year;
+        if (parameter is int year)
+            SelectedYear = year;
+        else if (parameter is string s && int.TryParse(s, out var parsed))
+            SelectedYear = parsed;
         await LoadReportAsync();
     }
 }

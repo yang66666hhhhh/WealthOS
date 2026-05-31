@@ -203,8 +203,14 @@ public partial class TransactionsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task FilterByTypeAsync(TransactionType? type)
+    private async Task FilterByTypeAsync(object? parameter)
     {
+        TransactionType? type = parameter switch
+        {
+            TransactionType t => t,
+            string s when Enum.TryParse<TransactionType>(s, out var parsed) => parsed,
+            _ => null
+        };
         FilterType = type;
         ApplyFilters();
     }

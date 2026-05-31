@@ -1,4 +1,4 @@
-<UserControl x:Class="WealthOS.Presentation.Views.GoalsView"
+﻿<UserControl x:Class="WealthOS.Presentation.Views.GoalsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:conv="clr-namespace:WealthOS.Presentation.Converters">
@@ -17,10 +17,10 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Style="{StaticResource PageTitleStyle}">
-                        <TextBlock.Text><Binding Source="{DynamicResource Goals.Title}"/></TextBlock.Text>
+                        <TextBlock.Text><Binding Source="{StaticResource Goals.Title}"/></TextBlock.Text>
                     </TextBlock>
                     <Button Grid.Column="1" Style="{StaticResource PrimaryButton}" Command="{Binding ShowAddCommand}" VerticalAlignment="Center">
-                        <Button.Content><Binding Source="{DynamicResource Goals.Add}"/></Button.Content>
+                        <Button.Content><Binding Source="{StaticResource Goals.Add}"/></Button.Content>
                     </Button>
                 </Grid>
 
@@ -38,10 +38,10 @@
                     </Border.Style>
                     <StackPanel HorizontalAlignment="Center">
                         <TextBlock FontSize="20" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center">
-                            <TextBlock.Text><Binding Source="{DynamicResource Goals.NoGoals}"/></TextBlock.Text>
+                            <TextBlock.Text><Binding Source="{StaticResource Goals.NoGoals}"/></TextBlock.Text>
                         </TextBlock>
                         <TextBlock FontSize="14" Foreground="{StaticResource TextHintBrush}" HorizontalAlignment="Center" Margin="0,12,0,0">
-                            <TextBlock.Text><Binding Source="{DynamicResource Goals.NoGoalsHint}"/></TextBlock.Text>
+                            <TextBlock.Text><Binding Source="{StaticResource Goals.NoGoalsHint}"/></TextBlock.Text>
                         </TextBlock>
                     </StackPanel>
                 </Border>
@@ -66,7 +66,7 @@
                                                     Padding="8,2" Margin="0,0,8,0"
                                                     Command="{Binding DataContext.ShowProgressDialogCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                     CommandParameter="{Binding}">
-                                                <Button.ToolTip><Binding Source="{DynamicResource Goals.AddMoney}"/></Button.ToolTip>
+                                                <Button.ToolTip><Binding Source="{StaticResource Goals.AddMoney}"/></Button.ToolTip>
                                                 <Button.Content>+</Button.Content>
                                             </Button>
                                             <Button Content="x" FontSize="14" Background="Transparent" BorderThickness="0"
@@ -105,13 +105,13 @@
                                     </Grid>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock FontSize="12" Foreground="{StaticResource TextSecondaryBrush}">
-                                            <TextBlock.Text><Binding Source="{DynamicResource Goals.TargetDateLabel}"/></TextBlock.Text>
+                                            <TextBlock.Text><Binding Source="{StaticResource Goals.TargetDateLabel}"/></TextBlock.Text>
                                         </TextBlock>
                                         <TextBlock Text="{Binding TargetDate, StringFormat='yyyy-MM-dd'}" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
                                         <TextBlock FontSize="12" Foreground="{StaticResource TextSecondaryBrush}">
-                                            <TextBlock.Text><Binding Source="{DynamicResource Goals.RemainingLabel}"/></TextBlock.Text>
+                                            <TextBlock.Text><Binding Source="{StaticResource Goals.RemainingLabel}"/></TextBlock.Text>
                                         </TextBlock>
                                         <TextBlock FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}">
                                             <TextBlock.Text>
@@ -130,10 +130,10 @@
                     <Border Background="White" CornerRadius="20" Padding="32" Width="480" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,24">
-                                <TextBlock.Text><Binding Source="{DynamicResource Goals.AddTitle}"/></TextBlock.Text>
+                                <TextBlock.Text><Binding Source="{StaticResource Goals.AddTitle}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
-                                <TextBlock.Text><Binding Source="{DynamicResource Goals.Name}"/></TextBlock.Text>
+                                <TextBlock.Text><Binding Source="{StaticResource Goals.Name}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBox Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,16"/>
                             <Grid Margin="0,0,0,16">
@@ -144,31 +144,31 @@
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
                                     <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
-                                        <TextBlock.Text><Binding Source="{DynamicResource Goals.TargetAmount}"/></TextBlock.Text>
+                                        <TextBlock.Text><Binding Source="{StaticResource Goals.TargetAmount}"/></TextBlock.Text>
                                     </TextBlock>
                                     <TextBox Text="{Binding NewTargetAmount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2">
                                     <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
-                                        <TextBlock.Text><Binding Source="{DynamicResource Goals.CurrentAmount}"/></TextBlock.Text>
+                                        <TextBlock.Text><Binding Source="{StaticResource Goals.CurrentAmount}"/></TextBlock.Text>
                                     </TextBlock>
                                     <TextBox Text="{Binding NewCurrentAmount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}"/>
                                 </StackPanel>
                             </Grid>
                             <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
-                                <TextBlock.Text><Binding Source="{DynamicResource Goals.TargetDate}"/></TextBlock.Text>
+                                <TextBlock.Text><Binding Source="{StaticResource Goals.TargetDate}"/></TextBlock.Text>
                             </TextBlock>
                             <DatePicker SelectedDate="{Binding NewTargetDate}" Margin="0,0,0,16"/>
                             <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
-                                <TextBlock.Text><Binding Source="{DynamicResource Goals.Note}"/></TextBlock.Text>
+                                <TextBlock.Text><Binding Source="{StaticResource Goals.Note}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBox Text="{Binding NewNote, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,24"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Button Style="{StaticResource SecondaryButton}" Command="{Binding CancelAddCommand}" Margin="0,0,12,0">
-                                    <Button.Content><Binding Source="{DynamicResource Common.Cancel}"/></Button.Content>
+                                    <Button.Content><Binding Source="{StaticResource Common.Cancel}"/></Button.Content>
                                 </Button>
                                 <Button Style="{StaticResource PrimaryButton}" Command="{Binding ConfirmAddCommand}">
-                                    <Button.Content><Binding Source="{DynamicResource Common.Add}"/></Button.Content>
+                                    <Button.Content><Binding Source="{StaticResource Common.Add}"/></Button.Content>
                                 </Button>
                             </StackPanel>
                         </StackPanel>
@@ -180,17 +180,17 @@
                     <Border Background="White" CornerRadius="20" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12">
-                                <TextBlock.Text><Binding Source="{DynamicResource Goals.DeleteTitle}"/></TextBlock.Text>
+                                <TextBlock.Text><Binding Source="{StaticResource Goals.DeleteTitle}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" TextWrapping="Wrap" Margin="0,0,0,24">
-                                <TextBlock.Text><Binding Source="{DynamicResource Goals.DeleteMessage}"/></TextBlock.Text>
+                                <TextBlock.Text><Binding Source="{StaticResource Goals.DeleteMessage}"/></TextBlock.Text>
                             </TextBlock>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Button Style="{StaticResource SecondaryButton}" Command="{Binding CancelDeleteCommand}" Margin="0,0,12,0">
-                                    <Button.Content><Binding Source="{DynamicResource Common.Cancel}"/></Button.Content>
+                                    <Button.Content><Binding Source="{StaticResource Common.Cancel}"/></Button.Content>
                                 </Button>
                                 <Button Style="{StaticResource PrimaryButton}" Command="{Binding ExecuteDeleteCommand}" Background="{StaticResource ExpenseBrush}">
-                                    <Button.Content><Binding Source="{DynamicResource Common.Delete}"/></Button.Content>
+                                    <Button.Content><Binding Source="{StaticResource Common.Delete}"/></Button.Content>
                                 </Button>
                             </StackPanel>
                         </StackPanel>
@@ -202,22 +202,22 @@
                     <Border Background="White" CornerRadius="20" Padding="32" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8">
-                                <TextBlock.Text><Binding Source="{DynamicResource Goals.ProgressTitle}"/></TextBlock.Text>
+                                <TextBlock.Text><Binding Source="{StaticResource Goals.ProgressTitle}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,20">
-                                <Run><Run.Text><Binding Source="{DynamicResource Goals.ProgressLabel}"/></Run.Text></Run>
+                                <Run><Run.Text><Binding Source="{StaticResource Goals.ProgressLabel}" Mode="OneWay"/></Run.Text></Run>
                                 <Run Text="{Binding ProgressGoalName, Mode=OneWay}" FontWeight="SemiBold"/>
                             </TextBlock>
                             <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6">
-                                <TextBlock.Text><Binding Source="{DynamicResource Goals.ProgressAmount}"/></TextBlock.Text>
+                                <TextBlock.Text><Binding Source="{StaticResource Goals.ProgressAmount}"/></TextBlock.Text>
                             </TextBlock>
                             <TextBox Text="{Binding ProgressAddAmount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Margin="0,0,0,24"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Button Style="{StaticResource SecondaryButton}" Command="{Binding CancelProgressCommand}" Margin="0,0,12,0">
-                                    <Button.Content><Binding Source="{DynamicResource Common.Cancel}"/></Button.Content>
+                                    <Button.Content><Binding Source="{StaticResource Common.Cancel}"/></Button.Content>
                                 </Button>
                                 <Button Style="{StaticResource PrimaryButton}" Command="{Binding ConfirmProgressCommand}">
-                                    <Button.Content><Binding Source="{DynamicResource Common.Add}"/></Button.Content>
+                                    <Button.Content><Binding Source="{StaticResource Common.Add}"/></Button.Content>
                                 </Button>
                             </StackPanel>
                         </StackPanel>

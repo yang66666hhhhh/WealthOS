@@ -166,8 +166,14 @@ public partial class BudgetsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task ChangeMonthAsync(int delta)
+    private async Task ChangeMonthAsync(object? parameter)
     {
+        int delta = parameter switch
+        {
+            int i => i,
+            string s when int.TryParse(s, out var parsed) => parsed,
+            _ => 0
+        };
         SelectedMonth += delta;
         if (SelectedMonth > 12) { SelectedMonth = 1; SelectedYear++; }
         if (SelectedMonth < 1) { SelectedMonth = 12; SelectedYear--; }

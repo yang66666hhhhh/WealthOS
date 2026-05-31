@@ -5,8 +5,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Theme.xaml"/>
-                <ResourceDictionary Source="Resources/Strings.en.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WealthOS.Presentation;component/Resources/Theme.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WealthOS.Presentation;component/Resources/Strings.en.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

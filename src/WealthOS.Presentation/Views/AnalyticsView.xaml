@@ -1,4 +1,4 @@
-<UserControl x:Class="WealthOS.Presentation.Views.AnalyticsView"
+﻿<UserControl x:Class="WealthOS.Presentation.Views.AnalyticsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
@@ -12,7 +12,7 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="32,24">
             <StackPanel MaxWidth="1200">
                 <TextBlock Style="{StaticResource PageTitleStyle}">
-                    <TextBlock.Text><Binding Source="{DynamicResource Analytics.Title}"/></TextBlock.Text>
+                    <TextBlock.Text><Binding Source="{StaticResource Analytics.Title}"/></TextBlock.Text>
                 </TextBlock>
 
                 <ProgressBar IsIndeterminate="True" Height="3" Margin="0,0,0,16"
@@ -29,7 +29,7 @@
                     <Border Grid.Column="0" Style="{StaticResource CardStyle}">
                         <StackPanel>
                             <TextBlock Style="{StaticResource SectionTitleStyle}">
-                                <TextBlock.Text><Binding Source="{DynamicResource Analytics.IncomeExpenseTrend}"/></TextBlock.Text>
+                                <TextBlock.Text><Binding Source="{StaticResource Analytics.IncomeExpenseTrend}"/></TextBlock.Text>
                             </TextBlock>
                             <lvc:CartesianChart Series="{Binding IncomeExpenseSeries}"
                                                 XAxes="{Binding IncomeExpenseXAxes}"
@@ -40,7 +40,7 @@
                     <Border Grid.Column="2" Style="{StaticResource CardStyle}">
                         <StackPanel>
                             <TextBlock Style="{StaticResource SectionTitleStyle}">
-                                <TextBlock.Text><Binding Source="{DynamicResource Analytics.AssetDistribution}"/></TextBlock.Text>
+                                <TextBlock.Text><Binding Source="{StaticResource Analytics.AssetDistribution}"/></TextBlock.Text>
                             </TextBlock>
                             <lvc:PieChart Series="{Binding AssetTrendSeries}"
                                           Height="300" LegendPosition="Right"/>
