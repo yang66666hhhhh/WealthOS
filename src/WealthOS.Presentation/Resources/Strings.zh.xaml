@@ -211,6 +211,7 @@
     <!-- Settings -->
     <sys:String x:Key="Nav.Settings">设置</sys:String>
     <sys:String x:Key="Settings.Title">设置</sys:String>
+    <sys:String x:Key="Settings.Subtitle">个性化您的应用</sys:String>
     <sys:String x:Key="Settings.Language">语言</sys:String>
     <sys:String x:Key="Settings.LanguageDesc">切换中文和英文界面</sys:String>
     <sys:String x:Key="Settings.ToggleLang">切换语言</sys:String>

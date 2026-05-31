@@ -8,92 +8,177 @@
     </UserControl.Resources>
 
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="32,24">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="28,24">
             <StackPanel MaxWidth="800">
-                <TextBlock Style="{StaticResource PageTitleStyle}">
-                    <TextBlock.Text><Binding Source="{StaticResource Settings.Title}"/></TextBlock.Text>
-                </TextBlock>
-
-                <!-- Language -->
-                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,20">
+                <!-- 页面标题 -->
+                <Grid Margin="0,0,0,24">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource SectionTitleStyle}">
-                            <TextBlock.Text><Binding Source="{StaticResource Settings.Language}"/></TextBlock.Text>
+                        <TextBlock Text="{DynamicResource Settings.Title}" FontSize="24" FontWeight="Bold" 
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBlock FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" Margin="0,4,0,0">
+                            <Run Text="&#x2699; "/>
+                            <Run Text="{DynamicResource Settings.Subtitle}"/>
                         </TextBlock>
-                        <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,16">
-                            <TextBlock.Text><Binding Source="{StaticResource Settings.LanguageDesc}"/></TextBlock.Text>
-                        </TextBlock>
-                        <Button Style="{StaticResource PrimaryButton}" Command="{Binding ToggleLanguageCommand}" HorizontalAlignment="Left">
+                    </StackPanel>
+                </Grid>
+
+                <!-- 语言设置 -->
+                <Border CornerRadius="14" Padding="20" Margin="0,0,0,16"
+                        BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                        Background="{StaticResource CardBackgroundBrush}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Width="44" Height="44" CornerRadius="12" Margin="0,0,16,0">
+                            <Border.Background>
+                                <SolidColorBrush Color="#EFF6FF"/>
+                            </Border.Background>
+                            <TextBlock Text="&#x1F310;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="{DynamicResource Settings.Language}" FontSize="15" FontWeight="SemiBold" 
+                                       Foreground="{StaticResource TextPrimaryBrush}"/>
+                            <TextBlock Text="{DynamicResource Settings.LanguageDesc}" FontSize="12" 
+                                       Foreground="{StaticResource TextTertiaryBrush}" Margin="0,4,0,0"/>
+                        </StackPanel>
+                        <Button Grid.Column="2" Style="{StaticResource SecondaryButton}" 
+                                Command="{Binding ToggleLanguageCommand}" VerticalAlignment="Center">
                             <Button.Content><Binding Source="{StaticResource Settings.ToggleLang}"/></Button.Content>
                         </Button>
-                    </StackPanel>
+                    </Grid>
                 </Border>
 
-                <!-- Theme -->
-                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,20">
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource SectionTitleStyle}">
-                            <TextBlock.Text><Binding Source="{StaticResource Settings.Theme}"/></TextBlock.Text>
-                        </TextBlock>
-                        <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,16">
-                            <TextBlock.Text><Binding Source="{StaticResource Settings.ThemeDesc}"/></TextBlock.Text>
-                        </TextBlock>
-                        <Button Style="{StaticResource PrimaryButton}" Command="{Binding ToggleThemeCommand}" HorizontalAlignment="Left">
+                <!-- 主题设置 -->
+                <Border CornerRadius="14" Padding="20" Margin="0,0,0,16"
+                        BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                        Background="{StaticResource CardBackgroundBrush}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Width="44" Height="44" CornerRadius="12" Margin="0,0,16,0">
+                            <Border.Background>
+                                <SolidColorBrush Color="#FEF3C7"/>
+                            </Border.Background>
+                            <TextBlock Text="&#x2600;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="{DynamicResource Settings.Theme}" FontSize="15" FontWeight="SemiBold" 
+                                       Foreground="{StaticResource TextPrimaryBrush}"/>
+                            <TextBlock Text="{DynamicResource Settings.ThemeDesc}" FontSize="12" 
+                                       Foreground="{StaticResource TextTertiaryBrush}" Margin="0,4,0,0"/>
+                        </StackPanel>
+                        <Button Grid.Column="2" Style="{StaticResource SecondaryButton}" 
+                                Command="{Binding ToggleThemeCommand}" VerticalAlignment="Center">
                             <Button.Content><Binding Source="{StaticResource Settings.ToggleTheme}"/></Button.Content>
                         </Button>
-                    </StackPanel>
+                    </Grid>
                 </Border>
 
-                <!-- Database Info -->
-                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,20">
+                <!-- 数据库信息 -->
+                <Border CornerRadius="14" Padding="20" Margin="0,0,0,16"
+                        BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                        Background="{StaticResource CardBackgroundBrush}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource SectionTitleStyle}">
-                            <TextBlock.Text><Binding Source="{StaticResource Settings.Database}"/></TextBlock.Text>
-                        </TextBlock>
                         <Grid Margin="0,0,0,16">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="8"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="8"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Settings.DbPath}" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding DbPath}" FontSize="13" Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap"/>
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource Settings.DbSize}" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding DbSize}" FontSize="13" Foreground="{StaticResource TextPrimaryBrush}"/>
-                            <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource Settings.LastBackup}" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
-                            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding LastBackupTime}" FontSize="13" Foreground="{StaticResource TextPrimaryBrush}"/>
+                            <Border Grid.Column="0" Width="44" Height="44" CornerRadius="12" Margin="0,0,16,0">
+                                <Border.Background>
+                                    <SolidColorBrush Color="#ECFDF5"/>
+                                </Border.Background>
+                                <TextBlock Text="&#x1F4BE;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{DynamicResource Settings.Database}" FontSize="15" FontWeight="SemiBold" 
+                                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                            </StackPanel>
                         </Grid>
+                        <Border CornerRadius="10" Padding="16" Background="{StaticResource SurfaceBrush}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="12"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="12"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Settings.DbPath}" 
+                                           FontSize="12" Foreground="{StaticResource TextTertiaryBrush}"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding DbPath}" 
+                                           FontSize="12" Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource Settings.DbSize}" 
+                                           FontSize="12" Foreground="{StaticResource TextTertiaryBrush}"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding DbSize}" 
+                                           FontSize="12" Foreground="{StaticResource TextPrimaryBrush}"/>
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource Settings.LastBackup}" 
+                                           FontSize="12" Foreground="{StaticResource TextTertiaryBrush}"/>
+                                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding LastBackupTime}" 
+                                           FontSize="12" Foreground="{StaticResource TextPrimaryBrush}"/>
+                            </Grid>
+                        </Border>
                     </StackPanel>
                 </Border>
 
-                <!-- Backup & Restore -->
-                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,20">
+                <!-- 备份与恢复 -->
+                <Border CornerRadius="14" Padding="20" Margin="0,0,0,16"
+                        BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                        Background="{StaticResource CardBackgroundBrush}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource SectionTitleStyle}">
-                            <TextBlock.Text><Binding Source="{StaticResource Settings.Backup}"/></TextBlock.Text>
-                        </TextBlock>
-                        <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,16">
-                            <TextBlock.Text><Binding Source="{StaticResource Settings.BackupDesc}"/></TextBlock.Text>
-                        </TextBlock>
+                        <Grid Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Width="44" Height="44" CornerRadius="12" Margin="0,0,16,0">
+                                <Border.Background>
+                                    <SolidColorBrush Color="#FEE2E2"/>
+                                </Border.Background>
+                                <TextBlock Text="&#x1F4E6;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{DynamicResource Settings.Backup}" FontSize="15" FontWeight="SemiBold" 
+                                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                                <TextBlock Text="{DynamicResource Settings.BackupDesc}" FontSize="12" 
+                                           Foreground="{StaticResource TextTertiaryBrush}" Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </Grid>
                         <StackPanel Orientation="Horizontal">
                             <Button Style="{StaticResource PrimaryButton}" Command="{Binding BackupCommand}" Margin="0,0,12,0">
-                                <Button.Content><Binding Source="{StaticResource Settings.BackupBtn}"/></Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#x1F4E5;" FontSize="14" Margin="0,0,8,0"/>
+                                    <TextBlock Text="{DynamicResource Settings.BackupBtn}"/>
+                                </StackPanel>
                             </Button>
                             <Button Style="{StaticResource SecondaryButton}" Command="{Binding RestoreCommand}">
-                                <Button.Content><Binding Source="{StaticResource Settings.RestoreBtn}"/></Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#x1F4E4;" FontSize="14" Margin="0,0,8,0"/>
+                                    <TextBlock Text="{DynamicResource Settings.RestoreBtn}"/>
+                                </StackPanel>
                             </Button>
                         </StackPanel>
-
-                        <TextBlock Text="{Binding StatusMessage}" FontSize="13" Foreground="{StaticResource AccentBrush}"
-                                   Margin="0,16,0,0" Visibility="{Binding StatusMessage, Converter={StaticResource BoolToVis}}"/>
+                        <Border CornerRadius="8" Padding="12" Margin="0,16,0,0"
+                                Visibility="{Binding StatusMessage, Converter={StaticResource BoolToVis}}">
+                            <Border.Background>
+                                <SolidColorBrush Color="#ECFDF5"/>
+                            </Border.Background>
+                            <TextBlock Text="{Binding StatusMessage}" FontSize="13" Foreground="{StaticResource AccentBrush}"/>
+                        </Border>
                     </StackPanel>
                 </Border>
+
+                <Border Height="20"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

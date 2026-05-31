@@ -211,6 +211,7 @@
     <!-- Settings -->
     <sys:String x:Key="Nav.Settings">Settings</sys:String>
     <sys:String x:Key="Settings.Title">Settings</sys:String>
+    <sys:String x:Key="Settings.Subtitle">Personalize your app</sys:String>
     <sys:String x:Key="Settings.Language">Language</sys:String>
     <sys:String x:Key="Settings.LanguageDesc">Switch between Chinese and English</sys:String>
     <sys:String x:Key="Settings.ToggleLang">Switch Language</sys:String>
