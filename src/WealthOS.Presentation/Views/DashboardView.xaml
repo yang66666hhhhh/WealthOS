@@ -15,22 +15,26 @@
         <!-- 顶部加载进度条 -->
         <Border Background="{StaticResource PrimaryBrush}" 
                 Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
-                Panel.ZIndex="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="3"
-                CornerRadius="0,0,2,2"/>
+                Panel.ZIndex="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="3"/>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="32,28">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="28,24">
             <StackPanel MaxWidth="1200">
                 <views:ErrorBanner DataContext="{Binding}"/>
 
-                <!-- 页面标题 -->
-                <TextBlock Style="{StaticResource PageTitleStyle}">
-                    <TextBlock.Text>
-                        <Binding Source="{StaticResource Dashboard.Title}"/>
-                    </TextBlock.Text>
-                </TextBlock>
+                <!-- 欢迎区域 -->
+                <Grid Margin="0,0,0,24">
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource Dashboard.Title}" FontSize="28" FontWeight="Bold" 
+                                   Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,4"/>
+                        <TextBlock FontSize="14" Foreground="{StaticResource TextSecondaryBrush}">
+                            <Run Text="&#x1F44B; "/>
+                            <Run Text="{DynamicResource Dashboard.Welcome}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
 
-                <!-- 净资产卡片 - 主视觉 -->
-                <Border CornerRadius="20" Padding="32,28" Margin="0,0,0,24"
+                <!-- 净资产主卡片 - 更丰富的信息 -->
+                <Border CornerRadius="20" Padding="28,24" Margin="0,0,0,20"
                         BorderThickness="1" BorderBrush="{StaticResource BorderBrush}">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -39,120 +43,180 @@
                         </LinearGradientBrush>
                     </Border.Background>
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,12"
-                                   FontWeight="Medium">
-                            <TextBlock.Text><Binding Source="{StaticResource Dashboard.NetWorth}"/></TextBlock.Text>
-                        </TextBlock>
-                        <TextBlock Grid.Row="1" FontSize="48" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12">
-                            <TextBlock.Text>
-                                <Binding Path="Dashboard.NetWorth" Converter="{StaticResource CurrencyConv}"/>
-                            </TextBlock.Text>
-                        </TextBlock>
-                        <StackPanel Grid.Row="2" Orientation="Horizontal">
-                            <Border CornerRadius="8" Padding="10,6" Margin="0,0,12,0">
-                                <Border.Background>
-                                    <SolidColorBrush Color="{StaticResource AccentLightColor}"/>
-                                </Border.Background>
-                                <TextBlock FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- 左侧：净资产 -->
+                        <StackPanel Grid.Column="0" Margin="0,0,24,0">
+                            <TextBlock FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" Margin="0,0,0,8" FontWeight="Medium">
+                                <TextBlock.Text><Binding Source="{StaticResource Dashboard.NetWorth}"/></TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock FontSize="42" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12">
+                                <TextBlock.Text>
+                                    <Binding Path="Dashboard.NetWorth" Converter="{StaticResource CurrencyConv}"/>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <Border CornerRadius="8" Padding="10,6" Margin="0,0,12,0">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="{StaticResource AccentLightColor}"/>
+                                    </Border.Background>
+                                    <TextBlock FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}">
+                                        <TextBlock.Text>
+                                            <Binding Path="Dashboard.NetWorthChange" Converter="{StaticResource CurrencyConv}"/>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </Border>
+                                <TextBlock FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" VerticalAlignment="Center">
+                                    <TextBlock.Text><Binding Source="{StaticResource Dashboard.ThisMonth}"/></TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- 分隔线 -->
+                        <Border Grid.Column="1" Background="{StaticResource BorderBrush}" VerticalAlignment="Stretch" Margin="0,8"/>
+
+                        <!-- 右侧：资产/负债对比 -->
+                        <StackPanel Grid.Column="2" Margin="24,0,0,0" VerticalAlignment="Center">
+                            <StackPanel Margin="0,0,0,16">
+                                <TextBlock FontSize="12" Foreground="{StaticResource TextTertiaryBrush}" Margin="0,0,0,4">
+                                    <TextBlock.Text><Binding Source="{StaticResource Dashboard.TotalAssets}"/></TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock FontSize="20" FontWeight="Bold" Foreground="{StaticResource IncomeBrush}">
                                     <TextBlock.Text>
-                                        <Binding Path="Dashboard.NetWorthChange" Converter="{StaticResource CurrencyConv}"/>
+                                        <Binding Path="Dashboard.TotalAssets" Converter="{StaticResource CurrencyConv}"/>
                                     </TextBlock.Text>
                                 </TextBlock>
-                            </Border>
-                            <TextBlock FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" VerticalAlignment="Center">
-                                <TextBlock.Text><Binding Source="{StaticResource Dashboard.ThisMonth}"/></TextBlock.Text>
-                            </TextBlock>
+                            </StackPanel>
+                            <Border Height="1" Background="{StaticResource BorderBrush}" Margin="0,0,0,16"/>
+                            <StackPanel>
+                                <TextBlock FontSize="12" Foreground="{StaticResource TextTertiaryBrush}" Margin="0,0,0,4">
+                                    <TextBlock.Text><Binding Source="{StaticResource Dashboard.Liabilities}"/></TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock FontSize="20" FontWeight="Bold" Foreground="{StaticResource ExpenseBrush}">
+                                    <TextBlock.Text>
+                                        <Binding Path="Dashboard.TotalLiabilities" Converter="{StaticResource CurrencyConv}"/>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
                 </Border>
 
-                <!-- 指标卡片网格 -->
-                <Grid Margin="0,0,0,24">
+                <!-- 指标卡片网格 - 2x2 布局 -->
+                <Grid Margin="0,0,0,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="12"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="16"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="16"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="12"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- 现金卡片 - 绿色左边框 -->
-                    <Border Grid.Column="0" CornerRadius="16" Padding="20" 
-                            BorderThickness="0,0,0,3" BorderBrush="{StaticResource IncomeBrush}"
-                            Background="{StaticResource CardBackgroundBrush}">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource StatLabelStyle}">
-                                <TextBlock.Text><Binding Source="{StaticResource Dashboard.Cash}"/></TextBlock.Text>
-                            </TextBlock>
-                            <TextBlock Style="{StaticResource StatValueStyle}" Margin="0,8,0,0">
-                                <TextBlock.Text>
-                                    <Binding Path="Dashboard.CashTotal" Converter="{StaticResource CurrencyConv}"/>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </StackPanel>
+                    <!-- 现金 -->
+                    <Border Grid.Row="0" Grid.Column="0" CornerRadius="16" Padding="20" 
+                            Background="{StaticResource CardBackgroundBrush}" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}">
+                        <Grid>
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource StatLabelStyle}">
+                                    <TextBlock.Text><Binding Source="{StaticResource Dashboard.Cash}"/></TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource StatValueStyle}" Margin="0,8,0,0">
+                                    <TextBlock.Text>
+                                        <Binding Path="Dashboard.CashTotal" Converter="{StaticResource CurrencyConv}"/>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                            <Border Width="40" Height="40" CornerRadius="10" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{StaticResource IncomeLightColor}"/>
+                                </Border.Background>
+                                <TextBlock Text="&#x1F4B5;" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
                     </Border>
 
-                    <!-- 投资卡片 - 紫色左边框 -->
-                    <Border Grid.Column="2" CornerRadius="16" Padding="20"
-                            BorderThickness="0,0,0,3" BorderBrush="{StaticResource PrimaryBrush}"
-                            Background="{StaticResource CardBackgroundBrush}">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource StatLabelStyle}">
-                                <TextBlock.Text><Binding Source="{StaticResource Dashboard.Investment}"/></TextBlock.Text>
-                            </TextBlock>
-                            <TextBlock Style="{StaticResource StatValueStyle}" Margin="0,8,0,0">
-                                <TextBlock.Text>
-                                    <Binding Path="Dashboard.InvestmentTotal" Converter="{StaticResource CurrencyConv}"/>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </StackPanel>
+                    <!-- 投资 -->
+                    <Border Grid.Row="0" Grid.Column="2" CornerRadius="16" Padding="20"
+                            Background="{StaticResource CardBackgroundBrush}" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}">
+                        <Grid>
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource StatLabelStyle}">
+                                    <TextBlock.Text><Binding Source="{StaticResource Dashboard.Investment}"/></TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource StatValueStyle}" Margin="0,8,0,0">
+                                    <TextBlock.Text>
+                                        <Binding Path="Dashboard.InvestmentTotal" Converter="{StaticResource CurrencyConv}"/>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                            <Border Width="40" Height="40" CornerRadius="10" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{StaticResource PrimaryLightColor}"/>
+                                </Border.Background>
+                                <TextBlock Text="&#x1F4C8;" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
                     </Border>
 
-                    <!-- 负债卡片 - 红色左边框 -->
-                    <Border Grid.Column="4" CornerRadius="16" Padding="20"
-                            BorderThickness="0,0,0,3" BorderBrush="{StaticResource ExpenseBrush}"
-                            Background="{StaticResource CardBackgroundBrush}">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource StatLabelStyle}">
-                                <TextBlock.Text><Binding Source="{StaticResource Dashboard.Liabilities}"/></TextBlock.Text>
-                            </TextBlock>
-                            <TextBlock Style="{StaticResource StatValueStyle}" Margin="0,8,0,0" Foreground="{StaticResource ExpenseBrush}">
-                                <TextBlock.Text>
-                                    <Binding Path="Dashboard.TotalLiabilities" Converter="{StaticResource CurrencyConv}"/>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </StackPanel>
+                    <!-- 负债 -->
+                    <Border Grid.Row="2" Grid.Column="0" CornerRadius="16" Padding="20"
+                            Background="{StaticResource CardBackgroundBrush}" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}">
+                        <Grid>
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource StatLabelStyle}">
+                                    <TextBlock.Text><Binding Source="{StaticResource Dashboard.Liabilities}"/></TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource StatValueStyle}" Margin="0,8,0,0" Foreground="{StaticResource ExpenseBrush}">
+                                    <TextBlock.Text>
+                                        <Binding Path="Dashboard.TotalLiabilities" Converter="{StaticResource CurrencyConv}"/>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                            <Border Width="40" Height="40" CornerRadius="10" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{StaticResource ExpenseLightColor}"/>
+                                </Border.Background>
+                                <TextBlock Text="&#x1F4B8;" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
                     </Border>
 
-                    <!-- 储蓄率卡片 - 蓝色左边框 -->
-                    <Border Grid.Column="6" CornerRadius="16" Padding="20"
-                            BorderThickness="0,0,0,3" BorderBrush="{StaticResource InfoBrush}"
-                            Background="{StaticResource CardBackgroundBrush}">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource StatLabelStyle}">
-                                <TextBlock.Text><Binding Source="{StaticResource Dashboard.SavingsRate}"/></TextBlock.Text>
-                            </TextBlock>
-                            <TextBlock Style="{StaticResource StatValueStyle}" Margin="0,8,0,0">
-                                <TextBlock.Text>
-                                    <Binding Path="Dashboard.SavingsRate" StringFormat="{}{0:F1}%"/>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </StackPanel>
+                    <!-- 储蓄率 -->
+                    <Border Grid.Row="2" Grid.Column="2" CornerRadius="16" Padding="20"
+                            Background="{StaticResource CardBackgroundBrush}" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}">
+                        <Grid>
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource StatLabelStyle}">
+                                    <TextBlock.Text><Binding Source="{StaticResource Dashboard.SavingsRate}"/></TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource StatValueStyle}" Margin="0,8,0,0">
+                                    <TextBlock.Text>
+                                        <Binding Path="Dashboard.SavingsRate" StringFormat="{}{0:F1}%"/>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                            <Border Width="40" Height="40" CornerRadius="10" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{StaticResource TransferLightColor}"/>
+                                </Border.Background>
+                                <TextBlock Text="&#x1F3AF;" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
                     </Border>
                 </Grid>
 
                 <!-- 图表区域 -->
-                <Grid Margin="0,0,0,24">
+                <Grid Margin="0,0,0,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="16"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
@@ -239,9 +303,19 @@
                 <!-- 最近交易 -->
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource SectionTitleStyle}">
-                            <TextBlock.Text><Binding Source="{StaticResource Dashboard.RecentTransactions}"/></TextBlock.Text>
-                        </TextBlock>
+                        <Grid Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Style="{StaticResource SectionTitleStyle}" Margin="0">
+                                <TextBlock.Text><Binding Source="{StaticResource Dashboard.RecentTransactions}"/></TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock Grid.Column="1" FontSize="13" Foreground="{StaticResource PrimaryBrush}" 
+                                       VerticalAlignment="Center" Cursor="Hand">
+                                <TextBlock.Text><Binding Source="{StaticResource Dashboard.ViewAll}"/></TextBlock.Text>
+                            </TextBlock>
+                        </Grid>
 
                         <!-- 空状态 -->
                         <Border Padding="40" HorizontalAlignment="Stretch">
@@ -269,7 +343,7 @@
                         <ItemsControl ItemsSource="{Binding Dashboard.RecentTransactions}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Padding="0,14" BorderThickness="0,0,0,1"
+                                    <Border Padding="0,12" BorderThickness="0,0,0,1"
                                             BorderBrush="{StaticResource BorderLightBrush}">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -356,6 +430,9 @@
                         </ItemsControl>
                     </StackPanel>
                 </Border>
+
+                <!-- 底部间距 -->
+                <Border Height="20"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

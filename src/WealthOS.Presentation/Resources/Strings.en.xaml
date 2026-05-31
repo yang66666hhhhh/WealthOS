@@ -15,17 +15,21 @@
 
     <!-- Dashboard -->
     <sys:String x:Key="Dashboard.Title">Dashboard</sys:String>
+    <sys:String x:Key="Dashboard.Welcome">Welcome back, keep up the good work</sys:String>
     <sys:String x:Key="Dashboard.NetWorth">Net Worth</sys:String>
     <sys:String x:Key="Dashboard.ThisMonth">This month</sys:String>
     <sys:String x:Key="Dashboard.Cash">Cash</sys:String>
     <sys:String x:Key="Dashboard.Investment">Investment</sys:String>
     <sys:String x:Key="Dashboard.Liabilities">Liabilities</sys:String>
+    <sys:String x:Key="Dashboard.TotalAssets">Total Assets</sys:String>
     <sys:String x:Key="Dashboard.SavingsRate">Savings Rate</sys:String>
     <sys:String x:Key="Dashboard.AssetAllocation">Asset Allocation</sys:String>
     <sys:String x:Key="Dashboard.NetWorthTrend">Net Worth Trend</sys:String>
     <sys:String x:Key="Dashboard.RecentTransactions">Recent Transactions</sys:String>
     <sys:String x:Key="Dashboard.NoTransactions">No transactions yet</sys:String>
     <sys:String x:Key="Dashboard.NoTransactionsHint">Add your first transaction to get started</sys:String>
+    <sys:String x:Key="Dashboard.AddTransaction">Add Transaction</sys:String>
+    <sys:String x:Key="Dashboard.ViewAll">View All</sys:String>
 
     <!-- Assets -->
     <sys:String x:Key="Assets.Title">Assets</sys:String>
