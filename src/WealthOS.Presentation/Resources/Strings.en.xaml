@@ -31,6 +31,7 @@
     <sys:String x:Key="Assets.Title">Assets</sys:String>
     <sys:String x:Key="Assets.Add">+ Add Asset</sys:String>
     <sys:String x:Key="Assets.AddTitle">Add Asset</sys:String>
+    <sys:String x:Key="Assets.EditTitle">Edit Asset</sys:String>
     <sys:String x:Key="Assets.Name">Name</sys:String>
     <sys:String x:Key="Assets.Type">Type</sys:String>
     <sys:String x:Key="Assets.Institution">Institution</sys:String>
@@ -50,6 +51,7 @@
     <sys:String x:Key="Liabilities.Title">Liabilities</sys:String>
     <sys:String x:Key="Liabilities.Add">+ Add Liability</sys:String>
     <sys:String x:Key="Liabilities.AddTitle">Add Liability</sys:String>
+    <sys:String x:Key="Liabilities.EditTitle">Edit Liability</sys:String>
     <sys:String x:Key="Liabilities.Name">Name</sys:String>
     <sys:String x:Key="Liabilities.Type">Type</sys:String>
     <sys:String x:Key="Liabilities.Institution">Institution</sys:String>
@@ -69,6 +71,7 @@
     <sys:String x:Key="Transactions.Title">Transactions</sys:String>
     <sys:String x:Key="Transactions.Add">+ Add Transaction</sys:String>
     <sys:String x:Key="Transactions.AddTitle">Add Transaction</sys:String>
+    <sys:String x:Key="Transactions.EditTitle">Edit Transaction</sys:String>
     <sys:String x:Key="Transactions.Type">Type</sys:String>
     <sys:String x:Key="Transactions.Account">Account</sys:String>
     <sys:String x:Key="Transactions.Amount">Amount</sys:String>
@@ -86,6 +89,7 @@
     <sys:String x:Key="Goals.Title">Goals</sys:String>
     <sys:String x:Key="Goals.Add">+ Add Goal</sys:String>
     <sys:String x:Key="Goals.AddTitle">Add Goal</sys:String>
+    <sys:String x:Key="Goals.EditTitle">Edit Goal</sys:String>
     <sys:String x:Key="Goals.Name">Name</sys:String>
     <sys:String x:Key="Goals.TargetAmount">Target Amount</sys:String>
     <sys:String x:Key="Goals.CurrentAmount">Current Amount</sys:String>
@@ -106,11 +110,30 @@
     <!-- Common -->
     <sys:String x:Key="Common.Cancel">Cancel</sys:String>
     <sys:String x:Key="Common.Add">Add</sys:String>
+    <sys:String x:Key="Common.Edit">Edit</sys:String>
     <sys:String x:Key="Common.Delete">Delete</sys:String>
     <sys:String x:Key="Common.Save">Save</sys:String>
     <sys:String x:Key="Common.Confirm">Confirm</sys:String>
     <sys:String x:Key="Common.Loading">Loading...</sys:String>
     <sys:String x:Key="Common.Transaction">Transaction</sys:String>
+
+    <!-- Accounts -->
+    <sys:String x:Key="Nav.Accounts">Accounts</sys:String>
+    <sys:String x:Key="Accounts.Title">Accounts</sys:String>
+    <sys:String x:Key="Accounts.Add">+ Add Account</sys:String>
+    <sys:String x:Key="Accounts.AddTitle">Add Account</sys:String>
+    <sys:String x:Key="Accounts.EditTitle">Edit Account</sys:String>
+    <sys:String x:Key="Accounts.Name">Name</sys:String>
+    <sys:String x:Key="Accounts.Type">Type</sys:String>
+    <sys:String x:Key="Accounts.Institution">Institution</sys:String>
+    <sys:String x:Key="Accounts.Balance">Balance</sys:String>
+    <sys:String x:Key="Accounts.Currency">Currency</sys:String>
+    <sys:String x:Key="Accounts.Note">Note</sys:String>
+    <sys:String x:Key="Accounts.NoAccounts">No accounts yet</sys:String>
+    <sys:String x:Key="Accounts.NoAccountsHint">Click '+ Add Account' to create your first account</sys:String>
+    <sys:String x:Key="Accounts.DeleteTitle">Delete Account</sys:String>
+    <sys:String x:Key="Accounts.DeleteMessage">Are you sure you want to delete this account? All related transactions will be kept.</sys:String>
+    <sys:String x:Key="Accounts.TotalBalance">Total Balance</sys:String>
 
     <!-- Language -->
     <sys:String x:Key="Lang.Switch">中文</sys:String>

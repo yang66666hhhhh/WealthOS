@@ -25,10 +25,16 @@ public partial class LiabilitiesViewModel : ObservableObject
     private bool _isAddDialogOpen;
 
     [ObservableProperty]
+    private bool _isEditDialogOpen;
+
+    [ObservableProperty]
     private bool _isConfirmDeleteOpen;
 
     [ObservableProperty]
     private Guid _pendingDeleteId;
+
+    [ObservableProperty]
+    private Guid _editingId;
 
     [ObservableProperty]
     private string _newName = string.Empty;
@@ -109,6 +115,47 @@ public partial class LiabilitiesViewModel : ObservableObject
 
         await _service.AddLiabilityAsync(liability);
         IsAddDialogOpen = false;
+        await LoadDataAsync();
+    }
+
+    [RelayCommand]
+    private async Task ShowEditDialog(Guid id)
+    {
+        var item = await _service.GetLiabilityAsync(id);
+        if (item == null) return;
+
+        EditingId = id;
+        NewName = item.Name;
+        NewType = item.Type;
+        NewBalance = item.Balance;
+        NewInterestRate = item.InterestRate;
+        NewMonthlyPayment = item.MonthlyPayment;
+        NewStartDate = item.StartDate;
+        NewInstitution = item.Institution;
+        IsEditDialogOpen = true;
+    }
+
+    [RelayCommand]
+    private void CancelEdit() => IsEditDialogOpen = false;
+
+    [RelayCommand]
+    private async Task ConfirmEditAsync()
+    {
+        if (string.IsNullOrWhiteSpace(NewName)) return;
+
+        var item = await _service.GetLiabilityAsync(EditingId);
+        if (item == null) return;
+
+        item.Name = NewName;
+        item.Type = NewType;
+        item.Balance = NewBalance;
+        item.InterestRate = NewInterestRate;
+        item.MonthlyPayment = NewMonthlyPayment;
+        item.StartDate = NewStartDate;
+        item.Institution = NewInstitution;
+
+        await _service.UpdateLiabilityAsync(item);
+        IsEditDialogOpen = false;
         await LoadDataAsync();
     }
 

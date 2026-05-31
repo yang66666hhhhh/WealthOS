@@ -212,6 +212,40 @@
                             </TextBlock>
                         </Border>
                     </Button>
+                    <Button Command="{Binding NavigateToCommand}" CommandParameter="Accounts"
+                            Background="Transparent" BorderThickness="0" Cursor="Hand"
+                            HorizontalContentAlignment="Left" Padding="0">
+                        <Border CornerRadius="10" Padding="20,12" Margin="8,2">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsAccountsSelected}" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource SidebarActiveBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock FontSize="14">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{StaticResource SidebarTextBrush}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsAccountsSelected}" Value="True">
+                                                <Setter Property="Foreground" Value="{StaticResource SidebarActiveTextBrush}"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}&#x1F3E6;  {0}">
+                                        <Binding Source="{DynamicResource Nav.Accounts}"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Border>
+                    </Button>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Margin="24,0,24,24">
@@ -256,6 +290,9 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type vm:GoalsViewModel}">
                     <views:GoalsView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:AccountsViewModel}">
+                    <views:AccountsView/>
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>

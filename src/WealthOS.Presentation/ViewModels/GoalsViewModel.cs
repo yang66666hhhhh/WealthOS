@@ -22,6 +22,9 @@ public partial class GoalsViewModel : ObservableObject
     private bool _isAddDialogOpen;
 
     [ObservableProperty]
+    private bool _isEditDialogOpen;
+
+    [ObservableProperty]
     private bool _isConfirmDeleteOpen;
 
     [ObservableProperty]
@@ -29,6 +32,9 @@ public partial class GoalsViewModel : ObservableObject
 
     [ObservableProperty]
     private Guid _pendingDeleteId;
+
+    [ObservableProperty]
+    private Guid _editingId;
 
     [ObservableProperty]
     private Guid _progressGoalId;
@@ -105,6 +111,43 @@ public partial class GoalsViewModel : ObservableObject
 
         await _service.AddGoalAsync(goal);
         IsAddDialogOpen = false;
+        await LoadDataAsync();
+    }
+
+    [RelayCommand]
+    private async Task ShowEditDialog(Guid id)
+    {
+        var item = await _service.GetGoalAsync(id);
+        if (item == null) return;
+
+        EditingId = id;
+        NewName = item.Name;
+        NewTargetAmount = item.TargetAmount;
+        NewCurrentAmount = item.CurrentAmount;
+        NewTargetDate = item.TargetDate;
+        NewNote = item.Note;
+        IsEditDialogOpen = true;
+    }
+
+    [RelayCommand]
+    private void CancelEdit() => IsEditDialogOpen = false;
+
+    [RelayCommand]
+    private async Task ConfirmEditAsync()
+    {
+        if (string.IsNullOrWhiteSpace(NewName) || NewTargetAmount <= 0) return;
+
+        var item = await _service.GetGoalAsync(EditingId);
+        if (item == null) return;
+
+        item.Name = NewName;
+        item.TargetAmount = NewTargetAmount;
+        item.CurrentAmount = NewCurrentAmount;
+        item.TargetDate = NewTargetDate;
+        item.Note = NewNote;
+
+        await _service.UpdateGoalAsync(item);
+        IsEditDialogOpen = false;
         await LoadDataAsync();
     }
 

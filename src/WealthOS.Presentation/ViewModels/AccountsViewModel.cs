@@ -8,12 +8,15 @@ using WealthOS.Domain.Enums;
 
 namespace WealthOS.Presentation.ViewModels;
 
-public partial class AssetsViewModel : ObservableObject
+public partial class AccountsViewModel : ObservableObject
 {
-    private readonly AssetService _service;
+    private readonly AccountService _service;
 
     [ObservableProperty]
-    private ObservableCollection<AssetCardDto> _assets = [];
+    private ObservableCollection<AccountDto> _accounts = [];
+
+    [ObservableProperty]
+    private decimal _totalBalance;
 
     [ObservableProperty]
     private bool _isLoading;
@@ -37,26 +40,23 @@ public partial class AssetsViewModel : ObservableObject
     private string _newName = string.Empty;
 
     [ObservableProperty]
-    private string _newInstitution = string.Empty;
-
-    [ObservableProperty]
-    private decimal _newCurrentValue;
-
-    [ObservableProperty]
-    private decimal _newInitialValue;
-
-    [ObservableProperty]
     private AssetType _newType = AssetType.Bank;
 
     [ObservableProperty]
-    private string _newNote = string.Empty;
+    private string _newInstitution = string.Empty;
 
     [ObservableProperty]
-    private AssetType? _filterType;
+    private decimal _newBalance;
 
-    public AssetType[] AssetTypes { get; } = Enum.GetValues<AssetType>();
+    [ObservableProperty]
+    private string _newCurrency = "CNY";
 
-    public AssetsViewModel(AssetService service)
+    [ObservableProperty]
+    private string? _newNote;
+
+    public AssetType[] AccountTypes { get; } = Enum.GetValues<AssetType>();
+
+    public AccountsViewModel(AccountService service)
     {
         _service = service;
         _ = LoadDataAsync();
@@ -68,10 +68,9 @@ public partial class AssetsViewModel : ObservableObject
         IsLoading = true;
         try
         {
-            var assets = FilterType.HasValue
-                ? await _service.GetAssetsByTypeAsync(FilterType.Value)
-                : await _service.GetAllAssetsAsync();
-            Assets = new ObservableCollection<AssetCardDto>(assets);
+            var items = await _service.GetAllAccountsAsync();
+            Accounts = new ObservableCollection<AccountDto>(items);
+            TotalBalance = items.Sum(a => a.Balance);
         }
         finally
         {
@@ -83,11 +82,11 @@ public partial class AssetsViewModel : ObservableObject
     private void ShowAddDialog()
     {
         NewName = string.Empty;
-        NewInstitution = string.Empty;
-        NewCurrentValue = 0;
-        NewInitialValue = 0;
         NewType = AssetType.Bank;
-        NewNote = string.Empty;
+        NewInstitution = string.Empty;
+        NewBalance = 0;
+        NewCurrency = "CNY";
+        NewNote = null;
         IsAddDialogOpen = true;
     }
 
@@ -99,17 +98,17 @@ public partial class AssetsViewModel : ObservableObject
     {
         if (string.IsNullOrWhiteSpace(NewName)) return;
 
-        var asset = new Asset
+        var account = new Account
         {
             Name = NewName,
             Type = NewType,
-            CurrentValue = NewCurrentValue,
-            InitialValue = NewInitialValue,
             Institution = NewInstitution,
+            Balance = NewBalance,
+            Currency = NewCurrency,
             Note = NewNote
         };
 
-        await _service.AddAssetAsync(asset);
+        await _service.AddAccountAsync(account);
         IsAddDialogOpen = false;
         await LoadDataAsync();
     }
@@ -117,16 +116,16 @@ public partial class AssetsViewModel : ObservableObject
     [RelayCommand]
     private async Task ShowEditDialog(Guid id)
     {
-        var asset = await _service.GetAssetAsync(id);
-        if (asset == null) return;
+        var item = await _service.GetAccountAsync(id);
+        if (item == null) return;
 
         EditingId = id;
-        NewName = asset.Name;
-        NewInstitution = asset.Institution;
-        NewCurrentValue = asset.CurrentValue;
-        NewInitialValue = asset.InitialValue;
-        NewType = asset.Type;
-        NewNote = asset.Note ?? string.Empty;
+        NewName = item.Name;
+        NewType = item.Type;
+        NewInstitution = item.Institution;
+        NewBalance = item.Balance;
+        NewCurrency = item.Currency;
+        NewNote = item.Note;
         IsEditDialogOpen = true;
     }
 
@@ -138,17 +137,17 @@ public partial class AssetsViewModel : ObservableObject
     {
         if (string.IsNullOrWhiteSpace(NewName)) return;
 
-        var asset = await _service.GetAssetAsync(EditingId);
-        if (asset == null) return;
+        var item = await _service.GetAccountAsync(EditingId);
+        if (item == null) return;
 
-        asset.Name = NewName;
-        asset.Type = NewType;
-        asset.CurrentValue = NewCurrentValue;
-        asset.InitialValue = NewInitialValue;
-        asset.Institution = NewInstitution;
-        asset.Note = NewNote;
+        item.Name = NewName;
+        item.Type = NewType;
+        item.Institution = NewInstitution;
+        item.Balance = NewBalance;
+        item.Currency = NewCurrency;
+        item.Note = NewNote;
 
-        await _service.UpdateAssetAsync(asset);
+        await _service.UpdateAccountAsync(item);
         IsEditDialogOpen = false;
         await LoadDataAsync();
     }
@@ -166,15 +165,8 @@ public partial class AssetsViewModel : ObservableObject
     [RelayCommand]
     private async Task ExecuteDeleteAsync()
     {
-        await _service.DeleteAssetAsync(PendingDeleteId);
+        await _service.DeleteAccountAsync(PendingDeleteId);
         IsConfirmDeleteOpen = false;
-        await LoadDataAsync();
-    }
-
-    [RelayCommand]
-    private async Task FilterByTypeAsync(AssetType? type)
-    {
-        FilterType = type;
         await LoadDataAsync();
     }
 }

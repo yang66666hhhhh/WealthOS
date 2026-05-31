@@ -29,10 +29,16 @@ public partial class TransactionsViewModel : ObservableObject
     private bool _isAddDialogOpen;
 
     [ObservableProperty]
+    private bool _isEditDialogOpen;
+
+    [ObservableProperty]
     private bool _isConfirmDeleteOpen;
 
     [ObservableProperty]
     private Guid _pendingDeleteId;
+
+    [ObservableProperty]
+    private Guid _editingId;
 
     [ObservableProperty]
     private TransactionType _newType = TransactionType.Expense;
@@ -112,6 +118,42 @@ public partial class TransactionsViewModel : ObservableObject
 
         await _service.AddTransactionAsync(transaction);
         IsAddDialogOpen = false;
+        await LoadDataAsync();
+    }
+
+    [RelayCommand]
+    private async Task ShowEditDialog(TransactionDto dto)
+    {
+        EditingId = dto.Id;
+        NewType = dto.Type;
+        NewAmount = dto.Amount;
+        NewNote = dto.Note;
+        NewDate = dto.OccurredAt;
+        SelectedAccount = Accounts.FirstOrDefault(a => a.Name == dto.AccountName);
+        IsEditDialogOpen = true;
+    }
+
+    [RelayCommand]
+    private void CancelEdit() => IsEditDialogOpen = false;
+
+    [RelayCommand]
+    private async Task ConfirmEditAsync()
+    {
+        if (NewAmount <= 0 || SelectedAccount == null) return;
+
+        await _service.DeleteTransactionAsync(EditingId);
+
+        var transaction = new Transaction
+        {
+            Type = NewType,
+            Amount = NewAmount,
+            Note = NewNote,
+            OccurredAt = NewDate,
+            AccountId = SelectedAccount.Id
+        };
+
+        await _service.AddTransactionAsync(transaction);
+        IsEditDialogOpen = false;
         await LoadDataAsync();
     }
 

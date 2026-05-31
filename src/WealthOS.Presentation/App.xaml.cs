@@ -58,6 +58,7 @@ public partial class App : System.Windows.Application
         services.AddSingleton<LiabilitiesViewModel>();
         services.AddSingleton<TransactionsViewModel>();
         services.AddSingleton<GoalsViewModel>();
+        services.AddSingleton<AccountsViewModel>();
         services.AddSingleton<MainWindowViewModel>();
         services.AddTransient<MainWindow>();
     }
