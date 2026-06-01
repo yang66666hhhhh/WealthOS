@@ -195,8 +195,8 @@ public partial class DashboardViewModel : ViewModelBase
                 {
                     Labeler = value => value switch
                     {
-                        >= 100_000_000 => $"{value / 100_000_000:N1}亿",
-                        >= 10_000 => $"{value / 10_000:N1}万",
+                        >= 100_000_000 => string.Format(GetResourceString("Unit.Yi"), value / 100_000_000),
+                        >= 10_000 => string.Format(GetResourceString("Unit.Wan"), value / 10_000),
                         _ => $"{value:N0}"
                     },
                     SeparatorsPaint = new SolidColorPaint(borderColor) { StrokeThickness = 1 },

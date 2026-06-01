@@ -62,7 +62,7 @@ public partial class AssetsViewModel : ViewModelBase
     public AssetsViewModel(AssetService service)
     {
         _service = service;
-        _ = LoadDataAsync();
+        SafeInitializeAsync(LoadDataAsync);
     }
 
     public override IRelayCommand? RefreshCommand => LoadDataCommand;

@@ -76,7 +76,7 @@ public partial class TransactionsViewModel : ViewModelBase
         _service = service;
         _accountService = accountService;
         _categoryService = categoryService;
-        _ = LoadDataAsync();
+        SafeInitializeAsync(LoadDataAsync);
     }
 
     public override IRelayCommand? RefreshCommand => LoadDataCommand;

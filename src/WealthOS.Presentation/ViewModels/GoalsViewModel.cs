@@ -63,7 +63,7 @@ public partial class GoalsViewModel : ViewModelBase
     public GoalsViewModel(GoalService service)
     {
         _service = service;
-        _ = LoadDataAsync();
+        SafeInitializeAsync(LoadDataAsync);
     }
 
     public override IRelayCommand? RefreshCommand => LoadDataCommand;

@@ -106,5 +106,16 @@
     <SolidColorBrush x:Key="ErrorDarkBrush" Color="{StaticResource ErrorDarkColor}"/>
     <SolidColorBrush x:Key="InfoBrush" Color="{StaticResource InfoColor}"/>
 
+    <!-- 图标背景色 -->
+    <Color x:Key="IconBgBlueColor">#EFF6FF</Color>
+    <SolidColorBrush x:Key="IconBgBlueBrush" Color="{StaticResource IconBgBlueColor}"/>
+    <Color x:Key="IconBgGreenColor">#ECFDF5</Color>
+    <SolidColorBrush x:Key="IconBgGreenBrush" Color="{StaticResource IconBgGreenColor}"/>
+    <Color x:Key="IconBgRedColor">#FEF2F2</Color>
+    <SolidColorBrush x:Key="IconBgRedBrush" Color="{StaticResource IconBgRedColor}"/>
+    <Color x:Key="IconBgYellowColor">#FEF3C7</Color>
+    <SolidColorBrush x:Key="IconBgYellowBrush" Color="{StaticResource IconBgYellowColor}"/>
+    <Color x:Key="IconBgPurpleColor">#EEF2FF</Color>
+    <SolidColorBrush x:Key="IconBgPurpleBrush" Color="{StaticResource IconBgPurpleColor}"/>
 
 </ResourceDictionary>

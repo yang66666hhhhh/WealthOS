@@ -62,7 +62,7 @@ public partial class LiabilitiesViewModel : ViewModelBase
     public LiabilitiesViewModel(LiabilityService service)
     {
         _service = service;
-        _ = LoadDataAsync();
+        SafeInitializeAsync(LoadDataAsync);
     }
 
     public override IRelayCommand? RefreshCommand => LoadDataCommand;

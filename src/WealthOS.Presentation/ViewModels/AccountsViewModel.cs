@@ -59,7 +59,7 @@ public partial class AccountsViewModel : ViewModelBase
     public AccountsViewModel(AccountService service)
     {
         _service = service;
-        _ = LoadDataAsync();
+        SafeInitializeAsync(LoadDataAsync);
     }
 
     public override IRelayCommand? RefreshCommand => LoadDataCommand;

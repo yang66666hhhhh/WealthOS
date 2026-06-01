@@ -291,6 +291,9 @@
     <sys:String x:Key="Analytics.NoData">暂无分析数据</sys:String>
     <sys:String x:Key="Analytics.NoDataHint">添加交易记录后即可查看数据分析</sys:String>
 
+    <sys:String x:Key="Unit.Yi">{0:N1}亿</sys:String>
+    <sys:String x:Key="Unit.Wan">{0:N1}万</sys:String>
+
     <!-- File Dialogs -->
     <sys:String x:Key="FileDialog.DbFilter">数据库文件|*.db</sys:String>
     <sys:String x:Key="FileDialog.CsvFilter">CSV 文件|*.csv</sys:String>

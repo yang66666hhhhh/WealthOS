@@ -17,29 +17,6 @@
     <Thickness x:Key="CardPadding">20</Thickness>
     <Thickness x:Key="PagePadding">28</Thickness>
 
-    <!-- ============================================ -->
-    <!--  图标背景色（用于 KPI 卡片图标） -->
-    <!-- ============================================ -->
-    
-    <!-- 蓝色背景 -->
-    <Color x:Key="IconBgBlueColor">#EFF6FF</Color>
-    <SolidColorBrush x:Key="IconBgBlueBrush" Color="{StaticResource IconBgBlueColor}"/>
-    
-    <!-- 绿色背景 -->
-    <Color x:Key="IconBgGreenColor">#ECFDF5</Color>
-    <SolidColorBrush x:Key="IconBgGreenBrush" Color="{StaticResource IconBgGreenColor}"/>
-    
-    <!-- 红色背景 -->
-    <Color x:Key="IconBgRedColor">#FEF2F2</Color>
-    <SolidColorBrush x:Key="IconBgRedBrush" Color="{StaticResource IconBgRedColor}"/>
-    
-    <!-- 黄色背景 -->
-    <Color x:Key="IconBgYellowColor">#FEF3C7</Color>
-    <SolidColorBrush x:Key="IconBgYellowBrush" Color="{StaticResource IconBgYellowColor}"/>
-    
-    <!-- 紫色背景 -->
-    <Color x:Key="IconBgPurpleColor">#EEF2FF</Color>
-    <SolidColorBrush x:Key="IconBgPurpleBrush" Color="{StaticResource IconBgPurpleColor}"/>
 
     <!-- ============================================ -->
     <!--  卡片样式 -->

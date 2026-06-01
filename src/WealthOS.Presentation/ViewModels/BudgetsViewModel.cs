@@ -68,7 +68,7 @@ public partial class BudgetsViewModel : ViewModelBase
     public BudgetsViewModel(BudgetService service)
     {
         _service = service;
-        _ = LoadDataAsync();
+        SafeInitializeAsync(LoadDataAsync);
     }
 
     public override IRelayCommand? RefreshCommand => LoadDataCommand;

@@ -20,7 +20,7 @@ public partial class TimelineViewModel : ViewModelBase
     public TimelineViewModel(TransactionService transactionService)
     {
         _transactionService = transactionService;
-        _ = LoadDataAsync();
+        SafeInitializeAsync(LoadDataAsync);
     }
 
     public override IRelayCommand? RefreshCommand => LoadDataCommand;

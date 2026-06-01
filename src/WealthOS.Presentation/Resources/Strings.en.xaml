@@ -291,6 +291,9 @@
     <sys:String x:Key="Analytics.NoData">No analytics data</sys:String>
     <sys:String x:Key="Analytics.NoDataHint">Add transactions to see data analysis</sys:String>
 
+    <sys:String x:Key="Unit.Yi">{0:N1}B</sys:String>
+    <sys:String x:Key="Unit.Wan">{0:N1}K</sys:String>
+
     <!-- File Dialogs -->
     <sys:String x:Key="FileDialog.DbFilter">Database Files|*.db</sys:String>
     <sys:String x:Key="FileDialog.CsvFilter">CSV Files|*.csv</sys:String>

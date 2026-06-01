@@ -29,7 +29,7 @@ public partial class FixedAssetsViewModel : ViewModelBase
     public FixedAssetsViewModel(AssetService assetService)
     {
         _assetService = assetService;
-        _ = LoadDataAsync();
+        SafeInitializeAsync(LoadDataAsync);
     }
 
     public override IRelayCommand? RefreshCommand => LoadDataCommand;

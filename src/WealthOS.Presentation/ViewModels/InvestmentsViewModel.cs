@@ -71,7 +71,7 @@ public partial class InvestmentsViewModel : ViewModelBase
     public InvestmentsViewModel(InvestmentService service)
     {
         _service = service;
-        _ = LoadDataAsync();
+        SafeInitializeAsync(LoadDataAsync);
     }
 
     public override IRelayCommand? RefreshCommand => LoadDataCommand;

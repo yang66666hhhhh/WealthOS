@@ -39,7 +39,7 @@ internal sealed class ConnectionOwningTransaction : IDbTransaction
         _connection = connection;
     }
 
-    public IDbConnection Connection => _inner.Connection;
+    public IDbConnection Connection => _inner.Connection!;
 
     public IsolationLevel IsolationLevel => _inner.IsolationLevel;
 
