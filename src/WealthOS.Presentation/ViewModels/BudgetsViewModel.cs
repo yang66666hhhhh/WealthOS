@@ -139,15 +139,22 @@ public partial class BudgetsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ShowEditDialog(Guid id)
     {
-        var item = await _service.GetBudgetAsync(id);
-        if (item == null) return;
+        try
+        {
+            var item = await _service.GetBudgetAsync(id);
+            if (item == null) return;
 
-        EditingId = id;
-        NewName = item.Name;
-        NewAmount = item.Amount;
-        NewSpent = item.Spent;
-        NewNote = item.Note;
-        IsEditDialogOpen = true;
+            EditingId = id;
+            NewName = item.Name;
+            NewAmount = item.Amount;
+            NewSpent = item.Spent;
+            NewNote = item.Note;
+            IsEditDialogOpen = true;
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]

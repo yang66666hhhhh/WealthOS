@@ -135,18 +135,25 @@ public partial class LiabilitiesViewModel : ViewModelBase
     [RelayCommand]
     private async Task ShowEditDialog(Guid id)
     {
-        var item = await _service.GetLiabilityAsync(id);
-        if (item == null) return;
+        try
+        {
+            var item = await _service.GetLiabilityAsync(id);
+            if (item == null) return;
 
-        EditingId = id;
-        NewName = item.Name;
-        NewType = item.Type;
-        NewBalance = item.Balance;
-        NewInterestRate = item.InterestRate;
-        NewMonthlyPayment = item.MonthlyPayment;
-        NewStartDate = item.StartDate;
-        NewInstitution = item.Institution;
-        IsEditDialogOpen = true;
+            EditingId = id;
+            NewName = item.Name;
+            NewType = item.Type;
+            NewBalance = item.Balance;
+            NewInterestRate = item.InterestRate;
+            NewMonthlyPayment = item.MonthlyPayment;
+            NewStartDate = item.StartDate;
+            NewInstitution = item.Institution;
+            IsEditDialogOpen = true;
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]

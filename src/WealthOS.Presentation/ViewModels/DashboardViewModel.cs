@@ -8,6 +8,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using WealthOS.Application.DTOs;
 using WealthOS.Application.Services;
+using WealthOS.Presentation.Converters;
 using WealthOS.Presentation.Services;
 
 namespace WealthOS.Presentation.ViewModels;
@@ -195,9 +196,9 @@ public partial class DashboardViewModel : ViewModelBase
                 {
                     Labeler = value => value switch
                     {
-                        >= 100_000_000 => string.Format(GetResourceString("Unit.Yi"), value / 100_000_000),
-                        >= 10_000 => string.Format(GetResourceString("Unit.Wan"), value / 10_000),
-                        _ => $"{value:N0}"
+                        >= 100_000_000 => $"{CurrencyConverter.CurrencySymbol}{string.Format(GetResourceString("Unit.Yi"), value / 100_000_000)}",
+                        >= 10_000 => $"{CurrencyConverter.CurrencySymbol}{string.Format(GetResourceString("Unit.Wan"), value / 10_000)}",
+                        _ => $"{CurrencyConverter.CurrencySymbol}{value:N0}"
                     },
                     SeparatorsPaint = new SolidColorPaint(borderColor) { StrokeThickness = 1 },
                     LabelsPaint = new SolidColorPaint(textSecondaryColor)

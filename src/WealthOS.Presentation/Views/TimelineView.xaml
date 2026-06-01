@@ -81,7 +81,7 @@
                                                     <SolidColorBrush Color="{StaticResource IconBgGreenColor}"/>
                                                 </Border.Background>
                                                 <TextBlock FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource IncomeBrush}">
-                                                    <Run Text="+"/><Run Text="{Binding TotalIncome, StringFormat='￥{0:N0}'}"/>
+                                                     <Run Text="+"/><Run><Run.Text><Binding Path="TotalIncome" Converter="{StaticResource CurrencyConv}"/></Run.Text></Run>
                                                 </TextBlock>
                                             </Border>
                                             <Border CornerRadius="6" Padding="8,4">
@@ -89,7 +89,7 @@
                                                     <SolidColorBrush Color="{StaticResource IconBgRedColor}"/>
                                                 </Border.Background>
                                                 <TextBlock FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource ExpenseBrush}">
-                                                    <Run Text="-"/><Run Text="{Binding TotalExpense, StringFormat='￥{0:N0}'}"/>
+                                                     <Run Text="-"/><Run><Run.Text><Binding Path="TotalExpense" Converter="{StaticResource CurrencyConv}"/></Run.Text></Run>
                                                 </TextBlock>
                                             </Border>
                                         </StackPanel>

@@ -129,17 +129,24 @@ public partial class AccountsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ShowEditDialog(Guid id)
     {
-        var item = await _service.GetAccountAsync(id);
-        if (item == null) return;
+        try
+        {
+            var item = await _service.GetAccountAsync(id);
+            if (item == null) return;
 
-        EditingId = id;
-        NewName = item.Name;
-        NewType = item.Type;
-        NewInstitution = item.Institution;
-        NewBalance = item.Balance;
-        NewCurrency = item.Currency;
-        NewNote = item.Note;
-        IsEditDialogOpen = true;
+            EditingId = id;
+            NewName = item.Name;
+            NewType = item.Type;
+            NewInstitution = item.Institution;
+            NewBalance = item.Balance;
+            NewCurrency = item.Currency;
+            NewNote = item.Note;
+            IsEditDialogOpen = true;
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]

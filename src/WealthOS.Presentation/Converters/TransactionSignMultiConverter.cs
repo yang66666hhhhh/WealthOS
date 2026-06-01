@@ -10,15 +10,16 @@ public class TransactionSignMultiConverter : IMultiValueConverter
     {
         if (values.Length >= 2 && values[0] is TransactionType type && values[1] is decimal amount)
         {
+            var sym = CurrencyConverter.CurrencySymbol;
             return type switch
             {
-                TransactionType.Income => $"+￥{amount:N2}",
-                TransactionType.Expense => $"-￥{amount:N2}",
-                TransactionType.Transfer => $"￥{amount:N2}",
-                _ => $"￥{amount:N2}"
+                TransactionType.Income => $"+{sym}{amount:N2}",
+                TransactionType.Expense => $"-{sym}{amount:N2}",
+                TransactionType.Transfer => $"{sym}{amount:N2}",
+                _ => $"{sym}{amount:N2}"
             };
         }
-        return "￥0";
+        return $"{CurrencyConverter.CurrencySymbol}0";
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

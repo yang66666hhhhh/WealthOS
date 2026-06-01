@@ -80,6 +80,8 @@
                     </Button>
                 </Grid>
 
+                <TextBlock Text="{Binding StatusMessage}" FontSize="12" Foreground="{StaticResource IncomeBrush}" Margin="0,8,0,0" Visibility="{Binding StatusMessage, Converter={StaticResource BoolToVis}}"/>
+
                 <!-- 空状态 -->
                 <Border Padding="60" Visibility="Collapsed">
                     <Border.Style>
@@ -224,10 +226,10 @@
                                             <TextBlock Grid.Column="0" Text="{Binding Month}" FontSize="14" FontWeight="Medium" 
                                                        VerticalAlignment="Center" Foreground="{StaticResource TextPrimaryBrush}"/>
                                             <TextBlock Grid.Column="1" FontSize="14" Foreground="{StaticResource IncomeBrush}" VerticalAlignment="Center">
-                                                <Run Text="+"/><Run Text="{Binding Income, StringFormat='￥{0:N0}'}"/>
+                                                <Run Text="+"/><Run><Run.Text><Binding Path="Income" Converter="{StaticResource CurrencyConv}"/></Run.Text></Run>
                                             </TextBlock>
                                             <TextBlock Grid.Column="2" FontSize="14" Foreground="{StaticResource ExpenseBrush}" VerticalAlignment="Center">
-                                                <Run Text="-"/><Run Text="{Binding Expense, StringFormat='￥{0:N0}'}"/>
+                                                <Run Text="-"/><Run><Run.Text><Binding Path="Expense" Converter="{StaticResource CurrencyConv}"/></Run.Text></Run>
                                             </TextBlock>
                                             <TextBlock Grid.Column="3" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center">
                                                 <TextBlock.Text><Binding Path="Savings" Converter="{StaticResource CurrencyConv}"/></TextBlock.Text>
@@ -271,7 +273,7 @@
                                                 </StackPanel>
                                                 <TextBlock Grid.Column="1" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource ExpenseBrush}"
                                                            VerticalAlignment="Center">
-                                                    <Run Text="-"/><Run Text="{Binding Amount, StringFormat='￥{0:N0}'}"/>
+                                                     <Run Text="-"/><Run><Run.Text><Binding Path="Amount" Converter="{StaticResource CurrencyConv}"/></Run.Text></Run>
                                                 </TextBlock>
                                             </Grid>
                                         </Border>
@@ -304,7 +306,7 @@
                                                 </StackPanel>
                                                 <TextBlock Grid.Column="1" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource IncomeBrush}"
                                                            VerticalAlignment="Center">
-                                                    <Run Text="+"/><Run Text="{Binding Amount, StringFormat='￥{0:N0}'}"/>
+                                                     <Run Text="+"/><Run><Run.Text><Binding Path="Amount" Converter="{StaticResource CurrencyConv}"/></Run.Text></Run>
                                                 </TextBlock>
                                             </Grid>
                                         </Border>

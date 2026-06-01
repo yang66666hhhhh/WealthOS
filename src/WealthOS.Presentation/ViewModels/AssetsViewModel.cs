@@ -133,17 +133,24 @@ public partial class AssetsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ShowEditDialog(Guid id)
     {
-        var asset = await _service.GetAssetAsync(id);
-        if (asset == null) return;
+        try
+        {
+            var asset = await _service.GetAssetAsync(id);
+            if (asset == null) return;
 
-        EditingId = id;
-        NewName = asset.Name;
-        NewInstitution = asset.Institution;
-        NewCurrentValue = asset.CurrentValue;
-        NewInitialValue = asset.InitialValue;
-        NewType = asset.Type;
-        NewNote = asset.Note ?? string.Empty;
-        IsEditDialogOpen = true;
+            EditingId = id;
+            NewName = asset.Name;
+            NewInstitution = asset.Institution;
+            NewCurrentValue = asset.CurrentValue;
+            NewInitialValue = asset.InitialValue;
+            NewType = asset.Type;
+            NewNote = asset.Note ?? string.Empty;
+            IsEditDialogOpen = true;
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]

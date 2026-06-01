@@ -193,15 +193,20 @@ public class TransactionService
 
     public async Task<int> ImportTransactionsFromCsvAsync(string filePath, Guid accountId)
     {
-        var lines = await System.IO.File.ReadAllLinesAsync(filePath, System.Text.Encoding.UTF8);
+        if (!System.IO.File.Exists(filePath))
+            throw new System.IO.FileNotFoundException("CSV file not found.", filePath);
+
+        var lines = await System.IO.File.ReadAllLinesAsync(filePath, new System.Text.UTF8Encoding(true));
         var count = 0;
 
         foreach (var line in lines.Skip(1))
         {
-            var parts = line.Split(',');
-            if (parts.Length < 3) continue;
+            if (string.IsNullOrWhiteSpace(line)) continue;
 
-            var typeStr = parts[1].Trim().Trim('"').ToLower();
+            var parts = ParseCsvLine(line);
+            if (parts.Count < 3) continue;
+
+            var typeStr = parts[1].Trim().ToLower();
             var type = typeStr switch
             {
                 "income" or "收入" => TransactionType.Income,
@@ -214,7 +219,7 @@ public class TransactionService
             if (!decimal.TryParse(parts[2].Trim(), out var amount)) continue;
             if (!DateTime.TryParse(parts[0].Trim(), out var date)) continue;
 
-            var note = parts.Length > 3 ? parts[3].Trim().Trim('"') : null;
+            var note = parts.Count > 3 ? parts[3].Trim() : null;
 
             var transaction = new Transaction
             {
@@ -230,5 +235,40 @@ public class TransactionService
         }
 
         return count;
+    }
+
+    private static List<string> ParseCsvLine(string line)
+    {
+        var result = new List<string>();
+        var current = new System.Text.StringBuilder();
+        bool inQuotes = false;
+
+        for (int i = 0; i < line.Length; i++)
+        {
+            char c = line[i];
+            if (c == '"')
+            {
+                if (inQuotes && i + 1 < line.Length && line[i + 1] == '"')
+                {
+                    current.Append('"');
+                    i++;
+                }
+                else
+                {
+                    inQuotes = !inQuotes;
+                }
+            }
+            else if (c == ',' && !inQuotes)
+            {
+                result.Add(current.ToString());
+                current.Clear();
+            }
+            else
+            {
+                current.Append(c);
+            }
+        }
+        result.Add(current.ToString());
+        return result;
     }
 }

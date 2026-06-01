@@ -210,13 +210,13 @@
                                                 <TextBlock FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" Margin="0,4,0,0">
                                                     <Run Text="{Binding Quantity}"/>
                                                     <Run Text=" × "/>
-                                                    <Run Text="{Binding AverageCost, StringFormat='￥{0:N2}'}"/>
+                                                     <Run><Run.Text><Binding Path="AverageCost" Converter="{StaticResource CurrencyConv}"/></Run.Text></Run>
                                                 </TextBlock>
                                             </StackPanel>
 
                                             <TextBlock Grid.Column="1" FontSize="13" FontWeight="SemiBold" 
                                                        VerticalAlignment="Center" HorizontalAlignment="Right" Margin="16,0">
-                                                <TextBlock.Text><Binding Path="CurrentPrice" StringFormat="￥{0:N2}"/></TextBlock.Text>
+                                                 <TextBlock.Text><Binding Path="CurrentPrice" Converter="{StaticResource CurrencyConv}"/></TextBlock.Text>
                                             </TextBlock>
 
                                             <TextBlock Grid.Column="2" FontSize="13" FontWeight="SemiBold"

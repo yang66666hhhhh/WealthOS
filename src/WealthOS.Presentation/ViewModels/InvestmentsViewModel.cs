@@ -146,18 +146,25 @@ public partial class InvestmentsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ShowEditDialog(Guid id)
     {
-        var item = await _service.GetHoldingAsync(id);
-        if (item == null) return;
+        try
+        {
+            var item = await _service.GetHoldingAsync(id);
+            if (item == null) return;
 
-        EditingId = id;
-        NewSymbol = item.Symbol;
-        NewName = item.Name;
-        NewAssetType = item.AssetType;
-        NewQuantity = item.Quantity;
-        NewAverageCost = item.AverageCost;
-        NewCurrentPrice = item.CurrentPrice;
-        NewNote = item.Note;
-        IsEditDialogOpen = true;
+            EditingId = id;
+            NewSymbol = item.Symbol;
+            NewName = item.Name;
+            NewAssetType = item.AssetType;
+            NewQuantity = item.Quantity;
+            NewAverageCost = item.AverageCost;
+            NewCurrentPrice = item.CurrentPrice;
+            NewNote = item.Note;
+            IsEditDialogOpen = true;
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]

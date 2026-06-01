@@ -71,6 +71,7 @@ public partial class SettingsViewModel : ViewModelBase
     [RelayCommand]
     private async Task BackupAsync()
     {
+        if (IsBusy) return;
         IsBusy = true;
         ClearError();
         try
@@ -107,6 +108,7 @@ public partial class SettingsViewModel : ViewModelBase
     [RelayCommand]
     private async Task RestoreAsync()
     {
+        if (IsBusy) return;
         var dialog = new OpenFileDialog
         {
             Filter = GetResourceString("FileDialog.DbFilter")

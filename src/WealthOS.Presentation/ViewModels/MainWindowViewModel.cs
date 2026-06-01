@@ -98,7 +98,13 @@ public partial class MainWindowViewModel : ObservableObject
         _settingsVm = settingsVm;
         _budgetsVm = budgetsVm;
 
+        Localization.CurrencyChanged += OnCurrencyChanged;
         Navigation.NavigateTo(_dashboardVm);
+    }
+
+    private void OnCurrencyChanged()
+    {
+        (Navigation.CurrentViewModel as ViewModelBase)?.RefreshCommand?.Execute(null);
     }
 
     [RelayCommand]

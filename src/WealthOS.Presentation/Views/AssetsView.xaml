@@ -14,6 +14,8 @@
     </UserControl.Resources>
 
     <Grid>
+        <views:ErrorBanner DataContext="{Binding}"/>
+
         <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="28,24">
             <StackPanel MaxWidth="1200">
                 <Grid Margin="0,0,0,24">
@@ -33,8 +35,6 @@
                 <Border Background="{StaticResource PrimaryBrush}" 
                         Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
                         Height="3" CornerRadius="2" Margin="0,0,0,16" HorizontalAlignment="Left" Width="120"/>
-
-                <views:ErrorBanner DataContext="{Binding}"/>
 
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                     <Button Margin="0,0,8,0" Padding="12,6" FontSize="12" Cursor="Hand"

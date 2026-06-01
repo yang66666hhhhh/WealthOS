@@ -130,16 +130,23 @@ public partial class GoalsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ShowEditDialog(Guid id)
     {
-        var item = await _service.GetGoalAsync(id);
-        if (item == null) return;
+        try
+        {
+            var item = await _service.GetGoalAsync(id);
+            if (item == null) return;
 
-        EditingId = id;
-        NewName = item.Name;
-        NewTargetAmount = item.TargetAmount;
-        NewCurrentAmount = item.CurrentAmount;
-        NewTargetDate = item.TargetDate;
-        NewNote = item.Note;
-        IsEditDialogOpen = true;
+            EditingId = id;
+            NewName = item.Name;
+            NewTargetAmount = item.TargetAmount;
+            NewCurrentAmount = item.CurrentAmount;
+            NewTargetDate = item.TargetDate;
+            NewNote = item.Note;
+            IsEditDialogOpen = true;
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
