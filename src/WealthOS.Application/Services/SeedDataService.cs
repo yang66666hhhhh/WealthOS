@@ -13,6 +13,7 @@ public class SeedDataService
     private readonly IGoalRepository _goalRepo;
     private readonly ICategoryRepository _categoryRepo;
     private readonly IBudgetRepository _budgetRepo;
+    private readonly CategoryService _categoryService;
 
     public SeedDataService(
         IAccountRepository accountRepo,
@@ -21,7 +22,8 @@ public class SeedDataService
         ITransactionRepository transactionRepo,
         IGoalRepository goalRepo,
         ICategoryRepository categoryRepo,
-        IBudgetRepository budgetRepo)
+        IBudgetRepository budgetRepo,
+        CategoryService categoryService)
     {
         _accountRepo = accountRepo;
         _assetRepo = assetRepo;
@@ -30,10 +32,12 @@ public class SeedDataService
         _goalRepo = goalRepo;
         _categoryRepo = categoryRepo;
         _budgetRepo = budgetRepo;
+        _categoryService = categoryService;
     }
 
     public async Task SeedAllAsync()
     {
+        await _categoryService.SeedDefaultCategoriesAsync();
         await SeedAccountsAsync();
         await SeedAssetsAsync();
         await SeedLiabilitiesAsync();
@@ -49,12 +53,12 @@ public class SeedDataService
 
         var accounts = new List<Account>
         {
-            new() { Name = "招商银行储蓄卡", Type = AssetType.Bank, Balance = 85000, Institution = "招商银行", Note = "工资卡" },
-            new() { Name = "工商银行储蓄卡", Type = AssetType.Bank, Balance = 32000, Institution = "工商银行", Note = "日常消费" },
-            new() { Name = "支付宝余额", Type = AssetType.Cash, Balance = 12500, Institution = "支付宝" },
-            new() { Name = "微信零钱", Type = AssetType.Cash, Balance = 3800, Institution = "微信" },
-            new() { Name = "证券账户", Type = AssetType.Stock, Balance = 150000, Institution = "华泰证券", Note = "股票投资" },
-            new() { Name = "公积金账户", Type = AssetType.Bank, Balance = 68000, Institution = "住房公积金中心", Note = "公积金" },
+            new() { Name = "招商银行储蓄卡", Type = AccountType.Bank, Balance = 85000, Institution = "招商银行", Note = "工资卡" },
+            new() { Name = "工商银行储蓄卡", Type = AccountType.Bank, Balance = 32000, Institution = "工商银行", Note = "日常消费" },
+            new() { Name = "支付宝余额", Type = AccountType.Cash, Balance = 12500, Institution = "支付宝" },
+            new() { Name = "微信零钱", Type = AccountType.Cash, Balance = 3800, Institution = "微信" },
+            new() { Name = "证券账户", Type = AccountType.Investment, Balance = 150000, Institution = "华泰证券", Note = "股票投资" },
+            new() { Name = "公积金账户", Type = AccountType.Bank, Balance = 68000, Institution = "住房公积金中心", Note = "公积金" },
         };
 
         foreach (var account in accounts)
@@ -95,8 +99,8 @@ public class SeedDataService
         {
             new() { Name = "房贷", Type = LiabilityType.Mortgage, Balance = 850000, InterestRate = 3.85m, MonthlyPayment = 4500, StartDate = new DateTime(2020, 3, 1), Institution = "招商银行" },
             new() { Name = "车贷", Type = LiabilityType.CarLoan, Balance = 45000, InterestRate = 4.5m, MonthlyPayment = 2800, StartDate = new DateTime(2023, 1, 1), Institution = "工商银行" },
-            new() { Name = "信用卡", Type = LiabilityType.CreditCard, Balance = 8500, InterestRate = 0, MonthlyPayment = 0, StartDate = DateTime.Now.AddMonths(-1), Institution = "招商银行" },
-            new() { Name = "花呗", Type = LiabilityType.Other, Balance = 3200, InterestRate = 0, MonthlyPayment = 0, StartDate = DateTime.Now.AddMonths(-1), Institution = "支付宝" },
+            new() { Name = "信用卡", Type = LiabilityType.CreditCard, Balance = 8500, InterestRate = 0, MonthlyPayment = 0, StartDate = DateTime.UtcNow.AddMonths(-1), Institution = "招商银行" },
+            new() { Name = "花呗", Type = LiabilityType.Other, Balance = 3200, InterestRate = 0, MonthlyPayment = 0, StartDate = DateTime.UtcNow.AddMonths(-1), Institution = "支付宝" },
         };
 
         foreach (var liability in liabilities)
@@ -141,7 +145,7 @@ public class SeedDataService
         var incomeCategories = categories.Where(c => c.Type == TransactionType.Income).ToList();
         var expenseCategories = categories.Where(c => c.Type == TransactionType.Expense).ToList();
 
-        var now = DateTime.Now;
+        var now = DateTime.UtcNow;
         var transactions = new List<Transaction>
         {
             // ===== 本月收入 =====
@@ -214,7 +218,7 @@ public class SeedDataService
         var existing = await _budgetRepo.GetAllAsync();
         if (existing.Any()) return;
 
-        var now = DateTime.Now;
+        var now = DateTime.UtcNow;
         var budgets = new List<Budget>
         {
             new() { Name = "餐饮", Amount = 5000, Spent = 2410, Month = now.Month, Year = now.Year, Note = "日常饮食" },

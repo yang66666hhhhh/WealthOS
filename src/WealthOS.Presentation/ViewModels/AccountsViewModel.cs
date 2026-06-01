@@ -40,7 +40,7 @@ public partial class AccountsViewModel : ViewModelBase
     private string _newName = string.Empty;
 
     [ObservableProperty]
-    private AssetType _newType = AssetType.Bank;
+    private AccountType _newType = AccountType.Bank;
 
     [ObservableProperty]
     private string _newInstitution = string.Empty;
@@ -54,13 +54,15 @@ public partial class AccountsViewModel : ViewModelBase
     [ObservableProperty]
     private string? _newNote;
 
-    public AssetType[] AccountTypes { get; } = Enum.GetValues<AssetType>();
+    public AccountType[] AccountTypes { get; } = Enum.GetValues<AccountType>();
 
     public AccountsViewModel(AccountService service)
     {
         _service = service;
         _ = LoadDataAsync();
     }
+
+    public override IRelayCommand? RefreshCommand => LoadDataCommand;
 
     [RelayCommand]
     private async Task LoadDataAsync()
@@ -85,7 +87,7 @@ public partial class AccountsViewModel : ViewModelBase
     private void ShowAddDialog()
     {
         NewName = string.Empty;
-        NewType = AssetType.Bank;
+        NewType = AccountType.Bank;
         NewInstitution = string.Empty;
         NewBalance = 0;
         NewCurrency = "CNY";
@@ -100,20 +102,28 @@ public partial class AccountsViewModel : ViewModelBase
     private async Task ConfirmAddAsync()
     {
         if (string.IsNullOrWhiteSpace(NewName)) return;
+        if (NewBalance < 0) { SetError(GetResourceString("Validation.NegativeBalance")); return; }
 
-        var account = new Account
+        try
         {
-            Name = NewName,
-            Type = NewType,
-            Institution = NewInstitution,
-            Balance = NewBalance,
-            Currency = NewCurrency,
-            Note = NewNote
-        };
+            var account = new Account
+            {
+                Name = NewName,
+                Type = NewType,
+                Institution = NewInstitution,
+                Balance = NewBalance,
+                Currency = NewCurrency,
+                Note = NewNote
+            };
 
-        await _service.AddAccountAsync(account);
-        IsAddDialogOpen = false;
-        await LoadDataAsync();
+            await _service.AddAccountAsync(account);
+            IsAddDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
@@ -140,19 +150,26 @@ public partial class AccountsViewModel : ViewModelBase
     {
         if (string.IsNullOrWhiteSpace(NewName)) return;
 
-        var item = await _service.GetAccountAsync(EditingId);
-        if (item == null) return;
+        try
+        {
+            var item = await _service.GetAccountAsync(EditingId);
+            if (item == null) return;
 
-        item.Name = NewName;
-        item.Type = NewType;
-        item.Institution = NewInstitution;
-        item.Balance = NewBalance;
-        item.Currency = NewCurrency;
-        item.Note = NewNote;
+            item.Name = NewName;
+            item.Type = NewType;
+            item.Institution = NewInstitution;
+            item.Balance = NewBalance;
+            item.Currency = NewCurrency;
+            item.Note = NewNote;
 
-        await _service.UpdateAccountAsync(item);
-        IsEditDialogOpen = false;
-        await LoadDataAsync();
+            await _service.UpdateAccountAsync(item);
+            IsEditDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
@@ -168,8 +185,15 @@ public partial class AccountsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ExecuteDeleteAsync()
     {
-        await _service.DeleteAccountAsync(PendingDeleteId);
-        IsConfirmDeleteOpen = false;
-        await LoadDataAsync();
+        try
+        {
+            await _service.DeleteAccountAsync(PendingDeleteId);
+            IsConfirmDeleteOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 }

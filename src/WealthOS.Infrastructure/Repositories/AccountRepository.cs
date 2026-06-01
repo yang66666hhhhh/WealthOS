@@ -11,7 +11,7 @@ public class AccountRepository : BaseRepository<Account>, IAccountRepository
 
     public AccountRepository(IDbContext context) : base(context) { }
 
-    public async Task<IEnumerable<Account>> GetByTypeAsync(AssetType type)
+    public async Task<IEnumerable<Account>> GetByTypeAsync(AccountType type)
     {
         using var connection = Context.CreateConnection();
         return await connection.QueryAsync<Account>(

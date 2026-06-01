@@ -34,10 +34,10 @@ public class DashboardService
 
         var accounts = await _accountRepo.GetAllAsync();
         var cashTotal = accounts
-            .Where(a => a.Type is AssetType.Cash or AssetType.Bank)
+            .Where(a => a.Type is AccountType.Cash or AccountType.Bank)
             .Sum(a => a.Balance);
         var investmentTotal = accounts
-            .Where(a => a.Type is AssetType.Fund or AssetType.Stock or AssetType.ETF or AssetType.Gold or AssetType.Crypto)
+            .Where(a => a.Type is AccountType.Investment)
             .Sum(a => a.Balance);
 
         var now = DateTime.UtcNow;
