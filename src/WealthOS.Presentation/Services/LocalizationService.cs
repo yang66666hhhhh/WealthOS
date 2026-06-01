@@ -41,9 +41,9 @@ public partial class LocalizationService : ObservableObject
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // 如果加载失败，使用默认值
+            System.Diagnostics.Debug.WriteLine($"Failed to load settings: {ex.Message}");
         }
 
         IsChinese = true;
@@ -66,9 +66,9 @@ public partial class LocalizationService : ObservableObject
             var json = JsonSerializer.Serialize(settings);
             File.WriteAllText(SettingsPath, json);
         }
-        catch
+        catch (Exception ex)
         {
-            // 如果保存失败，静默忽略
+            System.Diagnostics.Debug.WriteLine($"Failed to save settings: {ex.Message}");
         }
     }
 

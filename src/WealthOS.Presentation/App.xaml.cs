@@ -15,6 +15,7 @@ namespace WealthOS.Presentation;
 public partial class App : System.Windows.Application
 {
     private readonly IServiceProvider _services;
+    private Mutex? _mutex;
 
     public App()
     {
@@ -38,7 +39,7 @@ public partial class App : System.Windows.Application
         if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
             Directory.CreateDirectory(directory);
 
-        services.AddSingleton<IDbContext>(new SqliteDbContext($"Data Source={dbPath}"));
+        services.AddSingleton<IDbContext>(new SqliteDbContext($"Data Source={dbPath};Cache=Shared"));
         services.AddSingleton<DatabaseInitializer>();
 
         services.AddSingleton<IAccountRepository, AccountRepository>();
@@ -84,6 +85,13 @@ public partial class App : System.Windows.Application
         services.AddTransient<MainWindow>();
     }
 
+    private static string GetString(string key)
+    {
+        if (Current.TryFindResource(key) is string value)
+            return value;
+        return key;
+    }
+
     private static void ShowErrorAndShutdown(string title, string message, string? stackTrace = null)
     {
         System.Diagnostics.Debug.WriteLine($"{title}: {message}");
@@ -94,6 +102,14 @@ public partial class App : System.Windows.Application
 
     protected override async void OnStartup(StartupEventArgs e)
     {
+        _mutex = new Mutex(true, "WealthOS_SingleInstance", out bool isNewInstance);
+        if (!isNewInstance)
+        {
+            MessageBox.Show(GetString("App.AlreadyRunning"), "WealthOS", MessageBoxButton.OK, MessageBoxImage.Information);
+            Current.Shutdown();
+            return;
+        }
+
         base.OnStartup(e);
 
         try
@@ -103,18 +119,8 @@ public partial class App : System.Windows.Application
         }
         catch (Exception ex)
         {
-            ShowErrorAndShutdown("数据库初始化失败", ex.Message, ex.StackTrace);
+            ShowErrorAndShutdown(GetString("Startup.DbInitFailed"), ex.Message, ex.StackTrace);
             return;
-        }
-
-        try
-        {
-            var categoryService = _services.GetRequiredService<CategoryService>();
-            await categoryService.SeedDefaultCategoriesAsync();
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"分类种子数据失败: {ex.Message}");
         }
 
         try
@@ -144,7 +150,7 @@ public partial class App : System.Windows.Application
         }
         catch (Exception ex)
         {
-            ShowErrorAndShutdown("窗口创建失败", ex.Message, ex.StackTrace);
+            ShowErrorAndShutdown(GetString("Startup.WindowCreateFailed"), ex.Message, ex.StackTrace);
         }
     }
 }
