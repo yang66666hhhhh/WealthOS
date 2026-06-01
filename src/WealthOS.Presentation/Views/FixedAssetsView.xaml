@@ -1,7 +1,8 @@
 ﻿<UserControl x:Class="WealthOS.Presentation.Views.FixedAssetsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:conv="clr-namespace:WealthOS.Presentation.Converters">
+             xmlns:conv="clr-namespace:WealthOS.Presentation.Converters"
+             xmlns:views="clr-namespace:WealthOS.Presentation.Views">
 
     <UserControl.Resources>
         <conv:CurrencyConverter x:Key="CurrencyConv"/>
@@ -13,13 +14,16 @@
                 Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
                 Panel.ZIndex="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="3"/>
 
+        <views:ErrorBanner DataContext="{Binding}"/>
+
         <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="28,24">
             <StackPanel MaxWidth="1200">
                 <!-- 页面标题 -->
                 <Grid Margin="0,0,0,24">
                     <StackPanel>
-                        <TextBlock Text="{DynamicResource FixedAssets.Title}" FontSize="24" FontWeight="Bold" 
-                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBlock Style="{StaticResource PageTitleStyle}">
+                            <TextBlock.Text><Binding Source="{StaticResource FixedAssets.Title}"/></TextBlock.Text>
+                        </TextBlock>
                         <TextBlock FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" Margin="0,4,0,0">
                             <Run Text="&#x1F3E2; "/>
                             <Run Text="{DynamicResource FixedAssets.Subtitle}"/>
@@ -102,9 +106,10 @@
                 </Grid>
 
                 <!-- 空状态 -->
-                <Border Padding="60" Visibility="{Binding FixedAssets.Count, Converter={StaticResource BoolToVis}}">
+                <Border Padding="60">
                     <Border.Style>
                         <Style TargetType="Border">
+                            <Setter Property="Visibility" Value="Collapsed"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding FixedAssets.Count}" Value="0"><Setter Property="Visibility" Value="Visible"/></DataTrigger>
                             </Style.Triggers>
@@ -183,7 +188,7 @@
                                             </TextBlock>
                                             <TextBlock FontSize="12" Foreground="{StaticResource TextTertiaryBrush}">
                                                 <Run><Run.Text><Binding Source="{StaticResource FixedAssets.Age}" Mode="OneWay"/></Run.Text></Run>
-                                                <Run Text="{Binding AgeMonths, StringFormat='{}{0} 个月'}"/>
+                                                <Run><Run.Text><MultiBinding StringFormat="{}{0} {1}"><Binding Path="AgeMonths"/><Binding Source="{StaticResource Unit.Month}" Mode="OneWay"/></MultiBinding></Run.Text></Run>
                                             </TextBlock>
                                         </StackPanel>
                                     </Border>

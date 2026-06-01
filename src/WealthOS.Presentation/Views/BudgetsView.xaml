@@ -1,7 +1,8 @@
 ﻿<UserControl x:Class="WealthOS.Presentation.Views.BudgetsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:conv="clr-namespace:WealthOS.Presentation.Converters">
+             xmlns:conv="clr-namespace:WealthOS.Presentation.Converters"
+             xmlns:views="clr-namespace:WealthOS.Presentation.Views">
 
     <UserControl.Resources>
         <conv:CurrencyConverter x:Key="CurrencyConv"/>
@@ -13,6 +14,8 @@
                 Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"
                 Panel.ZIndex="50" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="3"/>
 
+        <views:ErrorBanner DataContext="{Binding}"/>
+
         <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="28,24">
             <StackPanel MaxWidth="1200">
                 <!-- 页面标题 -->
@@ -22,22 +25,25 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="{DynamicResource Budgets.Title}" FontSize="24" FontWeight="Bold" 
-                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBlock Style="{StaticResource PageTitleStyle}">
+                            <TextBlock.Text><Binding Source="{StaticResource Budgets.Title}"/></TextBlock.Text>
+                        </TextBlock>
                         <!-- 月份选择器 -->
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                             <Button Content="&#x276E;" Padding="8,4" FontSize="12" Cursor="Hand"
                                     Style="{StaticResource GhostButton}"
+                                    ToolTip="{DynamicResource Tooltip.Previous}"
                                     Command="{Binding ChangeMonthCommand}" CommandParameter="-1"/>
                             <TextBlock FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}"
                                        VerticalAlignment="Center" Margin="8,0">
                                 <Run Text="{Binding SelectedYear, Mode=OneWay}"/>
-                                <Run Text="年"/>
+                                <Run><Run.Text><Binding Source="{StaticResource Unit.Year}" Mode="OneWay"/></Run.Text></Run>
                                 <Run Text="{Binding SelectedMonth, Mode=OneWay}"/>
-                                <Run Text="月"/>
+                                <Run><Run.Text><Binding Source="{StaticResource Unit.Month}" Mode="OneWay"/></Run.Text></Run>
                             </TextBlock>
                             <Button Content="&#x276F;" Padding="8,4" FontSize="12" Cursor="Hand"
                                     Style="{StaticResource GhostButton}"
+                                    ToolTip="{DynamicResource Tooltip.Next}"
                                     Command="{Binding ChangeMonthCommand}" CommandParameter="1"/>
                         </StackPanel>
                     </StackPanel>
@@ -166,9 +172,10 @@
                 </Border>
 
                 <!-- 空状态 -->
-                <Border Padding="60" Visibility="{Binding Budgets.Count, Converter={StaticResource BoolToVis}}">
+                <Border Padding="60">
                     <Border.Style>
                         <Style TargetType="Border">
+                            <Setter Property="Visibility" Value="Collapsed"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Budgets.Count}" Value="0"><Setter Property="Visibility" Value="Visible"/></DataTrigger>
                             </Style.Triggers>
@@ -212,10 +219,12 @@
                                         <StackPanel Grid.Column="1" Orientation="Horizontal">
                                             <Button Content="&#x270E;" FontSize="14" Background="Transparent" BorderThickness="0" 
                                                     Foreground="{StaticResource TextTertiaryBrush}" Cursor="Hand" Padding="6,2"
+                                                    ToolTip="{DynamicResource Tooltip.Edit}"
                                                     Command="{Binding DataContext.ShowEditDialogCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                     CommandParameter="{Binding Id}"/>
                                             <Button Content="&#x2716;" FontSize="12" Background="Transparent" BorderThickness="0" 
                                                     Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="6,2"
+                                                    ToolTip="{DynamicResource Tooltip.Delete}"
                                                     Command="{Binding DataContext.ConfirmDeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                     CommandParameter="{Binding Id}"/>
                                         </StackPanel>
@@ -296,6 +305,10 @@
 
                 <!-- Add Dialog -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsAddDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
+                    <Border.InputBindings>
+                        <KeyBinding Key="Escape" Command="{Binding CancelAddCommand}"/>
+                        <KeyBinding Key="Enter" Command="{Binding ConfirmAddCommand}"/>
+                    </Border.InputBindings>
                     <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource CardCornerRadius}" Padding="28" Width="440" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
@@ -342,6 +355,10 @@
 
                 <!-- Edit Dialog -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsEditDialogOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
+                    <Border.InputBindings>
+                        <KeyBinding Key="Escape" Command="{Binding CancelEditCommand}"/>
+                        <KeyBinding Key="Enter" Command="{Binding ConfirmEditCommand}"/>
+                    </Border.InputBindings>
                     <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource CardCornerRadius}" Padding="28" Width="440" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
@@ -388,6 +405,10 @@
 
                 <!-- Delete Confirmation -->
                 <Border Background="{StaticResource DialogOverlayBrush}" Visibility="{Binding IsConfirmDeleteOpen, Converter={StaticResource BoolToVis}}" Panel.ZIndex="100">
+                    <Border.InputBindings>
+                        <KeyBinding Key="Escape" Command="{Binding CancelDeleteCommand}"/>
+                        <KeyBinding Key="Enter" Command="{Binding ExecuteDeleteCommand}"/>
+                    </Border.InputBindings>
                     <Border Background="{StaticResource DialogBackgroundBrush}" CornerRadius="{StaticResource CardCornerRadius}" Padding="28" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel>
                             <TextBlock Style="{StaticResource DialogTitleStyle}">
