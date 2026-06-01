@@ -132,22 +132,22 @@ public class ReportService
                 page.Content().PaddingVertical(20).Column(col =>
                 {
                     col.Item().Text("Financial Summary").SemiBold().FontSize(14);
-                    col.Item().PaddingTop(10).Grid(grid =>
+                    col.Item().PaddingTop(10).Table(table =>
                     {
-                        grid.Columns(2);
-                        grid.Item().Text($"Total Income: {currencySymbol}{report.TotalIncome:N2}");
-                        grid.Item().Text($"Total Expense: {currencySymbol}{report.TotalExpense:N2}");
-                        grid.Item().Text($"Savings Rate: {savingsRate:F1}%");
-                        grid.Item().Text($"Net Income: {currencySymbol}{report.TotalIncome - report.TotalExpense:N2}");
+                        table.ColumnsDefinition(cols => { cols.RelativeColumn(); cols.RelativeColumn(); });
+                        table.Cell().Text($"Total Income: {currencySymbol}{report.TotalIncome:N2}");
+                        table.Cell().Text($"Total Expense: {currencySymbol}{report.TotalExpense:N2}");
+                        table.Cell().Text($"Savings Rate: {savingsRate:F1}%");
+                        table.Cell().Text($"Net Income: {currencySymbol}{report.TotalIncome - report.TotalExpense:N2}");
                     });
 
                     col.Item().PaddingTop(20).Text("Net Worth").SemiBold().FontSize(14);
-                    col.Item().PaddingTop(10).Grid(grid =>
+                    col.Item().PaddingTop(10).Table(table =>
                     {
-                        grid.Columns(2);
-                        grid.Item().Text($"Start of Year: {currencySymbol}{report.StartNetWorth:N2}");
-                        grid.Item().Text($"End of Year: {currencySymbol}{report.EndNetWorth:N2}");
-                        grid.Item().Text($"Change: {currencySymbol}{netWorthChange:N2} ({(report.StartNetWorth > 0 ? netWorthChange / report.StartNetWorth * 100 : 0):F1}%)");
+                        table.ColumnsDefinition(cols => { cols.RelativeColumn(); cols.RelativeColumn(); });
+                        table.Cell().Text($"Start of Year: {currencySymbol}{report.StartNetWorth:N2}");
+                        table.Cell().Text($"End of Year: {currencySymbol}{report.EndNetWorth:N2}");
+                        table.Cell().Text($"Change: {currencySymbol}{netWorthChange:N2} ({(report.StartNetWorth > 0 ? netWorthChange / report.StartNetWorth * 100 : 0):F1}%)");
                     });
 
                     if (report.MonthlyBreakdown.Any())
