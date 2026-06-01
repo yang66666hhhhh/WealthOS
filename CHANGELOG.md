@@ -1,5 +1,73 @@
 # CHANGELOG
 
+## [1.1.0] - 2026-06-01
+
+### 修复
+
+#### 数据完整性
+- `Account.Type` 枚举从 `AssetType` 改为正确的 `AccountType`
+- `UpdateTransactionAsync` 编辑转账时正确更新目标账户余额
+- `TransactionDto` 新增 `AccountId`/`CategoryId`，编辑对话框改用 ID 匹配替代名称匹配
+- `ExportCsvAsync` 日期范围改为 `DateTimeKind.Utc`，与数据库 UTC 存储一致
+
+#### 资源加载
+- 修复 `CommonStyles.xaml` 作为 MergedDictionary 导致 `StaticResource` 无法解析父字典资源的 WPF 已知问题
+- `CommonStyles.xaml` 从 `Theme.xaml` 移至 `App.xaml` 独立加载
+- `ApplyTheme()` 搜索逻辑改用 `EndsWith` 精确匹配
+
+#### 空状态显示
+- 修复 10 个视图空状态显示逻辑完全反转的 bug（有数据时显示空状态，无数据时隐藏）
+
+#### 错误处理
+- 6 个 ViewModel 的写操作（Add/Edit/Delete）添加 `try/catch`
+- `ExportCsvAsync` 添加错误处理
+- `BackupAsync` 添加 `File.Exists` 检查
+- `RestoreAsync` 添加 SQLite `integrity_check` 验证，防止损坏备份覆盖有效数据库
+
+### 改进
+
+#### 架构
+- Application 层移除 Dapper/Sqlite 包引用（移至 Infrastructure）
+- 删除未使用的 `Frequency` 枚举、`TransactionTypeToColorConverter`、`TransactionTypeToSignConverter`
+- `ViewModelBase` 新增 `RefreshCommand` 抽象属性，消除 `MainWindowViewModel` 的 if/else 刷新链
+- `ViewModelBase` 新增 `GetResourceColor`/`GetResourceString` 共享方法
+- `NavigationService` 参数类型从 `ObservableObject` 改为 `ViewModelBase`
+- `SeedDataService` 自包含类别种子调用
+- `SafeInitializeAsync` 异常后调用 `SetError` 显示给用户
+
+#### UI/UX
+- 交易列表从 `ItemsControl` 改为 `ListView` + 虚拟化回收模式
+- 22 个对话框添加 Enter 确认 / Escape 取消键盘快捷键
+- 12 个视图添加 `ErrorBanner` 错误提示组件
+- GoalsView/LiabilitiesView 添加 Loading 进度条
+- 统一 ScrollViewer 内边距（28,24）和页面标题样式（`PageTitleStyle`）
+- ReportsView 年份按钮改为动态绑定 `AvailableYears`
+- ReportsView/AnalyticsView 添加空状态
+- SettingsView 添加 `IsBusy` Loading 指示器
+- Dashboard 所有区块添加 "查看全部" 导航链接
+- Dashboard "添加交易" 快捷操作自动打开新增对话框
+- 16 个图标按钮添加 ToolTip
+- 侧边栏修复重复图标（Budgets 💰→💳，Analytics 📊→📉）
+- `StartupErrorWindow` 改为亮色主题颜色
+
+#### 国际化
+- 新增 30+ 本地化资源键（验证消息、空状态、工具提示、文件对话框等）
+- 验证消息从硬编码中文改为资源键引用
+- BudgetsView "年"/"月" 改为资源绑定
+- FixedAssetsView "个月" 改为 MultiBinding
+- `CurrentDate` 日期格式改为通用 `yyyy-MM-dd dddd`
+- `App.xaml.cs` 启动错误消息改为资源键引用
+
+#### 主题
+- `DangerButton` 悬停颜色从硬编码 `#DC2626` 改为 `ErrorDarkBrush` 主题资源
+- `Theme.xaml`/`Theme.Dark.xaml` 新增 `ErrorDarkColor` + `ErrorDarkBrush`
+
+#### 性能
+- `AnalyticsViewModel` 从 6 次 DB 查询优化为 1 次批量查询 + 内存分组
+- 数据库新增 3 个索引：`CategoryId`、`ToAccountId`、`InvestmentHoldings(AccountId)`
+
+---
+
 ## [1.0.0] - 2026-05-31
 
 ### 新增
