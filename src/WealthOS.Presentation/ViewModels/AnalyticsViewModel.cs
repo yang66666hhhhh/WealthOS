@@ -32,24 +32,7 @@ public partial class AnalyticsViewModel : ViewModelBase
         _ = LoadDataAsync();
     }
 
-    private static string GetResourceString(string key)
-    {
-        var app = System.Windows.Application.Current;
-        if (app?.TryFindResource(key) is string value)
-            return value;
-        return key;
-    }
-
-    private static SKColor GetResourceColor(string key)
-    {
-        var app = System.Windows.Application.Current;
-        if (app?.TryFindResource(key) is SolidColorBrush brush)
-        {
-            var color = brush.Color;
-            return new SKColor(color.R, color.G, color.B, color.A);
-        }
-        return SKColors.Gray;
-    }
+    public override IRelayCommand? RefreshCommand => LoadDataCommand;
 
     [RelayCommand]
     private async Task LoadDataAsync()
@@ -65,14 +48,18 @@ public partial class AnalyticsViewModel : ViewModelBase
             var expenseData = new decimal[months];
             var labels = new string[months];
 
+            var overallStart = new DateTime(now.Year, now.Month, 1).AddMonths(-(months - 1));
+            var overallEnd = new DateTime(now.Year, now.Month, 1).AddMonths(1).AddDays(-1);
+            var allTransactions = (await _transactionService.GetTransactionsAsync(overallStart, overallEnd)).ToList();
+
             for (int i = 0; i < months; i++)
             {
                 var monthStart = new DateTime(now.Year, now.Month, 1).AddMonths(-(months - 1 - i));
-                var monthEnd = monthStart.AddMonths(1).AddDays(-1);
-                var transactions = await _transactionService.GetTransactionsAsync(monthStart, monthEnd);
+                var monthEnd = monthStart.AddMonths(1);
+                var monthTransactions = allTransactions.Where(t => t.OccurredAt >= monthStart && t.OccurredAt < monthEnd);
 
-                incomeData[i] = transactions.Where(t => t.Type == TransactionType.Income).Sum(t => t.Amount);
-                expenseData[i] = transactions.Where(t => t.Type == TransactionType.Expense).Sum(t => t.Amount);
+                incomeData[i] = monthTransactions.Where(t => t.Type == TransactionType.Income).Sum(t => t.Amount);
+                expenseData[i] = monthTransactions.Where(t => t.Type == TransactionType.Expense).Sum(t => t.Amount);
                 labels[i] = monthStart.ToString("MM/yyyy");
             }
 

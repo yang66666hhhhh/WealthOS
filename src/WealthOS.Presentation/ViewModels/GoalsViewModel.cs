@@ -66,6 +66,8 @@ public partial class GoalsViewModel : ViewModelBase
         _ = LoadDataAsync();
     }
 
+    public override IRelayCommand? RefreshCommand => LoadDataCommand;
+
     [RelayCommand]
     private async Task LoadDataAsync()
     {
@@ -102,19 +104,27 @@ public partial class GoalsViewModel : ViewModelBase
     private async Task ConfirmAddAsync()
     {
         if (string.IsNullOrWhiteSpace(NewName) || NewTargetAmount <= 0) return;
+        if (NewCurrentAmount < 0) { SetError(GetResourceString("Validation.NegativeCurrentAmount")); return; }
 
-        var goal = new Goal
+        try
         {
-            Name = NewName,
-            TargetAmount = NewTargetAmount,
-            CurrentAmount = NewCurrentAmount,
-            TargetDate = NewTargetDate,
-            Note = NewNote
-        };
+            var goal = new Goal
+            {
+                Name = NewName,
+                TargetAmount = NewTargetAmount,
+                CurrentAmount = NewCurrentAmount,
+                TargetDate = NewTargetDate,
+                Note = NewNote
+            };
 
-        await _service.AddGoalAsync(goal);
-        IsAddDialogOpen = false;
-        await LoadDataAsync();
+            await _service.AddGoalAsync(goal);
+            IsAddDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
@@ -140,18 +150,25 @@ public partial class GoalsViewModel : ViewModelBase
     {
         if (string.IsNullOrWhiteSpace(NewName) || NewTargetAmount <= 0) return;
 
-        var item = await _service.GetGoalAsync(EditingId);
-        if (item == null) return;
+        try
+        {
+            var item = await _service.GetGoalAsync(EditingId);
+            if (item == null) return;
 
-        item.Name = NewName;
-        item.TargetAmount = NewTargetAmount;
-        item.CurrentAmount = NewCurrentAmount;
-        item.TargetDate = NewTargetDate;
-        item.Note = NewNote;
+            item.Name = NewName;
+            item.TargetAmount = NewTargetAmount;
+            item.CurrentAmount = NewCurrentAmount;
+            item.TargetDate = NewTargetDate;
+            item.Note = NewNote;
 
-        await _service.UpdateGoalAsync(item);
-        IsEditDialogOpen = false;
-        await LoadDataAsync();
+            await _service.UpdateGoalAsync(item);
+            IsEditDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
@@ -167,9 +184,16 @@ public partial class GoalsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ExecuteDeleteAsync()
     {
-        await _service.DeleteGoalAsync(PendingDeleteId);
-        IsConfirmDeleteOpen = false;
-        await LoadDataAsync();
+        try
+        {
+            await _service.DeleteGoalAsync(PendingDeleteId);
+            IsConfirmDeleteOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
@@ -189,16 +213,23 @@ public partial class GoalsViewModel : ViewModelBase
     {
         if (ProgressAddAmount <= 0) return;
 
-        var goal = await _service.GetGoalAsync(ProgressGoalId);
-        if (goal != null)
+        try
         {
-            goal.CurrentAmount += ProgressAddAmount;
-            if (goal.CurrentAmount >= goal.TargetAmount)
-                goal.Status = GoalStatus.Completed;
-            await _service.UpdateGoalAsync(goal);
-        }
+            var goal = await _service.GetGoalAsync(ProgressGoalId);
+            if (goal != null)
+            {
+                goal.CurrentAmount += ProgressAddAmount;
+                if (goal.CurrentAmount >= goal.TargetAmount)
+                    goal.Status = GoalStatus.Completed;
+                await _service.UpdateGoalAsync(goal);
+            }
 
-        IsProgressDialogOpen = false;
-        await LoadDataAsync();
+            IsProgressDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 }

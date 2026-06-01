@@ -13,6 +13,10 @@ public partial class ReportsViewModel : ViewModelBase
     [ObservableProperty]
     private AnnualReportDto? _report;
 
+    public bool HasReport => Report != null;
+
+    partial void OnReportChanged(AnnualReportDto? value) => OnPropertyChanged(nameof(HasReport));
+
     [ObservableProperty]
     private int _selectedYear = DateTime.UtcNow.Year;
 
@@ -26,6 +30,8 @@ public partial class ReportsViewModel : ViewModelBase
         _reportService = reportService;
         _ = LoadReportAsync();
     }
+
+    public override IRelayCommand? RefreshCommand => LoadReportCommand;
 
     [RelayCommand]
     private async Task LoadReportAsync()
@@ -47,18 +53,25 @@ public partial class ReportsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ExportCsvAsync()
     {
-        var dialog = new SaveFileDialog
+        try
         {
-            FileName = $"WealthOS_Transactions_{SelectedYear}",
-            DefaultExt = ".csv",
-            Filter = "CSV 文件|*.csv"
-        };
+            var dialog = new SaveFileDialog
+            {
+                FileName = $"WealthOS_Transactions_{SelectedYear}",
+                DefaultExt = ".csv",
+                Filter = GetResourceString("FileDialog.CsvFilter")
+            };
 
-        if (dialog.ShowDialog() == true)
+            if (dialog.ShowDialog() == true)
+            {
+                var start = new DateTime(SelectedYear, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                var end = new DateTime(SelectedYear, 12, 31, 23, 59, 59, DateTimeKind.Utc);
+                await _reportService.ExportTransactionsToCsvAsync(dialog.FileName, start, end);
+            }
+        }
+        catch (Exception ex)
         {
-            var start = new DateTime(SelectedYear, 1, 1);
-            var end = new DateTime(SelectedYear, 12, 31, 23, 59, 59);
-            await _reportService.ExportTransactionsToCsvAsync(dialog.FileName, start, end);
+            SetError(ex);
         }
     }
 

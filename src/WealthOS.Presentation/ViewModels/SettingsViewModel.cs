@@ -2,6 +2,7 @@
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Data.Sqlite;
 using Microsoft.Win32;
 using WealthOS.Application.Interfaces;
 using WealthOS.Presentation.Services;
@@ -37,13 +38,7 @@ public partial class SettingsViewModel : ViewModelBase
         LoadInfo();
     }
 
-    private static string GetResourceString(string key)
-    {
-        var app = System.Windows.Application.Current;
-        if (app?.TryFindResource(key) is string value)
-            return value;
-        return key;
-    }
+    public override IRelayCommand? RefreshCommand => null;
 
     private void LoadInfo()
     {
@@ -76,12 +71,17 @@ public partial class SettingsViewModel : ViewModelBase
             {
                 FileName = $"WealthOS_Backup_{DateTime.Now:yyyyMMdd_HHmmss}",
                 DefaultExt = ".db",
-                Filter = "数据库文件|*.db"
+                Filter = GetResourceString("FileDialog.DbFilter")
             };
 
             if (dialog.ShowDialog() == true)
             {
-                File.Copy(DbPath, dialog.FileName, true);
+                if (!File.Exists(DbPath))
+                {
+                    StatusMessage = GetResourceString("Settings.DatabaseNotFound");
+                    return;
+                }
+                await Task.Run(() => File.Copy(DbPath, dialog.FileName, true));
                 LastBackupTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 StatusMessage = GetResourceString("Settings.BackupSuccess");
             }
@@ -101,7 +101,7 @@ public partial class SettingsViewModel : ViewModelBase
     {
         var dialog = new OpenFileDialog
         {
-            Filter = "数据库文件|*.db"
+            Filter = GetResourceString("FileDialog.DbFilter")
         };
 
         if (dialog.ShowDialog() == true)
@@ -110,12 +110,22 @@ public partial class SettingsViewModel : ViewModelBase
             ClearError();
             try
             {
-                File.Copy(dialog.FileName, DbPath, true);
-                StatusMessage = GetResourceString("Settings.RestoreSuccess");
+                await Task.Run(() =>
+                {
+                    using var conn = new SqliteConnection($"Data Source={dialog.FileName}");
+                    conn.Open();
+                    using var cmd = conn.CreateCommand();
+                    cmd.CommandText = "PRAGMA integrity_check;";
+                    var result = cmd.ExecuteScalar()?.ToString();
+                    if (result != "ok")
+                        throw new InvalidOperationException("Database integrity check failed.");
+                });
+                await Task.Run(() => File.Copy(dialog.FileName, DbPath, true));
+                StatusMessage = GetResourceString("Settings.RestoreSuccess") + " " + GetResourceString("Settings.RestartRequired");
             }
             catch (Exception ex)
             {
-                StatusMessage = $"{GetResourceString("Settings.RestoreFailed")}：{ex.Message}";
+                StatusMessage = $"{GetResourceString("Settings.InvalidBackupFile")}：{ex.Message}";
             }
             finally
             {

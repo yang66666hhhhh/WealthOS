@@ -79,6 +79,8 @@ public partial class TransactionsViewModel : ViewModelBase
         _ = LoadDataAsync();
     }
 
+    public override IRelayCommand? RefreshCommand => LoadDataCommand;
+
     [RelayCommand]
     private async Task LoadDataAsync()
     {
@@ -190,8 +192,8 @@ public partial class TransactionsViewModel : ViewModelBase
         NewAmount = dto.Amount;
         NewNote = dto.Note;
         NewDate = dto.OccurredAt;
-        SelectedAccount = Accounts.FirstOrDefault(a => a.Name == dto.AccountName);
-        SelectedCategory = Categories.FirstOrDefault(c => c.Name == dto.CategoryName && c.Type == dto.Type);
+        SelectedAccount = Accounts.FirstOrDefault(a => a.Id == dto.AccountId);
+        SelectedCategory = Categories.FirstOrDefault(c => c.Id == dto.CategoryId);
         IsEditDialogOpen = true;
     }
 

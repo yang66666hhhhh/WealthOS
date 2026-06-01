@@ -65,6 +65,8 @@ public partial class AssetsViewModel : ViewModelBase
         _ = LoadDataAsync();
     }
 
+    public override IRelayCommand? RefreshCommand => LoadDataCommand;
+
     [RelayCommand]
     private async Task LoadDataAsync()
     {
@@ -104,20 +106,28 @@ public partial class AssetsViewModel : ViewModelBase
     private async Task ConfirmAddAsync()
     {
         if (string.IsNullOrWhiteSpace(NewName)) return;
+        if (NewCurrentValue < 0 || NewInitialValue < 0) { SetError(GetResourceString("Validation.NegativeValue")); return; }
 
-        var asset = new Asset
+        try
         {
-            Name = NewName,
-            Type = NewType,
-            CurrentValue = NewCurrentValue,
-            InitialValue = NewInitialValue,
-            Institution = NewInstitution,
-            Note = NewNote
-        };
+            var asset = new Asset
+            {
+                Name = NewName,
+                Type = NewType,
+                CurrentValue = NewCurrentValue,
+                InitialValue = NewInitialValue,
+                Institution = NewInstitution,
+                Note = NewNote
+            };
 
-        await _service.AddAssetAsync(asset);
-        IsAddDialogOpen = false;
-        await LoadDataAsync();
+            await _service.AddAssetAsync(asset);
+            IsAddDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
@@ -144,19 +154,26 @@ public partial class AssetsViewModel : ViewModelBase
     {
         if (string.IsNullOrWhiteSpace(NewName)) return;
 
-        var asset = await _service.GetAssetAsync(EditingId);
-        if (asset == null) return;
+        try
+        {
+            var asset = await _service.GetAssetAsync(EditingId);
+            if (asset == null) return;
 
-        asset.Name = NewName;
-        asset.Type = NewType;
-        asset.CurrentValue = NewCurrentValue;
-        asset.InitialValue = NewInitialValue;
-        asset.Institution = NewInstitution;
-        asset.Note = NewNote;
+            asset.Name = NewName;
+            asset.Type = NewType;
+            asset.CurrentValue = NewCurrentValue;
+            asset.InitialValue = NewInitialValue;
+            asset.Institution = NewInstitution;
+            asset.Note = NewNote;
 
-        await _service.UpdateAssetAsync(asset);
-        IsEditDialogOpen = false;
-        await LoadDataAsync();
+            await _service.UpdateAssetAsync(asset);
+            IsEditDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
@@ -172,9 +189,16 @@ public partial class AssetsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ExecuteDeleteAsync()
     {
-        await _service.DeleteAssetAsync(PendingDeleteId);
-        IsConfirmDeleteOpen = false;
-        await LoadDataAsync();
+        try
+        {
+            await _service.DeleteAssetAsync(PendingDeleteId);
+            IsConfirmDeleteOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]

@@ -122,7 +122,7 @@ public partial class MainWindowViewModel : ObservableObject
 
         var target = page switch
         {
-            "Dashboard" => (ObservableObject)_dashboardVm,
+            "Dashboard" => (ViewModelBase)_dashboardVm,
             "Assets" => _assetsVm,
             "Liabilities" => _liabilitiesVm,
             "Transactions" => _transactionsVm,
@@ -135,11 +135,11 @@ public partial class MainWindowViewModel : ObservableObject
             "Reports" => _reportsVm,
             "Settings" => _settingsVm,
             "Budgets" => _budgetsVm,
-            _ => (ObservableObject)_dashboardVm
+            _ => (ViewModelBase)_dashboardVm
         };
 
         Navigation.NavigateTo(target);
-        RefreshPageData(target);
+        (target as ViewModelBase)?.RefreshCommand?.Execute(null);
     }
 
     [RelayCommand]
@@ -147,21 +147,5 @@ public partial class MainWindowViewModel : ObservableObject
     {
         Localization.ToggleLanguage();
         OnPropertyChanged(nameof(Localization));
-    }
-
-    private static void RefreshPageData(ObservableObject vm)
-    {
-        if (vm is DashboardViewModel dash) _ = dash.LoadDataCommand.ExecuteAsync(null);
-        else if (vm is AssetsViewModel assets) _ = assets.LoadDataCommand.ExecuteAsync(null);
-        else if (vm is LiabilitiesViewModel liab) _ = liab.LoadDataCommand.ExecuteAsync(null);
-        else if (vm is TransactionsViewModel trans) _ = trans.LoadDataCommand.ExecuteAsync(null);
-        else if (vm is GoalsViewModel goals) _ = goals.LoadDataCommand.ExecuteAsync(null);
-        else if (vm is AccountsViewModel accounts) _ = accounts.LoadDataCommand.ExecuteAsync(null);
-        else if (vm is InvestmentsViewModel investments) _ = investments.LoadDataCommand.ExecuteAsync(null);
-        else if (vm is FixedAssetsViewModel fixedAssets) _ = fixedAssets.LoadDataCommand.ExecuteAsync(null);
-        else if (vm is AnalyticsViewModel analytics) _ = analytics.LoadDataCommand.ExecuteAsync(null);
-        else if (vm is TimelineViewModel timeline) _ = timeline.LoadDataCommand.ExecuteAsync(null);
-        else if (vm is ReportsViewModel reports) _ = reports.LoadReportCommand.ExecuteAsync(null);
-        else if (vm is BudgetsViewModel budgets) _ = budgets.LoadDataCommand.ExecuteAsync(null);
     }
 }

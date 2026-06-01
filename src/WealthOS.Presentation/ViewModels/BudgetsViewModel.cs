@@ -71,6 +71,8 @@ public partial class BudgetsViewModel : ViewModelBase
         _ = LoadDataAsync();
     }
 
+    public override IRelayCommand? RefreshCommand => LoadDataCommand;
+
     [RelayCommand]
     private async Task LoadDataAsync()
     {
@@ -112,19 +114,26 @@ public partial class BudgetsViewModel : ViewModelBase
     {
         if (string.IsNullOrWhiteSpace(NewName) || NewAmount <= 0) return;
 
-        var budget = new Budget
+        try
         {
-            Name = NewName,
-            Amount = NewAmount,
-            Spent = NewSpent,
-            Month = SelectedMonth,
-            Year = SelectedYear,
-            Note = NewNote
-        };
+            var budget = new Budget
+            {
+                Name = NewName,
+                Amount = NewAmount,
+                Spent = NewSpent,
+                Month = SelectedMonth,
+                Year = SelectedYear,
+                Note = NewNote
+            };
 
-        await _service.AddBudgetAsync(budget);
-        IsAddDialogOpen = false;
-        await LoadDataAsync();
+            await _service.AddBudgetAsync(budget);
+            IsAddDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
@@ -149,17 +158,24 @@ public partial class BudgetsViewModel : ViewModelBase
     {
         if (string.IsNullOrWhiteSpace(NewName)) return;
 
-        var item = await _service.GetBudgetAsync(EditingId);
-        if (item == null) return;
+        try
+        {
+            var item = await _service.GetBudgetAsync(EditingId);
+            if (item == null) return;
 
-        item.Name = NewName;
-        item.Amount = NewAmount;
-        item.Spent = NewSpent;
-        item.Note = NewNote;
+            item.Name = NewName;
+            item.Amount = NewAmount;
+            item.Spent = NewSpent;
+            item.Note = NewNote;
 
-        await _service.UpdateBudgetAsync(item);
-        IsEditDialogOpen = false;
-        await LoadDataAsync();
+            await _service.UpdateBudgetAsync(item);
+            IsEditDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
@@ -175,9 +191,16 @@ public partial class BudgetsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ExecuteDeleteAsync()
     {
-        await _service.DeleteBudgetAsync(PendingDeleteId);
-        IsConfirmDeleteOpen = false;
-        await LoadDataAsync();
+        try
+        {
+            await _service.DeleteBudgetAsync(PendingDeleteId);
+            IsConfirmDeleteOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]

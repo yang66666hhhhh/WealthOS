@@ -74,6 +74,8 @@ public partial class InvestmentsViewModel : ViewModelBase
         _ = LoadDataAsync();
     }
 
+    public override IRelayCommand? RefreshCommand => LoadDataCommand;
+
     [RelayCommand]
     private async Task LoadDataAsync()
     {
@@ -116,21 +118,29 @@ public partial class InvestmentsViewModel : ViewModelBase
     private async Task ConfirmAddAsync()
     {
         if (string.IsNullOrWhiteSpace(NewSymbol) || NewQuantity <= 0) return;
+        if (NewAverageCost <= 0 || NewCurrentPrice <= 0) { SetError(GetResourceString("Validation.ZeroOrNegativePrice")); return; }
 
-        var holding = new InvestmentHolding
+        try
         {
-            Symbol = NewSymbol.ToUpper(),
-            Name = NewName,
-            AssetType = NewAssetType,
-            Quantity = NewQuantity,
-            AverageCost = NewAverageCost,
-            CurrentPrice = NewCurrentPrice,
-            Note = NewNote
-        };
+            var holding = new InvestmentHolding
+            {
+                Symbol = NewSymbol.ToUpper(),
+                Name = NewName,
+                AssetType = NewAssetType,
+                Quantity = NewQuantity,
+                AverageCost = NewAverageCost,
+                CurrentPrice = NewCurrentPrice,
+                Note = NewNote
+            };
 
-        await _service.AddHoldingAsync(holding);
-        IsAddDialogOpen = false;
-        await LoadDataAsync();
+            await _service.AddHoldingAsync(holding);
+            IsAddDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
@@ -158,20 +168,27 @@ public partial class InvestmentsViewModel : ViewModelBase
     {
         if (string.IsNullOrWhiteSpace(NewSymbol) || NewQuantity <= 0) return;
 
-        var item = await _service.GetHoldingAsync(EditingId);
-        if (item == null) return;
+        try
+        {
+            var item = await _service.GetHoldingAsync(EditingId);
+            if (item == null) return;
 
-        item.Symbol = NewSymbol.ToUpper();
-        item.Name = NewName;
-        item.AssetType = NewAssetType;
-        item.Quantity = NewQuantity;
-        item.AverageCost = NewAverageCost;
-        item.CurrentPrice = NewCurrentPrice;
-        item.Note = NewNote;
+            item.Symbol = NewSymbol.ToUpper();
+            item.Name = NewName;
+            item.AssetType = NewAssetType;
+            item.Quantity = NewQuantity;
+            item.AverageCost = NewAverageCost;
+            item.CurrentPrice = NewCurrentPrice;
+            item.Note = NewNote;
 
-        await _service.UpdateHoldingAsync(item);
-        IsEditDialogOpen = false;
-        await LoadDataAsync();
+            await _service.UpdateHoldingAsync(item);
+            IsEditDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
@@ -187,8 +204,15 @@ public partial class InvestmentsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ExecuteDeleteAsync()
     {
-        await _service.DeleteHoldingAsync(PendingDeleteId);
-        IsConfirmDeleteOpen = false;
-        await LoadDataAsync();
+        try
+        {
+            await _service.DeleteHoldingAsync(PendingDeleteId);
+            IsConfirmDeleteOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 }

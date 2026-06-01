@@ -18,6 +18,8 @@ public partial class DashboardViewModel : ViewModelBase
     private readonly NavigationService _navigation;
     private readonly TransactionsViewModel _transactionsVm;
     private readonly ReportsViewModel _reportsVm;
+    private readonly AssetsViewModel _assetsVm;
+    private readonly AnalyticsViewModel _analyticsVm;
 
     [ObservableProperty]
     private DashboardDto _dashboard = new();
@@ -28,7 +30,7 @@ public partial class DashboardViewModel : ViewModelBase
     [ObservableProperty]
     private int _selectedTimeRange;
 
-    public string CurrentDate => DateTime.Now.ToString("yyyy年M月d日 dddd");
+    public string CurrentDate => DateTime.Now.ToString("yyyy-MM-dd dddd");
 
     public ISeries[] AssetSeries { get; set; } = [];
     public ISeries[] NetWorthSeries { get; set; } = [];
@@ -39,25 +41,20 @@ public partial class DashboardViewModel : ViewModelBase
         DashboardService service,
         NavigationService navigation,
         TransactionsViewModel transactionsVm,
-        ReportsViewModel reportsVm)
+        ReportsViewModel reportsVm,
+        AssetsViewModel assetsVm,
+        AnalyticsViewModel analyticsVm)
     {
         _service = service;
         _navigation = navigation;
         _transactionsVm = transactionsVm;
         _reportsVm = reportsVm;
+        _assetsVm = assetsVm;
+        _analyticsVm = analyticsVm;
         _ = LoadDataAsync();
     }
 
-    private static SKColor GetResourceColor(string key)
-    {
-        var app = System.Windows.Application.Current;
-        if (app?.TryFindResource(key) is SolidColorBrush brush)
-        {
-            var color = brush.Color;
-            return new SKColor(color.R, color.G, color.B, color.A);
-        }
-        return SKColors.Gray;
-    }
+    public override IRelayCommand? RefreshCommand => LoadDataCommand;
 
     [RelayCommand]
     private async Task LoadDataAsync()
@@ -108,9 +105,28 @@ public partial class DashboardViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    private void AddTransaction()
+    {
+        _navigation.NavigateTo(_transactionsVm);
+        _transactionsVm.ShowAddDialogCommand.Execute(null);
+    }
+
+    [RelayCommand]
     private void NavigateToReports()
     {
         _navigation.NavigateTo(_reportsVm);
+    }
+
+    [RelayCommand]
+    private void NavigateToAssets()
+    {
+        _navigation.NavigateTo(_assetsVm);
+    }
+
+    [RelayCommand]
+    private void NavigateToAnalytics()
+    {
+        _navigation.NavigateTo(_analyticsVm);
     }
 
     private void UpdateCharts()

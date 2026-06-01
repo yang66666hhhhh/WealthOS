@@ -65,6 +65,8 @@ public partial class LiabilitiesViewModel : ViewModelBase
         _ = LoadDataAsync();
     }
 
+    public override IRelayCommand? RefreshCommand => LoadDataCommand;
+
     [RelayCommand]
     private async Task LoadDataAsync()
     {
@@ -104,21 +106,30 @@ public partial class LiabilitiesViewModel : ViewModelBase
     private async Task ConfirmAddAsync()
     {
         if (string.IsNullOrWhiteSpace(NewName)) return;
+        if (NewBalance < 0) { SetError(GetResourceString("Validation.NegativeLiability")); return; }
+        if (NewInterestRate < 0 || NewMonthlyPayment < 0) { SetError(GetResourceString("Validation.NegativeRateOrPayment")); return; }
 
-        var liability = new Liability
+        try
         {
-            Name = NewName,
-            Type = NewType,
-            Balance = NewBalance,
-            InterestRate = NewInterestRate,
-            MonthlyPayment = NewMonthlyPayment,
-            StartDate = NewStartDate,
-            Institution = NewInstitution
-        };
+            var liability = new Liability
+            {
+                Name = NewName,
+                Type = NewType,
+                Balance = NewBalance,
+                InterestRate = NewInterestRate,
+                MonthlyPayment = NewMonthlyPayment,
+                StartDate = NewStartDate,
+                Institution = NewInstitution
+            };
 
-        await _service.AddLiabilityAsync(liability);
-        IsAddDialogOpen = false;
-        await LoadDataAsync();
+            await _service.AddLiabilityAsync(liability);
+            IsAddDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
@@ -146,20 +157,27 @@ public partial class LiabilitiesViewModel : ViewModelBase
     {
         if (string.IsNullOrWhiteSpace(NewName)) return;
 
-        var item = await _service.GetLiabilityAsync(EditingId);
-        if (item == null) return;
+        try
+        {
+            var item = await _service.GetLiabilityAsync(EditingId);
+            if (item == null) return;
 
-        item.Name = NewName;
-        item.Type = NewType;
-        item.Balance = NewBalance;
-        item.InterestRate = NewInterestRate;
-        item.MonthlyPayment = NewMonthlyPayment;
-        item.StartDate = NewStartDate;
-        item.Institution = NewInstitution;
+            item.Name = NewName;
+            item.Type = NewType;
+            item.Balance = NewBalance;
+            item.InterestRate = NewInterestRate;
+            item.MonthlyPayment = NewMonthlyPayment;
+            item.StartDate = NewStartDate;
+            item.Institution = NewInstitution;
 
-        await _service.UpdateLiabilityAsync(item);
-        IsEditDialogOpen = false;
-        await LoadDataAsync();
+            await _service.UpdateLiabilityAsync(item);
+            IsEditDialogOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
@@ -175,8 +193,15 @@ public partial class LiabilitiesViewModel : ViewModelBase
     [RelayCommand]
     private async Task ExecuteDeleteAsync()
     {
-        await _service.DeleteLiabilityAsync(PendingDeleteId);
-        IsConfirmDeleteOpen = false;
-        await LoadDataAsync();
+        try
+        {
+            await _service.DeleteLiabilityAsync(PendingDeleteId);
+            IsConfirmDeleteOpen = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 }
