@@ -28,11 +28,33 @@ public class DashboardService
 
     public async Task<DashboardDto> GetDashboardAsync(int historyDays = 90)
     {
-        var totalAssets = await _assetRepo.GetTotalValueAsync();
-        var totalLiabilities = await _liabilityRepo.GetTotalBalanceAsync();
-        var netWorth = totalAssets - totalLiabilities;
+        var now = DateTime.UtcNow;
+        var monthStart = new DateTime(now.Year, now.Month, 1);
+        var prevMonthStart = monthStart.AddMonths(-1);
+        var historyStart = now.AddDays(-historyDays);
 
-        var accounts = await _accountRepo.GetAllAsync();
+        var totalAssetsTask = _assetRepo.GetTotalValueAsync();
+        var totalLiabilitiesTask = _liabilityRepo.GetTotalBalanceAsync();
+        var accountsTask = _accountRepo.GetAllAsync();
+        var monthIncomeTask = _transactionRepo.GetTotalByTypeAsync(TransactionType.Income, monthStart, now);
+        var monthExpenseTask = _transactionRepo.GetTotalByTypeAsync(TransactionType.Expense, monthStart, now);
+        var prevSnapshotTask = _netWorthRepo.GetByDateRangeAsync(prevMonthStart, monthStart);
+        var assetsTask = _assetRepo.GetAllAsync();
+        var snapshotsTask = _netWorthRepo.GetByDateRangeAsync(historyStart, now);
+        var recentTransactionsTask = _transactionRepo.GetByDateRangeAsync(now.AddDays(-30), now);
+
+        await Task.WhenAll(
+            totalAssetsTask, totalLiabilitiesTask, accountsTask,
+            monthIncomeTask, monthExpenseTask,
+            prevSnapshotTask, assetsTask, snapshotsTask, recentTransactionsTask);
+
+        var totalAssets = totalAssetsTask.Result;
+        var totalLiabilities = totalLiabilitiesTask.Result;
+        var netWorth = totalAssets - totalLiabilities;
+        var accounts = accountsTask.Result;
+        var monthIncome = monthIncomeTask.Result;
+        var monthExpense = monthExpenseTask.Result;
+
         var cashTotal = accounts
             .Where(a => a.Type is AccountType.Cash or AccountType.Bank)
             .Sum(a => a.Balance);
@@ -40,20 +62,15 @@ public class DashboardService
             .Where(a => a.Type is AccountType.Investment)
             .Sum(a => a.Balance);
 
-        var now = DateTime.UtcNow;
-        var monthStart = new DateTime(now.Year, now.Month, 1);
-        var monthIncome = await _transactionRepo.GetTotalByTypeAsync(TransactionType.Income, monthStart, now);
-        var monthExpense = await _transactionRepo.GetTotalByTypeAsync(TransactionType.Expense, monthStart, now);
         var savingsRate = monthIncome > 0 ? (monthIncome - monthExpense) / monthIncome * 100 : 0;
         var debtRatio = totalAssets > 0 ? totalLiabilities / totalAssets * 100 : 0;
 
-        var prevMonthStart = monthStart.AddMonths(-1);
-        var prevSnapshot = (await _netWorthRepo.GetByDateRangeAsync(prevMonthStart, monthStart))
+        var prevSnapshot = prevSnapshotTask.Result
             .OrderByDescending(s => s.SnapshotDate)
             .FirstOrDefault();
         var netWorthChange = prevSnapshot != null ? netWorth - prevSnapshot.NetWorth : 0;
 
-        var assets = (await _assetRepo.GetAllAsync()).Where(a => a.IsActive);
+        var assets = assetsTask.Result.Where(a => a.IsActive);
         var assetAllocations = assets
             .GroupBy(a => a.Type)
             .Select(g => new AssetAllocationDto
@@ -66,9 +83,7 @@ public class DashboardService
             .OrderByDescending(a => a.Value)
             .ToList();
 
-        var historyStart = now.AddDays(-historyDays);
-        var snapshots = await _netWorthRepo.GetByDateRangeAsync(historyStart, now);
-        var netWorthHistory = snapshots
+        var netWorthHistory = snapshotsTask.Result
             .OrderBy(s => s.SnapshotDate)
             .Select(s => new NetWorthPointDto { Date = s.SnapshotDate, Value = s.NetWorth })
             .ToList();
@@ -78,7 +93,8 @@ public class DashboardService
             netWorthHistory.Add(new NetWorthPointDto { Date = now, Value = netWorth });
         }
 
-        var recentTransactions = (await _transactionRepo.GetByDateRangeAsync(now.AddDays(-30), now))
+        var accountLookup = accounts.ToDictionary(a => a.Id);
+        var recentTransactions = recentTransactionsTask.Result
             .OrderByDescending(t => t.OccurredAt)
             .Take(10)
             .Select(t => new TransactionDto
@@ -88,7 +104,7 @@ public class DashboardService
                 Amount = t.Amount,
                 Note = t.Note,
                 OccurredAt = t.OccurredAt,
-                AccountName = accounts.FirstOrDefault(a => a.Id == t.AccountId)?.Name ?? ""
+                AccountName = accountLookup.TryGetValue(t.AccountId, out var acc) ? acc.Name : ""
             })
             .ToList();
 

@@ -197,7 +197,7 @@ public class TransactionService
             throw new System.IO.FileNotFoundException("CSV file not found.", filePath);
 
         var lines = await System.IO.File.ReadAllLinesAsync(filePath, new System.Text.UTF8Encoding(true));
-        var count = 0;
+        var transactions = new List<Transaction>();
 
         foreach (var line in lines.Skip(1))
         {
@@ -221,20 +221,45 @@ public class TransactionService
 
             var note = parts.Count > 3 ? parts[3].Trim() : null;
 
-            var transaction = new Transaction
+            transactions.Add(new Transaction
             {
                 Type = type.Value,
                 Amount = amount,
                 OccurredAt = date.ToUniversalTime(),
                 AccountId = accountId,
                 Note = note
-            };
-
-            await AddTransactionAsync(transaction);
-            count++;
+            });
         }
 
-        return count;
+        if (transactions.Count == 0) return 0;
+
+        using var transaction_scope = _dbContext.BeginTransaction();
+
+        try
+        {
+            var account = await _accountRepo.GetByIdAsync(accountId, transaction_scope)
+                ?? throw new InvalidOperationException($"Account {accountId} not found.");
+
+            foreach (var transaction in transactions)
+            {
+                await _transactionRepo.AddAsync(transaction, transaction_scope);
+                account.Balance += transaction.GetBalanceImpact();
+            }
+
+            account.UpdatedAt = DateTime.UtcNow;
+            await _accountRepo.UpdateAsync(account, transaction_scope);
+
+            transaction_scope.Commit();
+
+            await _netWorthService.SaveSnapshotIfNotExistsTodayAsync();
+
+            return transactions.Count;
+        }
+        catch
+        {
+            transaction_scope.Rollback();
+            throw;
+        }
     }
 
     private static List<string> ParseCsvLine(string line)

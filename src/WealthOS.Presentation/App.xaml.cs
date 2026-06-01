@@ -14,6 +14,7 @@ namespace WealthOS.Presentation;
 
 public partial class App : System.Windows.Application
 {
+    private Mutex? _mutex;
     private readonly IServiceProvider _services;
 
     public App()
@@ -101,6 +102,22 @@ public partial class App : System.Windows.Application
 
     protected override async void OnStartup(StartupEventArgs e)
     {
+        bool isNewInstance;
+        try
+        {
+            _mutex = new Mutex(true, "WealthOS_SingleInstance", out isNewInstance);
+            if (!isNewInstance)
+            {
+                MessageBox.Show(GetString("App.AlreadyRunning"), "WealthOS", MessageBoxButton.OK, MessageBoxImage.Information);
+                Current.Shutdown();
+                return;
+            }
+        }
+        catch (AbandonedMutexException)
+        {
+            // Previous instance crashed - we can proceed
+        }
+
         base.OnStartup(e);
 
         try

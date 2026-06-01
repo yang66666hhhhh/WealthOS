@@ -109,23 +109,30 @@ public partial class LocalizationService : ObservableObject
 
     public void ApplyLanguage()
     {
-        var app = System.Windows.Application.Current;
-        if (app == null) return;
-
-        var dict = new ResourceDictionary
+        try
         {
-            Source = new Uri(IsChinese
-                ? "pack://application:,,,/WealthOS.Presentation;component/Resources/Strings.zh.xaml"
-                : "pack://application:,,,/WealthOS.Presentation;component/Resources/Strings.en.xaml")
-        };
+            var app = System.Windows.Application.Current;
+            if (app == null) return;
 
-        var existing = app.Resources.MergedDictionaries
-            .FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("Strings."));
+            var dict = new ResourceDictionary
+            {
+                Source = new Uri(IsChinese
+                    ? "pack://application:,,,/WealthOS.Presentation;component/Resources/Strings.zh.xaml"
+                    : "pack://application:,,,/WealthOS.Presentation;component/Resources/Strings.en.xaml")
+            };
 
-        if (existing != null)
-            app.Resources.MergedDictionaries.Remove(existing);
+            var existing = app.Resources.MergedDictionaries
+                .FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("Strings."));
 
-        app.Resources.MergedDictionaries.Add(dict);
+            if (existing != null)
+                app.Resources.MergedDictionaries.Remove(existing);
+
+            app.Resources.MergedDictionaries.Add(dict);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Failed to apply language: {ex.Message}");
+        }
     }
 
     public void ApplyTheme()
