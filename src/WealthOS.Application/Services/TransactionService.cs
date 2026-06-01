@@ -42,6 +42,8 @@ public class TransactionService
                 Id = t.Id,
                 Type = t.Type,
                 Amount = t.Amount,
+                AccountId = t.AccountId,
+                CategoryId = t.CategoryId,
                 CategoryName = t.CategoryId.HasValue && categories.TryGetValue(t.CategoryId.Value, out var cat) ? cat.Name : null,
                 AccountName = accounts.TryGetValue(t.AccountId, out var acc) ? acc.Name : "",
                 Note = t.Note,
@@ -151,12 +153,23 @@ public class TransactionService
 
             if (originalTransaction.Type == TransactionType.Transfer && originalTransaction.ToAccountId.HasValue)
             {
-                var toAccount = await _accountRepo.GetByIdAsync(originalTransaction.ToAccountId.Value, transaction_scope);
-                if (toAccount != null)
+                var oldToAccount = await _accountRepo.GetByIdAsync(originalTransaction.ToAccountId.Value, transaction_scope);
+                if (oldToAccount != null)
                 {
-                    toAccount.Balance -= originalTransaction.Amount;
-                    toAccount.UpdatedAt = DateTime.UtcNow;
-                    await _accountRepo.UpdateAsync(toAccount, transaction_scope);
+                    oldToAccount.Balance -= originalTransaction.Amount;
+                    oldToAccount.UpdatedAt = DateTime.UtcNow;
+                    await _accountRepo.UpdateAsync(oldToAccount, transaction_scope);
+                }
+            }
+
+            if (updatedTransaction.Type == TransactionType.Transfer && updatedTransaction.ToAccountId.HasValue)
+            {
+                var newToAccount = await _accountRepo.GetByIdAsync(updatedTransaction.ToAccountId.Value, transaction_scope);
+                if (newToAccount != null)
+                {
+                    newToAccount.Balance += updatedTransaction.Amount;
+                    newToAccount.UpdatedAt = DateTime.UtcNow;
+                    await _accountRepo.UpdateAsync(newToAccount, transaction_scope);
                 }
             }
 
