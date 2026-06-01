@@ -211,6 +211,12 @@
     <sys:String x:Key="Nav.Reports">报告</sys:String>
     <sys:String x:Key="Reports.Title">年度报告</sys:String>
     <sys:String x:Key="Reports.ExportCsv">导出 CSV</sys:String>
+    <sys:String x:Key="Reports.ImportCsv">导入 CSV</sys:String>
+    <sys:String x:Key="Reports.ImportTitle">导入交易数据</sys:String>
+    <sys:String x:Key="Reports.ImportAccount">选择目标账户</sys:String>
+    <sys:String x:Key="Reports.ImportSuccess">成功导入 {0} 条交易记录</sys:String>
+    <sys:String x:Key="Reports.ExportPdf">导出 PDF</sys:String>
+    <sys:String x:Key="Reports.PdfExportSuccess">{0} 年度报告已导出</sys:String>
     <sys:String x:Key="Reports.TotalIncome">总收入</sys:String>
     <sys:String x:Key="Reports.TotalExpense">总支出</sys:String>
     <sys:String x:Key="Reports.SavingsRate">储蓄率</sys:String>
@@ -248,6 +254,8 @@
     <sys:String x:Key="Settings.SwitchedToEnglish">已切换到英文</sys:String>
     <sys:String x:Key="Settings.SwitchedToDark">已切换到深色模式</sys:String>
     <sys:String x:Key="Settings.SwitchedToLight">已切换到浅色模式</sys:String>
+    <sys:String x:Key="Settings.Currency">货币符号</sys:String>
+    <sys:String x:Key="Settings.CurrencyChanged">货币已切换为 {0}</sys:String>
 
     <!-- Budgets -->
     <sys:String x:Key="Nav.Budgets">预算</sys:String>

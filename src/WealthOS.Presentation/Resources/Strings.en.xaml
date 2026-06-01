@@ -211,6 +211,12 @@
     <sys:String x:Key="Nav.Reports">Reports</sys:String>
     <sys:String x:Key="Reports.Title">Annual Report</sys:String>
     <sys:String x:Key="Reports.ExportCsv">Export CSV</sys:String>
+    <sys:String x:Key="Reports.ImportCsv">Import CSV</sys:String>
+    <sys:String x:Key="Reports.ImportTitle">Import Transactions</sys:String>
+    <sys:String x:Key="Reports.ImportAccount">Select Target Account</sys:String>
+    <sys:String x:Key="Reports.ImportSuccess">Successfully imported {0} transactions</sys:String>
+    <sys:String x:Key="Reports.ExportPdf">Export PDF</sys:String>
+    <sys:String x:Key="Reports.PdfExportSuccess">{0} annual report exported</sys:String>
     <sys:String x:Key="Reports.TotalIncome">Total Income</sys:String>
     <sys:String x:Key="Reports.TotalExpense">Total Expense</sys:String>
     <sys:String x:Key="Reports.SavingsRate">Savings Rate</sys:String>
@@ -248,6 +254,8 @@
     <sys:String x:Key="Settings.SwitchedToEnglish">Switched to English</sys:String>
     <sys:String x:Key="Settings.SwitchedToDark">Switched to Dark Mode</sys:String>
     <sys:String x:Key="Settings.SwitchedToLight">Switched to Light Mode</sys:String>
+    <sys:String x:Key="Settings.Currency">Currency Symbol</sys:String>
+    <sys:String x:Key="Settings.CurrencyChanged">Currency changed to {0}</sys:String>
 
     <!-- Budgets -->
     <sys:String x:Key="Nav.Budgets">Budgets</sys:String>

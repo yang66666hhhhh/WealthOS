@@ -87,6 +87,32 @@
                     </Grid>
                 </Border>
 
+                <!-- 货币设置 -->
+                <Border CornerRadius="14" Padding="20" Margin="0,0,0,16"
+                        BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"
+                        Background="{StaticResource CardBackgroundBrush}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Width="44" Height="44" CornerRadius="12" Margin="0,0,16,0">
+                            <Border.Background>
+                                <SolidColorBrush Color="{StaticResource IconBgYellowColor}"/>
+                            </Border.Background>
+                            <TextBlock Text="&#x1F4B1;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="{DynamicResource Settings.Currency}" FontSize="15" FontWeight="SemiBold" 
+                                       Foreground="{StaticResource TextPrimaryBrush}"/>
+                        </StackPanel>
+                        <ComboBox Grid.Column="2" ItemsSource="{Binding AvailableCurrencies}" 
+                                  SelectedItem="{Binding SelectedCurrency}" VerticalAlignment="Center"
+                                  Width="80" FontSize="16"/>
+                    </Grid>
+                </Border>
+
                 <!-- 数据库信息 -->
                 <Border CornerRadius="14" Padding="20" Margin="0,0,0,16"
                         BorderThickness="1" BorderBrush="{StaticResource BorderBrush}"

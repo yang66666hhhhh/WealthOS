@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Data.Sqlite;
 using Microsoft.Win32;
 using WealthOS.Application.Interfaces;
+using WealthOS.Presentation.Converters;
 using WealthOS.Presentation.Services;
 
 namespace WealthOS.Presentation.ViewModels;
@@ -31,10 +33,16 @@ public partial class SettingsViewModel : ViewModelBase
 
     public bool IsDarkMode => _localization.IsDarkMode;
 
+    public string[] AvailableCurrencies => _localization.AvailableCurrencies;
+
+    [ObservableProperty]
+    private string _selectedCurrency = "￥";
+
     public SettingsViewModel(IDbContext dbContext, LocalizationService localization)
     {
         _dbContext = dbContext;
         _localization = localization;
+        _selectedCurrency = _localization.CurrencySymbol;
         LoadInfo();
     }
 
@@ -151,5 +159,11 @@ public partial class SettingsViewModel : ViewModelBase
         StatusMessage = _localization.IsDarkMode
             ? GetResourceString("Settings.SwitchedToDark")
             : GetResourceString("Settings.SwitchedToLight");
+    }
+
+    partial void OnSelectedCurrencyChanged(string value)
+    {
+        _localization.SetCurrency(value);
+        StatusMessage = string.Format(GetResourceString("Settings.CurrencyChanged"), value);
     }
 }

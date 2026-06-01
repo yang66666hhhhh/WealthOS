@@ -1,3 +1,6 @@
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
 using WealthOS.Application.DTOs;
 using WealthOS.Application.Interfaces;
 using WealthOS.Domain.Entities;
@@ -106,44 +109,112 @@ public class ReportService
         await System.IO.File.WriteAllLinesAsync(filePath, lines, System.Text.Encoding.UTF8);
     }
 
-    public async Task<int> ImportTransactionsFromCsvAsync(string filePath, Guid accountId)
+    public async Task ExportAnnualReportToPdfAsync(string filePath, int year, string currencySymbol = "￥")
     {
-        var lines = await System.IO.File.ReadAllLinesAsync(filePath, System.Text.Encoding.UTF8);
-        var count = 0;
+        var report = await GenerateAnnualReportAsync(year);
+        var netWorthChange = report.EndNetWorth - report.StartNetWorth;
+        var savingsRate = report.TotalIncome > 0 ? (report.TotalIncome - report.TotalExpense) / report.TotalIncome * 100 : 0;
 
-        foreach (var line in lines.Skip(1))
+        QuestPDF.Settings.License = LicenseType.Community;
+
+        Document.Create(container =>
         {
-            var parts = line.Split(',');
-            if (parts.Length < 3) continue;
-
-            var typeStr = parts[1].Trim().ToLower();
-            var type = typeStr switch
+            container.Page(page =>
             {
-                "income" or "收入" => TransactionType.Income,
-                "expense" or "支出" => TransactionType.Expense,
-                "transfer" or "转账" => TransactionType.Transfer,
-                _ => (TransactionType?)null
-            };
+                page.Size(PageSizes.A4);
+                page.Margin(40);
+                page.DefaultTextStyle(x => x.FontSize(11));
 
-            if (!type.HasValue) continue;
-            if (!decimal.TryParse(parts[2].Trim(), out var amount)) continue;
-            if (!DateTime.TryParse(parts[0].Trim(), out var date)) continue;
+                page.Header()
+                    .Text($"{year} Annual Wealth Report")
+                    .SemiBold().FontSize(20).FontColor(Colors.Blue.Darken2);
 
-            var note = parts.Length > 3 ? parts[3].Trim().Trim('"') : null;
+                page.Content().PaddingVertical(20).Column(col =>
+                {
+                    col.Item().Text("Financial Summary").SemiBold().FontSize(14);
+                    col.Item().PaddingTop(10).Grid(grid =>
+                    {
+                        grid.Columns(2);
+                        grid.Item().Text($"Total Income: {currencySymbol}{report.TotalIncome:N2}");
+                        grid.Item().Text($"Total Expense: {currencySymbol}{report.TotalExpense:N2}");
+                        grid.Item().Text($"Savings Rate: {savingsRate:F1}%");
+                        grid.Item().Text($"Net Income: {currencySymbol}{report.TotalIncome - report.TotalExpense:N2}");
+                    });
 
-            var transaction = new Transaction
-            {
-                Type = type.Value,
-                Amount = amount,
-                OccurredAt = date,
-                AccountId = accountId,
-                Note = note
-            };
+                    col.Item().PaddingTop(20).Text("Net Worth").SemiBold().FontSize(14);
+                    col.Item().PaddingTop(10).Grid(grid =>
+                    {
+                        grid.Columns(2);
+                        grid.Item().Text($"Start of Year: {currencySymbol}{report.StartNetWorth:N2}");
+                        grid.Item().Text($"End of Year: {currencySymbol}{report.EndNetWorth:N2}");
+                        grid.Item().Text($"Change: {currencySymbol}{netWorthChange:N2} ({(report.StartNetWorth > 0 ? netWorthChange / report.StartNetWorth * 100 : 0):F1}%)");
+                    });
 
-            await _transactionRepo.AddAsync(transaction);
-            count++;
-        }
+                    if (report.MonthlyBreakdown.Any())
+                    {
+                        col.Item().PaddingTop(20).Text("Monthly Breakdown").SemiBold().FontSize(14);
+                        col.Item().PaddingTop(10).Table(table =>
+                        {
+                            table.ColumnsDefinition(cols =>
+                            {
+                                cols.ConstantColumn(60);
+                                cols.RelativeColumn();
+                                cols.RelativeColumn();
+                                cols.RelativeColumn();
+                            });
 
-        return count;
+                            table.Header(header =>
+                            {
+                                header.Cell().Text("Month").SemiBold();
+                                header.Cell().AlignRight().Text("Income").SemiBold();
+                                header.Cell().AlignRight().Text("Expense").SemiBold();
+                                header.Cell().AlignRight().Text("Net").SemiBold();
+                            });
+
+                            foreach (var m in report.MonthlyBreakdown)
+                            {
+                                table.Cell().Text(m.Month);
+                                table.Cell().AlignRight().Text($"{currencySymbol}{m.Income:N0}");
+                                table.Cell().AlignRight().Text($"{currencySymbol}{m.Expense:N0}");
+                                table.Cell().AlignRight().Text($"{currencySymbol}{m.Income - m.Expense:N0}");
+                            }
+                        });
+                    }
+
+                    if (report.TopExpenseCategories.Any())
+                    {
+                        col.Item().PaddingTop(20).Text("Top Expense Categories").SemiBold().FontSize(14);
+                        col.Item().PaddingTop(10).Table(table =>
+                        {
+                            table.ColumnsDefinition(cols =>
+                            {
+                                cols.RelativeColumn();
+                                cols.RelativeColumn();
+                                cols.ConstantColumn(60);
+                            });
+
+                            table.Header(header =>
+                            {
+                                header.Cell().Text("Category").SemiBold();
+                                header.Cell().AlignRight().Text("Amount").SemiBold();
+                                header.Cell().AlignRight().Text("%").SemiBold();
+                            });
+
+                            foreach (var c in report.TopExpenseCategories)
+                            {
+                                table.Cell().Text(c.Category);
+                                table.Cell().AlignRight().Text($"{currencySymbol}{c.Amount:N0}");
+                                table.Cell().AlignRight().Text($"{c.Percentage:F1}%");
+                            }
+                        });
+                    }
+                });
+
+                page.Footer()
+                    .AlignCenter()
+                    .Text($"Generated by WealthOS on {DateTime.Now:yyyy-MM-dd HH:mm}")
+                    .FontSize(9).FontColor(Colors.Grey.Medium);
+            });
+        }).GeneratePdf(filePath);
     }
 }

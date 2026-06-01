@@ -2,6 +2,7 @@ using System.IO;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows;
+using WealthOS.Presentation.Converters;
 
 namespace WealthOS.Presentation.Services;
 
@@ -17,8 +18,14 @@ public partial class LocalizationService : ObservableObject
     [ObservableProperty]
     private bool _isDarkMode;
 
+    [ObservableProperty]
+    private string _currencySymbol = "￥";
+
+    public string[] AvailableCurrencies { get; } = ["￥", "$", "€", "£", "¥"];
+
     public event Action? LanguageChanged;
     public event Action? ThemeChanged;
+    public event Action? CurrencyChanged;
 
     public LocalizationService()
     {
@@ -37,6 +44,8 @@ public partial class LocalizationService : ObservableObject
                 {
                     IsChinese = settings.IsChinese;
                     IsDarkMode = settings.IsDarkMode;
+                    CurrencySymbol = settings.CurrencySymbol ?? "￥";
+                    CurrencyConverter.CurrencySymbol = CurrencySymbol;
                     return;
                 }
             }
@@ -48,6 +57,7 @@ public partial class LocalizationService : ObservableObject
 
         IsChinese = true;
         IsDarkMode = false;
+        CurrencySymbol = "￥";
     }
 
     private void SaveSettings()
@@ -61,7 +71,8 @@ public partial class LocalizationService : ObservableObject
             var settings = new SettingsData
             {
                 IsChinese = IsChinese,
-                IsDarkMode = IsDarkMode
+                IsDarkMode = IsDarkMode,
+                CurrencySymbol = CurrencySymbol
             };
             var json = JsonSerializer.Serialize(settings);
             File.WriteAllText(SettingsPath, json);
@@ -86,6 +97,14 @@ public partial class LocalizationService : ObservableObject
         ApplyTheme();
         SaveSettings();
         ThemeChanged?.Invoke();
+    }
+
+    public void SetCurrency(string symbol)
+    {
+        CurrencySymbol = symbol;
+        CurrencyConverter.CurrencySymbol = symbol;
+        SaveSettings();
+        CurrencyChanged?.Invoke();
     }
 
     public void ApplyLanguage()
@@ -136,5 +155,6 @@ public partial class LocalizationService : ObservableObject
     {
         public bool IsChinese { get; set; } = true;
         public bool IsDarkMode { get; set; }
+        public string? CurrencySymbol { get; set; }
     }
 }

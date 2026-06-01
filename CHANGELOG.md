@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## [1.2.0] - 2026-06-01
+
+### 新增
+
+#### Phase 3 功能
+- CSV 数据导入：支持中英文类型识别（收入/Income、支出/Expense、转账/Transfer），导入时自动更新账户余额
+- PDF 年度报告导出：使用 QuestPDF 生成包含财务摘要、月度明细、支出排行的 PDF 报告
+- 多币种支持：设置页可切换 ￥/$€£¥ 五种货币符号，全局生效并持久化
+
+#### 改进
+- CSV 导入从 ReportService 移至 TransactionService，确保导入交易正确更新账户余额
+- ReportService 新增 `ExportAnnualReportToPdfAsync` 方法
+- CurrencyConverter 支持动态货币符号
+- SettingsViewModel 新增货币选择器
+
+---
+
 ## [1.1.0] - 2026-06-01
 
 ### 修复

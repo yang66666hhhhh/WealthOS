@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
 using WealthOS.Application.DTOs;
@@ -9,6 +10,8 @@ namespace WealthOS.Presentation.ViewModels;
 public partial class ReportsViewModel : ViewModelBase
 {
     private readonly ReportService _reportService;
+    private readonly TransactionService _transactionService;
+    private readonly AccountService _accountService;
 
     [ObservableProperty]
     private AnnualReportDto? _report;
@@ -23,12 +26,29 @@ public partial class ReportsViewModel : ViewModelBase
     [ObservableProperty]
     private bool _isLoading;
 
+    [ObservableProperty]
+    private bool _isImportDialogOpen;
+
+    [ObservableProperty]
+    private ObservableCollection<AccountDto> _accounts = [];
+
+    [ObservableProperty]
+    private AccountDto? _selectedAccount;
+
+    [ObservableProperty]
+    private string _importStatusMessage = string.Empty;
+
+    [ObservableProperty]
+    private string _statusMessage = string.Empty;
+
     public int[] AvailableYears { get; } = [DateTime.UtcNow.Year, DateTime.UtcNow.Year - 1, DateTime.UtcNow.Year - 2];
 
-    public ReportsViewModel(ReportService reportService)
+    public ReportsViewModel(ReportService reportService, TransactionService transactionService, AccountService accountService)
     {
         _reportService = reportService;
-        _ = LoadReportAsync();
+        _transactionService = transactionService;
+        _accountService = accountService;
+        SafeInitializeAsync(LoadReportAsync);
     }
 
     public override IRelayCommand? RefreshCommand => LoadReportCommand;
@@ -72,6 +92,89 @@ public partial class ReportsViewModel : ViewModelBase
         catch (Exception ex)
         {
             SetError(ex);
+        }
+    }
+
+    [RelayCommand]
+    private async Task ExportPdfAsync()
+    {
+        try
+        {
+            var dialog = new SaveFileDialog
+            {
+                FileName = $"WealthOS_Report_{SelectedYear}",
+                DefaultExt = ".pdf",
+                Filter = "PDF Files|*.pdf"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                IsLoading = true;
+                await _reportService.ExportAnnualReportToPdfAsync(dialog.FileName, SelectedYear, Converters.CurrencyConverter.CurrencySymbol);
+                StatusMessage = string.Format(GetResourceString("Reports.PdfExportSuccess"), SelectedYear);
+            }
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task ShowImportDialogAsync()
+    {
+        try
+        {
+            var accountList = await _accountService.GetAllAccountsAsync();
+            Accounts = new ObservableCollection<AccountDto>(accountList);
+            SelectedAccount = Accounts.FirstOrDefault();
+            ImportStatusMessage = string.Empty;
+            IsImportDialogOpen = true;
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
+    }
+
+    [RelayCommand]
+    private void CancelImport()
+    {
+        IsImportDialogOpen = false;
+    }
+
+    [RelayCommand]
+    private async Task ConfirmImportAsync()
+    {
+        if (SelectedAccount == null) return;
+
+        try
+        {
+            var dialog = new OpenFileDialog
+            {
+                Filter = GetResourceString("FileDialog.CsvFilter")
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                IsImportDialogOpen = false;
+                IsLoading = true;
+                var count = await _transactionService.ImportTransactionsFromCsvAsync(dialog.FileName, SelectedAccount.Id);
+                ImportStatusMessage = string.Format(GetResourceString("Reports.ImportSuccess"), count);
+                await LoadReportAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
+        finally
+        {
+            IsLoading = false;
         }
     }
 
