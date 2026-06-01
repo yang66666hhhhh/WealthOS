@@ -90,7 +90,7 @@
                                               Command="{Binding NavigateToCommand}" 
                                               CommandParameter="Goals"/>
 
-                        <views:NavigationItem Icon="&#x1F4B0;" 
+                        <views:NavigationItem Icon="&#x1F4B3;" 
                                               Label="{DynamicResource Nav.Budgets}"
                                               IsSelected="{Binding IsBudgetsSelected}"
                                               Command="{Binding NavigateToCommand}" 
@@ -118,7 +118,7 @@
                                               Command="{Binding NavigateToCommand}" 
                                               CommandParameter="FixedAssets"/>
 
-                        <views:NavigationItem Icon="&#x1F4CA;" 
+                        <views:NavigationItem Icon="&#x1F4C9;" 
                                               Label="{DynamicResource Nav.Analytics}"
                                               IsSelected="{Binding IsAnalyticsSelected}"
                                               Command="{Binding NavigateToCommand}" 

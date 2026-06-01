@@ -5,6 +5,7 @@
     <!-- App -->
     <sys:String x:Key="App.Title">WealthOS - 个人财富操作系统</sys:String>
     <sys:String x:Key="App.Version">v1.1.0</sys:String>
+    <sys:String x:Key="App.AlreadyRunning">WealthOS 已经在运行中。</sys:String>
 
     <!-- Sidebar -->
     <sys:String x:Key="Nav.MainSection">主要</sys:String>
@@ -241,6 +242,8 @@
     <sys:String x:Key="Settings.BackupFailed">备份失败</sys:String>
     <sys:String x:Key="Settings.RestoreSuccess">恢复成功，重启应用后生效</sys:String>
     <sys:String x:Key="Settings.RestoreFailed">恢复失败</sys:String>
+    <sys:String x:Key="Settings.RestartRequired">数据库已恢复，应用需要重启才能生效。</sys:String>
+    <sys:String x:Key="Settings.RestartRequiredTitle">需要重启</sys:String>
     <sys:String x:Key="Settings.SwitchedToChinese">已切换到中文</sys:String>
     <sys:String x:Key="Settings.SwitchedToEnglish">已切换到英文</sys:String>
     <sys:String x:Key="Settings.SwitchedToDark">已切换到深色模式</sys:String>
@@ -264,6 +267,43 @@
     <sys:String x:Key="Budgets.DeleteMessage">确定要删除此预算吗？</sys:String>
     <sys:String x:Key="Budgets.ExecutionRate">执行率</sys:String>
     <sys:String x:Key="Budgets.OverallProgress">预算执行进度</sys:String>
+
+    <!-- Validation -->
+    <sys:String x:Key="Validation.NegativeBalance">余额不能为负数</sys:String>
+    <sys:String x:Key="Validation.NegativeValue">价值不能为负数</sys:String>
+    <sys:String x:Key="Validation.NegativeLiability">负债余额不能为负数</sys:String>
+    <sys:String x:Key="Validation.NegativeRateOrPayment">利率和月供不能为负数</sys:String>
+    <sys:String x:Key="Validation.ZeroOrNegativePrice">成本价和当前价必须大于零</sys:String>
+    <sys:String x:Key="Validation.NegativeCurrentAmount">当前金额不能为负数</sys:String>
+
+    <!-- Units -->
+    <sys:String x:Key="Unit.Year">年</sys:String>
+    <sys:String x:Key="Unit.Month">月</sys:String>
+    <sys:String x:Key="Unit.Months">{0} 个月</sys:String>
+
+    <!-- Startup -->
+    <sys:String x:Key="Startup.DbInitFailed">数据库初始化失败</sys:String>
+    <sys:String x:Key="Startup.WindowCreateFailed">窗口创建失败</sys:String>
+
+    <!-- Empty States -->
+    <sys:String x:Key="Reports.NoData">暂无报表数据</sys:String>
+    <sys:String x:Key="Reports.NoDataHint">选择年份查看年度报告</sys:String>
+    <sys:String x:Key="Analytics.NoData">暂无分析数据</sys:String>
+    <sys:String x:Key="Analytics.NoDataHint">添加交易记录后即可查看数据分析</sys:String>
+
+    <!-- File Dialogs -->
+    <sys:String x:Key="FileDialog.DbFilter">数据库文件|*.db</sys:String>
+    <sys:String x:Key="FileDialog.CsvFilter">CSV 文件|*.csv</sys:String>
+    <sys:String x:Key="Settings.DatabaseNotFound">数据库文件不存在</sys:String>
+    <sys:String x:Key="Settings.InvalidBackupFile">所选文件不是有效的数据库备份</sys:String>
+
+    <!-- Tooltips -->
+    <sys:String x:Key="Tooltip.Edit">编辑</sys:String>
+    <sys:String x:Key="Tooltip.Delete">删除</sys:String>
+    <sys:String x:Key="Tooltip.Add">添加</sys:String>
+    <sys:String x:Key="Tooltip.Previous">上一个</sys:String>
+    <sys:String x:Key="Tooltip.Next">下一个</sys:String>
+    <sys:String x:Key="Tooltip.AddProgress">更新进度</sys:String>
 
     <!-- Language -->
     <sys:String x:Key="Lang.Switch">EN</sys:String>

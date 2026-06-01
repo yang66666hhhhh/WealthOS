@@ -5,6 +5,7 @@
     <!-- App -->
     <sys:String x:Key="App.Title">WealthOS - Personal Wealth Operating System</sys:String>
     <sys:String x:Key="App.Version">v1.1.0</sys:String>
+    <sys:String x:Key="App.AlreadyRunning">WealthOS is already running.</sys:String>
 
     <!-- Sidebar -->
     <sys:String x:Key="Nav.MainSection">Main</sys:String>
@@ -241,6 +242,8 @@
     <sys:String x:Key="Settings.BackupFailed">Backup failed</sys:String>
     <sys:String x:Key="Settings.RestoreSuccess">Restore successful, restart to apply</sys:String>
     <sys:String x:Key="Settings.RestoreFailed">Restore failed</sys:String>
+    <sys:String x:Key="Settings.RestartRequired">Database restored. The application needs to restart to apply changes.</sys:String>
+    <sys:String x:Key="Settings.RestartRequiredTitle">Restart Required</sys:String>
     <sys:String x:Key="Settings.SwitchedToChinese">Switched to Chinese</sys:String>
     <sys:String x:Key="Settings.SwitchedToEnglish">Switched to English</sys:String>
     <sys:String x:Key="Settings.SwitchedToDark">Switched to Dark Mode</sys:String>
@@ -264,6 +267,43 @@
     <sys:String x:Key="Budgets.DeleteMessage">Are you sure you want to delete this budget?</sys:String>
     <sys:String x:Key="Budgets.ExecutionRate">Execution Rate</sys:String>
     <sys:String x:Key="Budgets.OverallProgress">Budget Progress</sys:String>
+
+    <!-- Validation -->
+    <sys:String x:Key="Validation.NegativeBalance">Balance cannot be negative</sys:String>
+    <sys:String x:Key="Validation.NegativeValue">Value cannot be negative</sys:String>
+    <sys:String x:Key="Validation.NegativeLiability">Liability balance cannot be negative</sys:String>
+    <sys:String x:Key="Validation.NegativeRateOrPayment">Interest rate and monthly payment cannot be negative</sys:String>
+    <sys:String x:Key="Validation.ZeroOrNegativePrice">Cost and current price must be greater than zero</sys:String>
+    <sys:String x:Key="Validation.NegativeCurrentAmount">Current amount cannot be negative</sys:String>
+
+    <!-- Units -->
+    <sys:String x:Key="Unit.Year">Year</sys:String>
+    <sys:String x:Key="Unit.Month">Month</sys:String>
+    <sys:String x:Key="Unit.Months">{0} months</sys:String>
+
+    <!-- Startup -->
+    <sys:String x:Key="Startup.DbInitFailed">Database initialization failed</sys:String>
+    <sys:String x:Key="Startup.WindowCreateFailed">Window creation failed</sys:String>
+
+    <!-- Empty States -->
+    <sys:String x:Key="Reports.NoData">No report data</sys:String>
+    <sys:String x:Key="Reports.NoDataHint">Select a year to view the annual report</sys:String>
+    <sys:String x:Key="Analytics.NoData">No analytics data</sys:String>
+    <sys:String x:Key="Analytics.NoDataHint">Add transactions to see data analysis</sys:String>
+
+    <!-- File Dialogs -->
+    <sys:String x:Key="FileDialog.DbFilter">Database Files|*.db</sys:String>
+    <sys:String x:Key="FileDialog.CsvFilter">CSV Files|*.csv</sys:String>
+    <sys:String x:Key="Settings.DatabaseNotFound">Database file not found</sys:String>
+    <sys:String x:Key="Settings.InvalidBackupFile">Selected file is not a valid database backup</sys:String>
+
+    <!-- Tooltips -->
+    <sys:String x:Key="Tooltip.Edit">Edit</sys:String>
+    <sys:String x:Key="Tooltip.Delete">Delete</sys:String>
+    <sys:String x:Key="Tooltip.Add">Add</sys:String>
+    <sys:String x:Key="Tooltip.Previous">Previous</sys:String>
+    <sys:String x:Key="Tooltip.Next">Next</sys:String>
+    <sys:String x:Key="Tooltip.AddProgress">Update Progress</sys:String>
 
     <!-- Language -->
     <sys:String x:Key="Lang.Switch">中文</sys:String>
