@@ -161,4 +161,11 @@ public partial class App : System.Windows.Application
             ShowErrorAndShutdown(GetString("Startup.WindowCreateFailed"), ex.Message, ex.StackTrace);
         }
     }
+
+    protected override void OnExit(ExitEventArgs e)
+    {
+        _mutex?.ReleaseMutex();
+        _mutex?.Dispose();
+        base.OnExit(e);
+    }
 }
