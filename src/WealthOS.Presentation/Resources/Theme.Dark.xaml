@@ -125,12 +125,5 @@
     <Color x:Key="IconBgPurpleColor">#312E81</Color>
     <SolidColorBrush x:Key="IconBgPurpleBrush" Color="{StaticResource IconBgPurpleColor}"/>
 
-    <!-- ============================================ -->
-    <!--  引入公共样式（必须在画刷之后） -->
-    <!-- ============================================ -->
-    
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/WealthOS.Presentation;component/Resources/CommonStyles.xaml"/>
-    </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

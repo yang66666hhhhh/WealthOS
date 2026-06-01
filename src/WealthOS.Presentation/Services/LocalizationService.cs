@@ -123,8 +123,8 @@ public partial class LocalizationService : ObservableObject
 
         var existing = app.Resources.MergedDictionaries
             .FirstOrDefault(d => d.Source != null &&
-                (d.Source.OriginalString.Contains("Theme.xaml") ||
-                 d.Source.OriginalString.Contains("Theme.Dark.xaml")));
+                (d.Source.OriginalString.EndsWith("Theme.xaml") ||
+                 d.Source.OriginalString.EndsWith("Theme.Dark.xaml")));
 
         if (existing != null)
             app.Resources.MergedDictionaries.Remove(existing);

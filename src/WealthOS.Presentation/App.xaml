@@ -6,6 +6,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/WealthOS.Presentation;component/Resources/Theme.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WealthOS.Presentation;component/Resources/CommonStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WealthOS.Presentation;component/Resources/Strings.zh.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

@@ -4,7 +4,7 @@
         Title="WealthOS - 启动错误"
         Height="400" Width="600"
         WindowStartupLocation="CenterScreen"
-        Background="#1E293B">
+        Background="#FFFFFF">
 
     <Grid Margin="24">
         <Grid.RowDefinitions>
@@ -17,14 +17,14 @@
         <TextBlock Grid.Row="0" Text="&#x26A0;" FontSize="48" HorizontalAlignment="Center" Margin="0,0,0,16"
                    Foreground="#F59E0B"/>
         <TextBlock Grid.Row="1" Text="应用启动失败" FontSize="20" FontWeight="Bold"
-                   HorizontalAlignment="Center" Foreground="#F1F5F9" Margin="0,0,0,8"/>
+                   HorizontalAlignment="Center" Foreground="#1E293B" Margin="0,0,0,8"/>
         <TextBlock Grid.Row="1" Text="请查看下方错误信息" FontSize="14"
-                   HorizontalAlignment="Center" Foreground="#94A3B8" Margin="0,30,0,16"/>
+                   HorizontalAlignment="Center" Foreground="#64748B" Margin="0,30,0,16"/>
 
-        <Border Grid.Row="2" Background="#0F172A" CornerRadius="8" Padding="16" Margin="0,0,0,16">
+        <Border Grid.Row="2" Background="#F1F5F9" CornerRadius="8" Padding="16" Margin="0,0,0,16">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <TextBlock x:Name="ErrorTextBlock" TextWrapping="Wrap"
-                           Foreground="#94A3B8" FontFamily="Consolas" FontSize="12"/>
+                           Foreground="#64748B" FontFamily="Consolas" FontSize="12"/>
             </ScrollViewer>
         </Border>
 

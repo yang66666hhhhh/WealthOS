@@ -15,7 +15,6 @@ namespace WealthOS.Presentation;
 public partial class App : System.Windows.Application
 {
     private readonly IServiceProvider _services;
-    private Mutex? _mutex;
 
     public App()
     {
@@ -39,7 +38,7 @@ public partial class App : System.Windows.Application
         if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
             Directory.CreateDirectory(directory);
 
-        services.AddSingleton<IDbContext>(new SqliteDbContext($"Data Source={dbPath};Cache=Shared"));
+        services.AddSingleton<IDbContext>(new SqliteDbContext($"Data Source={dbPath}"));
         services.AddSingleton<DatabaseInitializer>();
 
         services.AddSingleton<IAccountRepository, AccountRepository>();
@@ -102,14 +101,6 @@ public partial class App : System.Windows.Application
 
     protected override async void OnStartup(StartupEventArgs e)
     {
-        _mutex = new Mutex(true, "WealthOS_SingleInstance", out bool isNewInstance);
-        if (!isNewInstance)
-        {
-            MessageBox.Show(GetString("App.AlreadyRunning"), "WealthOS", MessageBoxButton.OK, MessageBoxImage.Information);
-            Current.Shutdown();
-            return;
-        }
-
         base.OnStartup(e);
 
         try

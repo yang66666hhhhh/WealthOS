@@ -16,19 +16,6 @@ public class DatabaseInitializer
     {
         using var connection = (SqliteConnection)_context.CreateConnection();
 
-        var pragmas = new[]
-        {
-            "PRAGMA journal_mode=WAL;",
-            "PRAGMA busy_timeout=5000;"
-        };
-
-        foreach (var pragma in pragmas)
-        {
-            using var cmd = connection.CreateCommand();
-            cmd.CommandText = pragma;
-            await Task.Run(() => cmd.ExecuteNonQuery());
-        }
-
         var statements = new[]
         {
             @"CREATE TABLE IF NOT EXISTS Accounts (

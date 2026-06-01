@@ -51,7 +51,7 @@ public partial class DashboardViewModel : ViewModelBase
         _reportsVm = reportsVm;
         _assetsVm = assetsVm;
         _analyticsVm = analyticsVm;
-        _ = LoadDataAsync();
+        SafeInitializeAsync(LoadDataAsync);
     }
 
     public override IRelayCommand? RefreshCommand => LoadDataCommand;
