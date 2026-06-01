@@ -187,14 +187,21 @@ public partial class TransactionsViewModel : ViewModelBase
     [RelayCommand]
     private async Task ShowEditDialog(TransactionDto dto)
     {
-        EditingId = dto.Id;
-        NewType = dto.Type;
-        NewAmount = dto.Amount;
-        NewNote = dto.Note;
-        NewDate = dto.OccurredAt;
-        SelectedAccount = Accounts.FirstOrDefault(a => a.Id == dto.AccountId);
-        SelectedCategory = Categories.FirstOrDefault(c => c.Id == dto.CategoryId);
-        IsEditDialogOpen = true;
+        try
+        {
+            EditingId = dto.Id;
+            NewType = dto.Type;
+            NewAmount = dto.Amount;
+            NewNote = dto.Note;
+            NewDate = dto.OccurredAt;
+            SelectedAccount = Accounts.FirstOrDefault(a => a.Id == dto.AccountId);
+            SelectedCategory = Categories.FirstOrDefault(c => c.Id == dto.CategoryId);
+            IsEditDialogOpen = true;
+        }
+        catch (Exception ex)
+        {
+            SetError(ex);
+        }
     }
 
     [RelayCommand]
