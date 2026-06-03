@@ -77,8 +77,7 @@ public class DashboardService
             {
                 Name = g.Key.ToString(),
                 Value = g.Sum(a => a.CurrentValue),
-                Percentage = totalAssets > 0 ? g.Sum(a => a.CurrentValue) / totalAssets * 100 : 0,
-                Color = GetAssetColor(g.Key)
+                Percentage = totalAssets > 0 ? g.Sum(a => a.CurrentValue) / totalAssets * 100 : 0
             })
             .OrderByDescending(a => a.Value)
             .ToList();
@@ -125,19 +124,4 @@ public class DashboardService
             RecentTransactions = recentTransactions
         };
     }
-
-    private static string GetAssetColor(AssetType type) => type switch
-    {
-        AssetType.Cash => "#4CAF50",
-        AssetType.Bank => "#2196F3",
-        AssetType.Fund => "#9C27B0",
-        AssetType.Stock => "#FF9800",
-        AssetType.ETF => "#00BCD4",
-        AssetType.Crypto => "#F44336",
-        AssetType.Gold => "#FFD700",
-        AssetType.House => "#795548",
-        AssetType.Car => "#607D8B",
-        AssetType.Collection => "#E91E63",
-        _ => "#9E9E9E"
-    };
 }

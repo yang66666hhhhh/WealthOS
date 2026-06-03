@@ -114,13 +114,14 @@ public class SeedDataService
         var existing = await _goalRepo.GetAllAsync();
         if (existing.Any()) return;
 
+        var now = DateTime.UtcNow;
         var goals = new List<Goal>
         {
-            new() { Name = "应急基金", TargetAmount = 100000, CurrentAmount = 65000, TargetDate = new DateTime(2025, 12, 31), Icon = "🛡️", Note = "6个月生活费" },
-            new() { Name = "日本旅行", TargetAmount = 30000, CurrentAmount = 18000, TargetDate = new DateTime(2025, 10, 1), Icon = "✈️", Note = "东京大阪7日游" },
-            new() { Name = "子女教育", TargetAmount = 500000, CurrentAmount = 85000, TargetDate = new DateTime(2030, 9, 1), Icon = "🎓", Note = "大学教育基金" },
-            new() { Name = "提前还贷", TargetAmount = 200000, CurrentAmount = 45000, TargetDate = new DateTime(2026, 6, 30), Icon = "🏠", Note = "减少房贷压力" },
-            new() { Name = "新车基金", TargetAmount = 150000, CurrentAmount = 32000, TargetDate = new DateTime(2027, 12, 31), Icon = "🚗", Note = "换一辆新能源车" },
+            new() { Name = "应急基金", TargetAmount = 100000, CurrentAmount = 65000, TargetDate = now.AddMonths(6), Icon = "🛡️", Note = "6个月生活费" },
+            new() { Name = "日本旅行", TargetAmount = 30000, CurrentAmount = 18000, TargetDate = now.AddMonths(4), Icon = "✈️", Note = "东京大阪7日游" },
+            new() { Name = "子女教育", TargetAmount = 500000, CurrentAmount = 85000, TargetDate = now.AddYears(5), Icon = "🎓", Note = "大学教育基金" },
+            new() { Name = "提前还贷", TargetAmount = 200000, CurrentAmount = 45000, TargetDate = now.AddMonths(12), Icon = "🏠", Note = "减少房贷压力" },
+            new() { Name = "新车基金", TargetAmount = 150000, CurrentAmount = 32000, TargetDate = now.AddMonths(18), Icon = "🚗", Note = "换一辆新能源车" },
         };
 
         foreach (var goal in goals)
@@ -146,11 +147,16 @@ public class SeedDataService
         var expenseCategories = categories.Where(c => c.Type == TransactionType.Expense).ToList();
 
         var now = DateTime.UtcNow;
+        var thisMonth = now.ToString("M月");
+        var lastMonth = now.AddMonths(-1).ToString("M月");
+        var twoMonthsAgo = now.AddMonths(-2).ToString("M月");
+        var threeMonthsAgo = now.AddMonths(-3).ToString("M月");
+
         var transactions = new List<Transaction>
         {
             // ===== 本月收入 =====
-            new() { Type = TransactionType.Income, Amount = 25000, AccountId = salaryAccount.Id, CategoryId = incomeCategories.First(c => c.Name == "工资").Id, Note = "12月工资", OccurredAt = now.AddDays(-5) },
-            new() { Type = TransactionType.Income, Amount = 5000, AccountId = salaryAccount.Id, CategoryId = incomeCategories.First(c => c.Name == "奖金").Id, Note = "年终奖预发", OccurredAt = now.AddDays(-3) },
+            new() { Type = TransactionType.Income, Amount = 25000, AccountId = salaryAccount.Id, CategoryId = incomeCategories.First(c => c.Name == "工资").Id, Note = $"{thisMonth}工资", OccurredAt = now.AddDays(-5) },
+            new() { Type = TransactionType.Income, Amount = 5000, AccountId = salaryAccount.Id, CategoryId = incomeCategories.First(c => c.Name == "奖金").Id, Note = "奖金", OccurredAt = now.AddDays(-3) },
             new() { Type = TransactionType.Income, Amount = 2800, AccountId = consumeAccount.Id, CategoryId = incomeCategories.First(c => c.Name == "投资收益").Id, Note = "ETF分红", OccurredAt = now.AddDays(-10) },
             new() { Type = TransactionType.Income, Amount = 1500, AccountId = consumeAccount.Id, CategoryId = incomeCategories.First(c => c.Name == "兼职").Id, Note = "周末兼职", OccurredAt = now.AddDays(-12) },
 
@@ -166,7 +172,7 @@ public class SeedDataService
             new() { Type = TransactionType.Expense, Amount = 200, AccountId = consumeAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "交通").Id, Note = "地铁充值", OccurredAt = now.AddDays(-8) },
             
             // 购物
-            new() { Type = TransactionType.Expense, Amount = 1800, AccountId = consumeAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "购物").Id, Note = "冬装采购", OccurredAt = now.AddDays(-3) },
+            new() { Type = TransactionType.Expense, Amount = 1800, AccountId = consumeAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "购物").Id, Note = "换季采购", OccurredAt = now.AddDays(-3) },
             new() { Type = TransactionType.Expense, Amount = 450, AccountId = consumeAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "购物").Id, Note = "日用品", OccurredAt = now.AddDays(-7) },
             
             // 住房
@@ -188,22 +194,22 @@ public class SeedDataService
             new() { Type = TransactionType.Expense, Amount = 299, AccountId = consumeAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "教育").Id, Note = "在线课程", OccurredAt = now.AddDays(-13) },
 
             // ===== 上月交易 =====
-            new() { Type = TransactionType.Income, Amount = 25000, AccountId = salaryAccount.Id, CategoryId = incomeCategories.First(c => c.Name == "工资").Id, Note = "11月工资", OccurredAt = now.AddMonths(-1).AddDays(-5) },
+            new() { Type = TransactionType.Income, Amount = 25000, AccountId = salaryAccount.Id, CategoryId = incomeCategories.First(c => c.Name == "工资").Id, Note = $"{lastMonth}工资", OccurredAt = now.AddMonths(-1).AddDays(-5) },
             new() { Type = TransactionType.Income, Amount = 8000, AccountId = salaryAccount.Id, CategoryId = incomeCategories.First(c => c.Name == "兼职").Id, Note = "项目外包", OccurredAt = now.AddMonths(-1).AddDays(-15) },
             new() { Type = TransactionType.Income, Amount = 3200, AccountId = consumeAccount.Id, CategoryId = incomeCategories.First(c => c.Name == "投资收益").Id, Note = "基金分红", OccurredAt = now.AddMonths(-1).AddDays(-20) },
             
-            new() { Type = TransactionType.Expense, Amount = 4200, AccountId = consumeAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "餐饮").Id, Note = "11月餐饮总支出", OccurredAt = now.AddMonths(-1).AddDays(-1) },
+            new() { Type = TransactionType.Expense, Amount = 4200, AccountId = consumeAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "餐饮").Id, Note = $"{lastMonth}餐饮总支出", OccurredAt = now.AddMonths(-1).AddDays(-1) },
             new() { Type = TransactionType.Expense, Amount = 4500, AccountId = salaryAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "住房").Id, Note = "房贷月供", OccurredAt = now.AddMonths(-1).AddDays(-5) },
             new() { Type = TransactionType.Expense, Amount = 2800, AccountId = salaryAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "住房").Id, Note = "车贷月供", OccurredAt = now.AddMonths(-1).AddDays(-5) },
-            new() { Type = TransactionType.Expense, Amount = 3500, AccountId = consumeAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "购物").Id, Note = "双十一购物", OccurredAt = now.AddMonths(-1).AddDays(-10) },
+            new() { Type = TransactionType.Expense, Amount = 3500, AccountId = consumeAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "购物").Id, Note = "网购", OccurredAt = now.AddMonths(-1).AddDays(-10) },
             new() { Type = TransactionType.Expense, Amount = 1200, AccountId = consumeAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "交通").Id, Note = "加油+停车", OccurredAt = now.AddMonths(-1).AddDays(-12) },
-            new() { Type = TransactionType.Expense, Amount = 600, AccountId = consumeAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "娱乐").Id, Note = "KTV聚餐", OccurredAt = now.AddMonths(-1).AddDays(-18) },
+            new() { Type = TransactionType.Expense, Amount = 600, AccountId = consumeAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "娱乐").Id, Note = "聚餐", OccurredAt = now.AddMonths(-1).AddDays(-18) },
             
             // ===== 更早的交易 =====
-            new() { Type = TransactionType.Income, Amount = 25000, AccountId = salaryAccount.Id, CategoryId = incomeCategories.First(c => c.Name == "工资").Id, Note = "10月工资", OccurredAt = now.AddMonths(-2).AddDays(-5) },
+            new() { Type = TransactionType.Income, Amount = 25000, AccountId = salaryAccount.Id, CategoryId = incomeCategories.First(c => c.Name == "工资").Id, Note = $"{twoMonthsAgo}工资", OccurredAt = now.AddMonths(-2).AddDays(-5) },
             new() { Type = TransactionType.Expense, Amount = 4500, AccountId = salaryAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "住房").Id, Note = "房贷月供", OccurredAt = now.AddMonths(-2).AddDays(-5) },
-            new() { Type = TransactionType.Expense, Amount = 3800, AccountId = consumeAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "餐饮").Id, Note = "10月餐饮", OccurredAt = now.AddMonths(-2).AddDays(-1) },
-            new() { Type = TransactionType.Income, Amount = 25000, AccountId = salaryAccount.Id, CategoryId = incomeCategories.First(c => c.Name == "工资").Id, Note = "9月工资", OccurredAt = now.AddMonths(-3).AddDays(-5) },
+            new() { Type = TransactionType.Expense, Amount = 3800, AccountId = consumeAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "餐饮").Id, Note = $"{twoMonthsAgo}餐饮", OccurredAt = now.AddMonths(-2).AddDays(-1) },
+            new() { Type = TransactionType.Income, Amount = 25000, AccountId = salaryAccount.Id, CategoryId = incomeCategories.First(c => c.Name == "工资").Id, Note = $"{threeMonthsAgo}工资", OccurredAt = now.AddMonths(-3).AddDays(-5) },
             new() { Type = TransactionType.Expense, Amount = 4500, AccountId = salaryAccount.Id, CategoryId = expenseCategories.First(c => c.Name == "住房").Id, Note = "房贷月供", OccurredAt = now.AddMonths(-3).AddDays(-5) },
         };
 
