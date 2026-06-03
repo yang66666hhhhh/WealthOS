@@ -29,7 +29,7 @@ public partial class AnalyticsViewModel : ViewModelBase
     {
         _dashboardService = dashboardService;
         _transactionService = transactionService;
-        SafeInitializeAsync(LoadDataAsync);
+        _ = LoadDataAsync();
     }
 
     public override IRelayCommand? RefreshCommand => LoadDataCommand;
