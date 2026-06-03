@@ -110,7 +110,7 @@
                                                     Foreground="{StaticResource TextTertiaryBrush}" Cursor="Hand" Padding="6,2"
                                                     ToolTip="{DynamicResource Tooltip.Edit}"
                                                     Command="{Binding DataContext.ShowEditDialogCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                    CommandParameter="{Binding}"/>
+                                                    CommandParameter="{Binding Id}"/>
                                             <Button Content="&#x2716;" FontSize="12" Background="Transparent" BorderThickness="0" 
                                                     Foreground="{StaticResource TextHintBrush}" Cursor="Hand" Padding="6,2"
                                                     ToolTip="{DynamicResource Tooltip.Delete}"
