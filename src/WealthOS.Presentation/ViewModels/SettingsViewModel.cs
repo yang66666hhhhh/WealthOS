@@ -87,9 +87,17 @@ public partial class SettingsViewModel : ViewModelBase
             {
                 if (!File.Exists(DbPath))
                 {
-                    StatusMessage = GetResourceString("Settings.DatabaseNotFound");
+                    SetError(GetResourceString("Settings.DatabaseNotFound"));
                     return;
                 }
+                await Task.Run(() =>
+                {
+                    using var conn = new SqliteConnection($"Data Source={DbPath}");
+                    conn.Open();
+                    using var cmd = conn.CreateCommand();
+                    cmd.CommandText = "PRAGMA wal_checkpoint(TRUNCATE);";
+                    cmd.ExecuteNonQuery();
+                });
                 await Task.Run(() => File.Copy(DbPath, dialog.FileName, true));
                 LastBackupTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 StatusMessage = GetResourceString("Settings.BackupSuccess");
@@ -97,7 +105,7 @@ public partial class SettingsViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            StatusMessage = $"{GetResourceString("Settings.BackupFailed")}：{ex.Message}";
+            SetError($"{GetResourceString("Settings.BackupFailed")}：{ex.Message}");
         }
         finally
         {
@@ -135,7 +143,7 @@ public partial class SettingsViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                StatusMessage = $"{GetResourceString("Settings.InvalidBackupFile")}：{ex.Message}";
+                SetError($"{GetResourceString("Settings.InvalidBackupFile")}：{ex.Message}");
             }
             finally
             {
