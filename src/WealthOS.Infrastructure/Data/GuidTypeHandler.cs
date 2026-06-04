@@ -46,7 +46,7 @@ public class DecimalTypeHandler : SqlMapper.TypeHandler<decimal>
 {
     public override void SetValue(IDbDataParameter parameter, decimal value)
     {
-        parameter.Value = (double)value;
+        parameter.Value = value;
     }
 
     public override decimal Parse(object value)
@@ -59,7 +59,7 @@ public class DecimalTypeHandler : SqlMapper.TypeHandler<decimal>
             int i => i,
             long l => l,
             string s => decimal.Parse(s),
-            _ => 0m
+            _ => throw new ArgumentException($"Cannot convert {value?.GetType()} to decimal")
         };
     }
 }

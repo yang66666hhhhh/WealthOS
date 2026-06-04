@@ -8,10 +8,12 @@ namespace WealthOS.Application.Services;
 public class AccountService
 {
     private readonly IAccountRepository _repo;
+    private readonly ITransactionRepository _transactionRepo;
 
-    public AccountService(IAccountRepository repo)
+    public AccountService(IAccountRepository repo, ITransactionRepository transactionRepo)
     {
         _repo = repo;
+        _transactionRepo = transactionRepo;
     }
 
     public async Task<IEnumerable<AccountDto>> GetAllAccountsAsync()
@@ -31,6 +33,14 @@ public class AccountService
 
     public async Task<Guid> AddAccountAsync(Account account) => await _repo.AddAsync(account);
     public async Task<bool> UpdateAccountAsync(Account account) => await _repo.UpdateAsync(account);
-    public async Task<bool> DeleteAccountAsync(Guid id) => await _repo.DeleteAsync(id);
+
+    public async Task<bool> DeleteAccountAsync(Guid id)
+    {
+        var transactions = await _transactionRepo.GetByAccountAsync(id);
+        if (transactions.Any())
+            throw new InvalidOperationException("Cannot delete account with existing transactions. Delete transactions first.");
+        return await _repo.DeleteAsync(id);
+    }
+
     public async Task<Account?> GetAccountAsync(Guid id) => await _repo.GetByIdAsync(id);
 }

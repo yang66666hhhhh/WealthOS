@@ -61,7 +61,7 @@ public partial class TransactionsViewModel : ViewModelBase
     private string? _newNote;
 
     [ObservableProperty]
-    private DateTime _newDate = DateTime.Today;
+    private DateTime _newDate = DateTime.UtcNow.Date;
 
     [ObservableProperty]
     private TransactionType? _filterType;

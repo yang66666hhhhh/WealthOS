@@ -7,6 +7,8 @@ using WealthOS.Application.Services;
 
 namespace WealthOS.Presentation.ViewModels;
 
+public record YearButton(int Year, bool IsSelected);
+
 public partial class ReportsViewModel : ViewModelBase
 {
     private readonly ReportService _reportService;
@@ -42,6 +44,10 @@ public partial class ReportsViewModel : ViewModelBase
     private string _statusMessage = string.Empty;
 
     public int[] AvailableYears { get; } = [DateTime.UtcNow.Year, DateTime.UtcNow.Year - 1, DateTime.UtcNow.Year - 2];
+
+    public List<YearButton> YearButtons => AvailableYears.Select(y => new YearButton(y, y == SelectedYear)).ToList();
+
+    partial void OnSelectedYearChanged(int value) => OnPropertyChanged(nameof(YearButtons));
 
     public ReportsViewModel(ReportService reportService, TransactionService transactionService, AccountService accountService)
     {

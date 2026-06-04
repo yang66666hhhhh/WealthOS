@@ -34,7 +34,7 @@ public class BudgetService
         return budgets.Select(b =>
         {
             decimal spent = b.Spent;
-            if (Guid.TryParse(b.CategoryId, out var catId) && expenseByCategory.TryGetValue(catId, out var calculated))
+            if (b.CategoryId.HasValue && expenseByCategory.TryGetValue(b.CategoryId.Value, out var calculated))
                 spent = calculated;
 
             return new BudgetDto
@@ -45,6 +45,7 @@ public class BudgetService
                 Spent = spent,
                 Month = b.Month,
                 Year = b.Year,
+                CategoryId = b.CategoryId,
                 Note = b.Note
             };
         });

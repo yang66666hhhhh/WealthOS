@@ -52,7 +52,7 @@ public partial class LiabilitiesViewModel : ViewModelBase
     private decimal _newMonthlyPayment;
 
     [ObservableProperty]
-    private DateTime _newStartDate = DateTime.Today;
+    private DateTime _newStartDate = DateTime.UtcNow.Date;
 
     [ObservableProperty]
     private string? _newInstitution;

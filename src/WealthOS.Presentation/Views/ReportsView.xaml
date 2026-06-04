@@ -30,56 +30,32 @@
                             <TextBlock.Text><Binding Source="{StaticResource Reports.Title}"/></TextBlock.Text>
                         </TextBlock>
                         <!-- 年份选择器 -->
-                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                            <Button Content="2026" Margin="0,0,8,0" Padding="12,6" FontSize="12" Cursor="Hand"
-                                    Command="{Binding ChangeYearCommand}" CommandParameter="2026">
-                                <Button.Style>
-                                    <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
-                                        <Setter Property="Padding" Value="12,6"/>
-                                        <Setter Property="FontSize" Value="12"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding SelectedYear}" Value="2026">
-                                                <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
-                                                <Setter Property="Foreground" Value="White"/>
-                                                <Setter Property="BorderThickness" Value="0"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
-                            </Button>
-                            <Button Content="2025" Margin="0,0,8,0" Padding="12,6" FontSize="12" Cursor="Hand"
-                                    Command="{Binding ChangeYearCommand}" CommandParameter="2025">
-                                <Button.Style>
-                                    <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
-                                        <Setter Property="Padding" Value="12,6"/>
-                                        <Setter Property="FontSize" Value="12"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding SelectedYear}" Value="2025">
-                                                <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
-                                                <Setter Property="Foreground" Value="White"/>
-                                                <Setter Property="BorderThickness" Value="0"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
-                            </Button>
-                            <Button Content="2024" Margin="0,0,8,0" Padding="12,6" FontSize="12" Cursor="Hand"
-                                    Command="{Binding ChangeYearCommand}" CommandParameter="2024">
-                                <Button.Style>
-                                    <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
-                                        <Setter Property="Padding" Value="12,6"/>
-                                        <Setter Property="FontSize" Value="12"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding SelectedYear}" Value="2024">
-                                                <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
-                                                <Setter Property="Foreground" Value="White"/>
-                                                <Setter Property="BorderThickness" Value="0"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
-                            </Button>
-                        </StackPanel>
+                        <ItemsControl ItemsSource="{Binding YearButtons}" Margin="0,8,0,0">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Content="{Binding Year}" Margin="0,0,8,0" Padding="12,6" FontSize="12" Cursor="Hand"
+                                            Command="{Binding DataContext.ChangeYearCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            CommandParameter="{Binding Year}">
+                                        <Button.Style>
+                                            <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}">
+                                                <Setter Property="Padding" Value="12,6"/>
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                        <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                        <Setter Property="BorderThickness" Value="0"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </StackPanel>
                     <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" 
                             Command="{Binding ExportCsvCommand}" VerticalAlignment="Center">

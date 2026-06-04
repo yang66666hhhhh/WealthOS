@@ -9,6 +9,6 @@ public class Budget : BaseEntity
     public decimal Spent { get; set; }
     public int Month { get; set; }
     public int Year { get; set; }
-    public string? CategoryId { get; set; }
+    public Guid? CategoryId { get; set; }
     public string? Note { get; set; }
 }

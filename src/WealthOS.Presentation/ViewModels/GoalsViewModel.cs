@@ -55,7 +55,7 @@ public partial class GoalsViewModel : ViewModelBase
     private decimal _newCurrentAmount;
 
     [ObservableProperty]
-    private DateTime _newTargetDate = DateTime.Today.AddYears(1);
+    private DateTime _newTargetDate = DateTime.UtcNow.Date.AddYears(1);
 
     [ObservableProperty]
     private string? _newNote;

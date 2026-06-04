@@ -60,6 +60,9 @@ public partial class BudgetsViewModel : ViewModelBase
     private string? _newNote;
 
     [ObservableProperty]
+    private Guid? _newCategoryId;
+
+    [ObservableProperty]
     private int _selectedYear = DateTime.UtcNow.Year;
 
     [ObservableProperty]
@@ -103,6 +106,7 @@ public partial class BudgetsViewModel : ViewModelBase
         NewAmount = 0;
         NewSpent = 0;
         NewNote = null;
+        NewCategoryId = null;
         IsAddDialogOpen = true;
     }
 
@@ -123,6 +127,7 @@ public partial class BudgetsViewModel : ViewModelBase
                 Spent = NewSpent,
                 Month = SelectedMonth,
                 Year = SelectedYear,
+                CategoryId = NewCategoryId,
                 Note = NewNote
             };
 
@@ -148,6 +153,7 @@ public partial class BudgetsViewModel : ViewModelBase
             NewName = item.Name;
             NewAmount = item.Amount;
             NewSpent = item.Spent;
+            NewCategoryId = item.CategoryId;
             NewNote = item.Note;
             IsEditDialogOpen = true;
         }
@@ -173,6 +179,7 @@ public partial class BudgetsViewModel : ViewModelBase
             item.Name = NewName;
             item.Amount = NewAmount;
             item.Spent = NewSpent;
+            item.CategoryId = NewCategoryId;
             item.Note = NewNote;
 
             await _service.UpdateBudgetAsync(item);
