@@ -67,6 +67,10 @@ public abstract partial class ViewModelBase : ObservableObject
             var color = brush.Color;
             return new SKColor(color.R, color.G, color.B, color.A);
         }
+        if (app?.TryFindResource(key) is System.Windows.Media.Color mediaColor)
+        {
+            return new SKColor(mediaColor.R, mediaColor.G, mediaColor.B, mediaColor.A);
+        }
         return SKColors.Gray;
     }
 }
