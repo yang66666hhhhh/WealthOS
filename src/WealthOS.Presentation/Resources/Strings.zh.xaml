@@ -87,6 +87,7 @@
     <sys:String x:Key="Transactions.EditTitle">编辑交易</sys:String>
     <sys:String x:Key="Transactions.Type">类型</sys:String>
     <sys:String x:Key="Transactions.Account">账户</sys:String>
+    <sys:String x:Key="Transactions.ToAccount">目标账户</sys:String>
     <sys:String x:Key="Transactions.Category">分类</sys:String>
     <sys:String x:Key="Transactions.Amount">金额</sys:String>
     <sys:String x:Key="Transactions.Date">日期</sys:String>

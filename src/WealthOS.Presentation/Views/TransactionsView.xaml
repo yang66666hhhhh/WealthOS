@@ -301,6 +301,23 @@
                                 <TextBlock.Text><Binding Source="{StaticResource Transactions.Account}"/></TextBlock.Text>
                             </TextBlock>
                             <ComboBox ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount}" DisplayMemberPath="Name" Margin="0,0,0,16"/>
+                            <!-- To Account (Transfer only) -->
+                            <StackPanel Visibility="Collapsed" Margin="0,0,0,16">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding NewType}" Value="Transfer">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <TextBlock Style="{StaticResource LabelStyle}">
+                                    <TextBlock.Text><Binding Source="{StaticResource Transactions.ToAccount}"/></TextBlock.Text>
+                                </TextBlock>
+                                <ComboBox ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedToAccount}" DisplayMemberPath="Name"/>
+                            </StackPanel>
                             <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Transactions.Category}"/></TextBlock.Text>
                             </TextBlock>
@@ -374,6 +391,23 @@
                                 <TextBlock.Text><Binding Source="{StaticResource Transactions.Account}"/></TextBlock.Text>
                             </TextBlock>
                             <ComboBox ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount}" DisplayMemberPath="Name" Margin="0,0,0,16"/>
+                            <!-- To Account (Transfer only) -->
+                            <StackPanel Visibility="Collapsed" Margin="0,0,0,16">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding NewType}" Value="Transfer">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <TextBlock Style="{StaticResource LabelStyle}">
+                                    <TextBlock.Text><Binding Source="{StaticResource Transactions.ToAccount}"/></TextBlock.Text>
+                                </TextBlock>
+                                <ComboBox ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedToAccount}" DisplayMemberPath="Name"/>
+                            </StackPanel>
                             <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Transactions.Category}"/></TextBlock.Text>
                             </TextBlock>

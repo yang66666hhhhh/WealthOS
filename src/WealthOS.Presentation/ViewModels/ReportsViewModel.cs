@@ -38,9 +38,6 @@ public partial class ReportsViewModel : ViewModelBase
     private AccountDto? _selectedAccount;
 
     [ObservableProperty]
-    private string _importStatusMessage = string.Empty;
-
-    [ObservableProperty]
     private string _statusMessage = string.Empty;
 
     public int[] AvailableYears { get; } = [DateTime.UtcNow.Year, DateTime.UtcNow.Year - 1, DateTime.UtcNow.Year - 2];
@@ -138,7 +135,7 @@ public partial class ReportsViewModel : ViewModelBase
             var accountList = await _accountService.GetAllAccountsAsync();
             Accounts = new ObservableCollection<AccountDto>(accountList);
             SelectedAccount = Accounts.FirstOrDefault();
-            ImportStatusMessage = string.Empty;
+            StatusMessage = string.Empty;
             IsImportDialogOpen = true;
         }
         catch (Exception ex)
@@ -170,7 +167,7 @@ public partial class ReportsViewModel : ViewModelBase
                 IsImportDialogOpen = false;
                 IsLoading = true;
                 var count = await _transactionService.ImportTransactionsFromCsvAsync(dialog.FileName, SelectedAccount.Id);
-                ImportStatusMessage = string.Format(GetResourceString("Reports.ImportSuccess"), count);
+                StatusMessage = string.Format(GetResourceString("Reports.ImportSuccess"), count);
                 await LoadReportAsync();
             }
         }

@@ -28,6 +28,9 @@ public partial class TransactionsViewModel : ViewModelBase
     private AccountDto? _selectedAccount;
 
     [ObservableProperty]
+    private AccountDto? _selectedToAccount;
+
+    [ObservableProperty]
     private Category? _selectedCategory;
 
     [ObservableProperty]
@@ -161,6 +164,7 @@ public partial class TransactionsViewModel : ViewModelBase
     private async Task ConfirmAddAsync()
     {
         if (NewAmount <= 0 || SelectedAccount == null) return;
+        if (NewType == TransactionType.Transfer && SelectedToAccount == null) return;
 
         try
         {
@@ -171,7 +175,8 @@ public partial class TransactionsViewModel : ViewModelBase
                 Note = NewNote,
                 OccurredAt = NewDate,
                 AccountId = SelectedAccount.Id,
-                CategoryId = SelectedCategory?.Id
+                CategoryId = SelectedCategory?.Id,
+                ToAccountId = NewType == TransactionType.Transfer ? SelectedToAccount?.Id : null
             };
 
             await _service.AddTransactionAsync(transaction);
@@ -195,6 +200,7 @@ public partial class TransactionsViewModel : ViewModelBase
             NewNote = dto.Note;
             NewDate = dto.OccurredAt;
             SelectedAccount = Accounts.FirstOrDefault(a => a.Id == dto.AccountId);
+            SelectedToAccount = dto.ToAccountId.HasValue ? Accounts.FirstOrDefault(a => a.Id == dto.ToAccountId.Value) : null;
             SelectedCategory = Categories.FirstOrDefault(c => c.Id == dto.CategoryId);
             IsEditDialogOpen = true;
         }
@@ -211,6 +217,7 @@ public partial class TransactionsViewModel : ViewModelBase
     private async Task ConfirmEditAsync()
     {
         if (NewAmount <= 0 || SelectedAccount == null) return;
+        if (NewType == TransactionType.Transfer && SelectedToAccount == null) return;
 
         try
         {
@@ -221,7 +228,8 @@ public partial class TransactionsViewModel : ViewModelBase
                 Note = NewNote,
                 OccurredAt = NewDate,
                 AccountId = SelectedAccount.Id,
-                CategoryId = SelectedCategory?.Id
+                CategoryId = SelectedCategory?.Id,
+                ToAccountId = NewType == TransactionType.Transfer ? SelectedToAccount?.Id : null
             };
 
             await _service.UpdateTransactionAsync(EditingId, transaction);

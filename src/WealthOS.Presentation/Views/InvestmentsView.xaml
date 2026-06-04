@@ -8,9 +8,6 @@
     <UserControl.Resources>
         <conv:CurrencyConverter x:Key="CurrencyConv"/>
         <conv:BoolToVisibilityConverter x:Key="BoolToVis"/>
-        <ObjectDataProvider x:Key="InvestmentTypes" MethodName="GetValues" ObjectType="{x:Type enums:AssetType}">
-            <ObjectDataProvider.MethodParameters><x:Type TypeName="enums:AssetType"/></ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
     </UserControl.Resources>
 
     <Grid>
@@ -324,7 +321,7 @@
                             <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Investments.Type}"/></TextBlock.Text>
                             </TextBlock>
-                            <ComboBox ItemsSource="{Binding Source={StaticResource InvestmentTypes}}" SelectedItem="{Binding NewAssetType}" Margin="0,0,0,16"/>
+                            <ComboBox ItemsSource="{Binding InvestmentTypes}" SelectedItem="{Binding NewAssetType}" Margin="0,0,0,16"/>
                             <Grid Margin="0,0,0,16">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -397,7 +394,7 @@
                             <TextBlock Style="{StaticResource LabelStyle}">
                                 <TextBlock.Text><Binding Source="{StaticResource Investments.Type}"/></TextBlock.Text>
                             </TextBlock>
-                            <ComboBox ItemsSource="{Binding Source={StaticResource InvestmentTypes}}" SelectedItem="{Binding NewAssetType}" Margin="0,0,0,16"/>
+                            <ComboBox ItemsSource="{Binding InvestmentTypes}" SelectedItem="{Binding NewAssetType}" Margin="0,0,0,16"/>
                             <Grid Margin="0,0,0,16">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>

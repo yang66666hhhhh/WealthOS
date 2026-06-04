@@ -46,6 +46,8 @@ public class TransactionService
                 CategoryId = t.CategoryId,
                 CategoryName = t.CategoryId.HasValue && categories.TryGetValue(t.CategoryId.Value, out var cat) ? cat.Name : null,
                 AccountName = accounts.TryGetValue(t.AccountId, out var acc) ? acc.Name : "",
+                ToAccountId = t.ToAccountId,
+                ToAccountName = t.ToAccountId.HasValue && accounts.TryGetValue(t.ToAccountId.Value, out var toAcc) ? toAcc.Name : null,
                 Note = t.Note,
                 OccurredAt = t.OccurredAt
             });

@@ -11,6 +11,8 @@ public record TransactionDto
     public Guid? CategoryId { get; init; }
     public string? CategoryName { get; init; }
     public string AccountName { get; init; } = string.Empty;
+    public Guid? ToAccountId { get; init; }
+    public string? ToAccountName { get; init; }
     public string? Note { get; init; }
     public DateTime OccurredAt { get; init; }
 }
