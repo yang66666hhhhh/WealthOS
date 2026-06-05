@@ -10,9 +10,13 @@ namespace WealthOS.Presentation.ViewModels;
 public partial class BudgetsViewModel : ViewModelBase
 {
     private readonly BudgetService _service;
+    private readonly CategoryService _categoryService;
 
     [ObservableProperty]
     private ObservableCollection<BudgetDto> _budgets = [];
+
+    [ObservableProperty]
+    private ObservableCollection<Category> _categories = [];
 
     [ObservableProperty]
     private decimal _totalBudget;
@@ -68,9 +72,10 @@ public partial class BudgetsViewModel : ViewModelBase
     [ObservableProperty]
     private int _selectedMonth = DateTime.UtcNow.Month;
 
-    public BudgetsViewModel(BudgetService service)
+    public BudgetsViewModel(BudgetService service, CategoryService categoryService)
     {
         _service = service;
+        _categoryService = categoryService;
         SafeInitializeAsync(LoadDataAsync);
     }
 
@@ -83,7 +88,9 @@ public partial class BudgetsViewModel : ViewModelBase
         ClearError();
         try {
             var items = await _service.GetBudgetsAsync(SelectedYear, SelectedMonth);
+            var categories = await _categoryService.GetAllAsync();
             Budgets = new ObservableCollection<BudgetDto>(items);
+            Categories = new ObservableCollection<Category>(categories);
             TotalBudget = items.Sum(b => b.Amount);
             TotalSpent = items.Sum(b => b.Spent);
             TotalRemaining = TotalBudget - TotalSpent;

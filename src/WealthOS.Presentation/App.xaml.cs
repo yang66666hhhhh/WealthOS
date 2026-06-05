@@ -108,7 +108,7 @@ public partial class App : System.Windows.Application
             _mutex = new Mutex(true, "WealthOS_SingleInstance", out isNewInstance);
             if (!isNewInstance)
             {
-                MessageBox.Show(GetString("App.AlreadyRunning"), "WealthOS", MessageBoxButton.OK, MessageBoxImage.Information);
+                System.Diagnostics.Debug.WriteLine("WealthOS is already running. Shutting down.");
                 Current.Shutdown();
                 return;
             }

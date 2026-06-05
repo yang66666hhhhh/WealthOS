@@ -48,12 +48,12 @@ public class DashboardService
             monthIncomeTask, monthExpenseTask,
             prevSnapshotTask, assetsTask, snapshotsTask, recentTransactionsTask);
 
-        var totalAssets = totalAssetsTask.Result;
-        var totalLiabilities = totalLiabilitiesTask.Result;
+        var totalAssets = await totalAssetsTask;
+        var totalLiabilities = await totalLiabilitiesTask;
         var netWorth = totalAssets - totalLiabilities;
-        var accounts = accountsTask.Result;
-        var monthIncome = monthIncomeTask.Result;
-        var monthExpense = monthExpenseTask.Result;
+        var accounts = await accountsTask;
+        var monthIncome = await monthIncomeTask;
+        var monthExpense = await monthExpenseTask;
 
         var cashTotal = accounts
             .Where(a => a.Type is AccountType.Cash or AccountType.Bank)
@@ -65,12 +65,12 @@ public class DashboardService
         var savingsRate = monthIncome > 0 ? (monthIncome - monthExpense) / monthIncome * 100 : 0;
         var debtRatio = totalAssets > 0 ? totalLiabilities / totalAssets * 100 : 0;
 
-        var prevSnapshot = prevSnapshotTask.Result
+        var prevSnapshot = (await prevSnapshotTask)
             .OrderByDescending(s => s.SnapshotDate)
             .FirstOrDefault();
         var netWorthChange = prevSnapshot != null ? netWorth - prevSnapshot.NetWorth : 0;
 
-        var assets = assetsTask.Result.Where(a => a.IsActive);
+        var assets = (await assetsTask).Where(a => a.IsActive);
         var assetAllocations = assets
             .GroupBy(a => a.Type)
             .Select(g => new AssetAllocationDto
@@ -82,7 +82,7 @@ public class DashboardService
             .OrderByDescending(a => a.Value)
             .ToList();
 
-        var netWorthHistory = snapshotsTask.Result
+        var netWorthHistory = (await snapshotsTask)
             .OrderBy(s => s.SnapshotDate)
             .Select(s => new NetWorthPointDto { Date = s.SnapshotDate, Value = s.NetWorth })
             .ToList();
@@ -93,7 +93,7 @@ public class DashboardService
         }
 
         var accountLookup = accounts.ToDictionary(a => a.Id);
-        var recentTransactions = recentTransactionsTask.Result
+        var recentTransactions = (await recentTransactionsTask)
             .OrderByDescending(t => t.OccurredAt)
             .Take(10)
             .Select(t => new TransactionDto

@@ -154,8 +154,25 @@
                                                         <StackPanel Grid.Column="1">
                                                             <TextBlock Text="{Binding Note, FallbackValue='Transaction'}"
                                                                        FontSize="13" FontWeight="Medium" Foreground="{StaticResource TextPrimaryBrush}"/>
-                                                            <TextBlock Text="{Binding AccountName}" FontSize="11"
-                                                                       Foreground="{StaticResource TextTertiaryBrush}"/>
+                                                            <TextBlock FontSize="11" Foreground="{StaticResource TextTertiaryBrush}">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="TextBlock">
+                                                                        <Setter Property="Text" Value="{Binding AccountName}"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding Type}" Value="Transfer">
+                                                                                <Setter Property="Text">
+                                                                                    <Setter.Value>
+                                                                                        <MultiBinding StringFormat="{}{0} → {1}">
+                                                                                            <Binding Path="AccountName"/>
+                                                                                            <Binding Path="ToAccountName"/>
+                                                                                        </MultiBinding>
+                                                                                    </Setter.Value>
+                                                                                </Setter>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                            </TextBlock>
                                                         </StackPanel>
                                                         <!-- 金额 -->
                                                         <TextBlock Grid.Column="2" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center">
